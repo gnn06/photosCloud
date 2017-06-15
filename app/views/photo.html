@@ -1,0 +1,13 @@
+<div class="row marketing" id="photo">
+    <a href="#!/{{ photos[currentPhoto - 1].url | thumbnail }} ">Précédente</a>
+    <a href="#!/{{ photos[currentPhoto + 1].url | thumbnail }} ">Suivante</a>
+    <br/>
+	<img src="/large/{{$route.current.params.folder}}" ng-show="$route.current.params.folder.indexOf('.jpg') > 0 || $route.current.params.folder.indexOf('.JPG') > 0"/>
+    <!-- autoplay -->
+	<video ng-show="$route.current.params.folder.indexOf('.mp4') > 0"
+	  src="/photo/{{$route.current.params.folder}}"  controls poster="/large/{{$route.current.params.folder}}">
+	  Votre navigateur ne permet pas de lire les vidéos.
+	  Mais vous pouvez toujours 
+	  <a href="fichiervideo.webm">la télécharger</a> !
+	</video>
+</div>
