@@ -153,3 +153,14 @@ app.use(express.static('app'));
 app.listen(8080, function () {
   console.log('Example app listening on port 8080!');
 });
+
+app.get('/data/*', function(req, res) {
+	console.log("get data of " + req.url);
+	var photoPath = req.url.substr(('/data/').length); // folder/image.jpg
+	console.log(photoPath);
+	fs.readFile(config.dataPath + photoPath + '.json', 'utf-8', (err, content) => {
+		if (err) throw err;
+		console.log(content)
+		res.json(content)
+	})
+})
