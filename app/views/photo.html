@@ -1,13 +1,56 @@
 <div class="row marketing" id="photo">
-    <a href="#!/{{ photos[currentPhoto - 1].url | thumbnail }} ">Précédente</a>
-    <a href="#!/{{ photos[currentPhoto + 1].url | thumbnail }} ">Suivante</a>
-    <br/>
+  <div>
+	<a href="#!/{{ photos[currentPhoto - 1].url | thumbnail }} ">Précédente</a>
+	<a href="#!/{{ photos[currentPhoto + 1].url | thumbnail }} ">Suivante</a>
+  </div>
+  <div>
 	<img src="/large/{{$route.current.params.folder}}" ng-show="$route.current.params.folder.indexOf('.jpg') > 0 || $route.current.params.folder.indexOf('.JPG') > 0"/>
-    <!-- autoplay -->
+	<!-- autoplay -->
 	<video ng-show="$route.current.params.folder.indexOf('.mp4') > 0"
-	  src="/photo/{{$route.current.params.folder}}"  controls poster="/large/{{$route.current.params.folder}}">
-	  Votre navigateur ne permet pas de lire les vidéos.
-	  Mais vous pouvez toujours 
-	  <a href="fichiervideo.webm">la télécharger</a> !
+		src="/photo/{{$route.current.params.folder}}"	 controls poster="/large/{{$route.current.params.folder}}">
+		Votre navigateur ne permet pas de lire les vidéos.
+		Mais vous pouvez toujours
+		<a href="fichiervideo.webm">la télécharger</a> !
 	</video>
+  </div>
+  <div>
+  	<label>
+  		<input type="radio"
+  		   ng-model="data.star"
+  		   value="1"
+  		   name="star1">
+  		1
+  	</label>
+  	<label>
+  		<input type="radio"
+  		   ng-model="data.star"
+  		   value="2"
+  		   name="star2">
+  		2
+  	</label>
+  	<label>
+  		<input type="radio"
+  		   ng-model="data.star"
+  		   value="3"
+  		   name="star3">
+  		3
+  	</label>
+  	<label>
+  		<input type="radio"
+  		   ng-model="data.star"
+  		   value="4"
+  		   name="star4">
+  		4
+  	</label><label>
+  		<input type="radio"
+  		   ng-model="data.star"
+  		   value="5"
+  		   name="star5">
+  		5
+  	</label>
+  	<button id="samplejsonpbtn"
+  		ng-click="post()">
+  		submit
+  	</button>status = {{status}}
+  </div>
 </div>

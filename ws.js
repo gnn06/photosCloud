@@ -5,12 +5,14 @@ var Thumbnail = require('thumbnail');
 var exif = require('fast-exif');
 var mp4boxModule = require('mp4box');
 var fs = require('fs');
+var bodyParser = require('body-parser');
 // var ExifImage = require('exif').ExifImage;
 
 var config = require('./config')
 console.log(config)
 
 var app = express();
+var jsonParser = bodyParser.json()
 var mp4box = new mp4boxModule.MP4Box();
 
 config.photosUrl = "/thumbnails";
@@ -48,7 +50,7 @@ function getPhotoDate (photoFilename, promises, callback) {
 			  mp4box.appendBuffer(arrayBuffer);
 			  var date = mp4box.getInfo().created;
 			  resolve(date);
-		  });	  
+		  });
 	  })
 	  pM.then(function(box){
 		  var date = mp4box.getInfo().created;
@@ -75,7 +77,7 @@ function getPhotoDateSync (photoFilename, callback) {
 
 app.get(config.photosUrl + '*', function (req, res) {
   console.log("get photos of folder " + req.url);
-  var start = new Date().getTime();	
+  var start = new Date().getTime();
   //console.log(firstPartUrl)
   var firstPartUrl = req.protocol + '://' + req.get('host')
   var folder = req.url.substring(config.photosUrl.length);
@@ -159,8 +161,24 @@ app.get('/data/*', function(req, res) {
 	var photoPath = req.url.substr(('/data/').length); // folder/image.jpg
 	console.log(photoPath);
 	fs.readFile(config.dataPath + photoPath + '.json', 'utf-8', (err, content) => {
+		if (err) {
+      res.json({star:""});
+    } else {
+      var object = JSON.parse(content);
+  		res.json(object);
+    }
+	})
+})
+
+app.post('/data/*', jsonParser, function(req, res) {
+	console.log("post data of " + req.url);
+	var photoPath = req.url.substr(('/data/').length); // folder/image.jpg
+	console.log(photoPath);
+	console.log(req.body)
+	var content = JSON.stringify(req.body, null, 2)
+	fs.writeFile(config.dataPath + photoPath + '.json', content, 'utf-8', (err) => {
 		if (err) throw err;
-		console.log(content)
-		res.json(content)
+		console.log('write ok')
+		res.send('ok');
 	})
 })
