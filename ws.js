@@ -79,43 +79,52 @@ function getPhotoDate (photoFilename, promises, callback) {
 app.get("/thumbnails*", function (req, res) {
   console.log("get photos of folder " + req.url);
   var start = new Date().getTime();
-  //console.log(firstPartUrl)
   var firstPartUrl = req.protocol + '://' + req.get('host')
+  //console.log(firstPartUrl)
   var folder = req.url.substring("/thumbnails".length);
-  var items = [] // files, directories, symlinks, etc
-  var promises = new Array();
-  klaw(config.photosPath + folder)
-  .on('data', function (item) {
-    // item.path = ''\\\\RASPBERRYPI\\PiPhotos\\photos\\2016\\DSCF2749.JPG'
-    var filename = item.path.substring(config.photosPath.length);
-    // filename = '2016\\DSCF2749.JPG'
-    if (!item.stats.isDirectory()) {
-      var date = getPhotoDate(item.path, promises, function(date){
-		  var obj = {}
-		  obj.url = firstPartUrl + config.thumbnailUrl + '/' + filename.replace(/\\/g,'/');
-		  obj.date = date;
-		  // console.log(item.path + "," + date);
-		  items.push(obj)
-	  });
-    }
+  console.log("folder=", folder)
+  readFolderisting(folder)
+  .then(folderContent => {
+      res.json(folderContent);
   })
-  .on('end', function () {
-	Promise.all(promises).then(function () {
-		res.header("Access-Control-Allow-Origin", "*");
-		items = items.sort(function(a, b) {
-		  if (a.date > b.date) {
-			return -1;
-		  } else if (a.date < b.date) {
-			return 1;
-		  } else {
-			return 0;
-		  }
-		})
-		res.json(items);
-    var end = new Date().getTime();
-		console.log("GET /thumbnails duration : " + (end - start));
-	})
-  })
+  .catch(function(err) {
+    console.error(err);
+    var items = [] // files, directories, symlinks, etc
+    var promises = new Array();
+    klaw(config.photosPath + folder)
+    .on('data', function (item) {
+      // item.path = ''\\\\RASPBERRYPI\\PiPhotos\\photos\\2016\\DSCF2749.JPG'
+      var filename = item.path.substring(config.photosPath.length);
+      // filename = '2016\\DSCF2749.JPG'
+      if (!item.stats.isDirectory()) {
+        var date = getPhotoDate(item.path, promises, function(date){
+    	  var obj = {}
+    	  obj.url = firstPartUrl + config.thumbnailUrl + '/' + filename.replace(/\\/g,'/');
+    	  obj.date = date;
+    	  // console.log(item.path + "," + date);
+    	  items.push(obj)
+      });
+      }
+    })
+    .on('end', function () {
+    	Promise.all(promises).then(function () {
+    		res.header("Access-Control-Allow-Origin", "*");
+    		items = items.sort(function(a, b) {
+    		  if (a.date > b.date) {
+    			     return -1;
+    		  } else if (a.date < b.date) {
+    			     return 1;
+    		  } else {
+    			     return 0;
+    		  }
+    		})
+        writeFolderContent(folder, items);
+    		res.json(items);
+	    })
+    })
+  });
+  var end = new Date().getTime();
+  console.log("GET /thumbnails duration : " + (end - start));
 });
 
 // app.get(config.photoUrl + '/*', function (req, res) {
@@ -183,3 +192,32 @@ app.post('/data/*', jsonParser, function(req, res) {
 		res.send('ok');
 	})
 })
+
+function readFolderisting (folderPath) {
+  return new Promise(function(resolve, reject) {
+    fs.readFile(config.dataPath + folderPath + '/folder.json', 'utf-8', (err, content) => {
+      if (err) {
+        console.log('error reading folder content ', config.dataPath + folderPath + '/folder.json');
+        reject(err);
+        return;
+      }
+      console.log('read folder content ', config.dataPath + folderPath + '/folder.json', content.length);
+      var object = JSON.parse(content);
+      resolve(object);
+    });
+  });
+}
+
+function writeFolderContent (folderPath, items) {
+  return new Promise(function(resolve, reject) {
+    var fileContent = JSON.stringify(items, null, 2);
+    console.log('write folder content ', config.dataPath + folderPath + '/folder.json', fileContent.length);
+    fs.writeFile(config.dataPath + folderPath + '/folder.json', fileContent, 'utf-8', (err) => {
+      if (err) {
+        reject(err);
+        return;
+      };
+      resolve('success');
+    });
+  });
+}
