@@ -23,7 +23,8 @@ function getPhotoDate (photoFilename, promises, callback) {
   if (photoFilename.substr(-4).toLowerCase() === ".jpg") {
 	  var p = exif.read(photoFilename);
 	  p.then(function(data){
-		  callback(data.image.ModifyDate);
+		  var date = data && data.image && data.image.ModifyDate;
+		  callback(date);
 	   })
 	   .catch(function(data){
 		   console.error(photoFilename, data);
@@ -34,7 +35,7 @@ function getPhotoDate (photoFilename, promises, callback) {
 	  var mp4box = new mp4boxModule.MP4Box();
 	  var pM = new Promise(function(resolve, reject) {
 		  fs.readFile(photoFilename, (err, content) => {
-			  console.log(typeof content)
+			  console.log("read : " + content.length)
 			  if (err) reject(err);
 			  var arrayBuffer = new Uint8Array(content).buffer;
 			  arrayBuffer.fileStart = 0;
