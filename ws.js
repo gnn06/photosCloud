@@ -112,17 +112,17 @@ app.get(config.photosUrl + '*', function (req, res) {
 		  }
 		})
 		res.json(items);
-		var end = new Date().getTime();
+    var end = new Date().getTime();
 		console.log("GET /thumbnails duration : " + (end - start));
 	})
   })
 });
 
-app.get(config.photoUrl + '/*', function (req, res) {
-  console.log("get photo " + req.url);
-  var photoPath = req.url.substr((config.photoUrl + '/').length)
-  res.sendFile(config.photosPath + '/' + photoPath)
-})
+// app.get(config.photoUrl + '/*', function (req, res) {
+//   console.log("get photo " + req.url);
+//   var photoPath = req.url.substr((config.photoUrl + '/').length)
+//   res.sendFile(config.photosPath + '/' + photoPath)
+// })
 
 app.get('/large/*', function (req, res) {
 	console.log("get large of " + req.url)
@@ -160,7 +160,7 @@ app.listen(8080, function () {
 app.get('/data/*', function(req, res) {
 	console.log("get data of " + req.url);
 	var photoPath = req.url.substr(('/data/').length); // folder/image.jpg
-	console.log(photoPath);
+	//console.log(photoPath);
 	fs.readFile(config.dataPath + photoPath + '.json', 'utf-8', (err, content) => {
 		if (err) {
       res.json({star:""});
