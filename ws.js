@@ -66,22 +66,22 @@ function getPhotoDate (photoFilename, promises, callback) {
   // TODO récupére date du fichier si on ne peut rien faire d'autre
 }
 
-function getPhotoDateSync (photoFilename, callback) {
-  try {
-    var result = exif.readSync(photoFilename);
-    return result.image.ModifyDate;
-  } catch (ex) {
-    console.error('error reading EXIF of ' + photoFilename + ' ' + ex);
-    return null;
-  }
-}
+// function getPhotoDateSync (photoFilename, callback) {
+//   try {
+//     var result = exif.readSync(photoFilename);
+//     return result.image.ModifyDate;
+//   } catch (ex) {
+//     console.error('error reading EXIF of ' + photoFilename + ' ' + ex);
+//     return null;
+//   }
+// }
 
-app.get(config.photosUrl + '*', function (req, res) {
+app.get("/thumbnails*", function (req, res) {
   console.log("get photos of folder " + req.url);
   var start = new Date().getTime();
   //console.log(firstPartUrl)
   var firstPartUrl = req.protocol + '://' + req.get('host')
-  var folder = req.url.substring(config.photosUrl.length);
+  var folder = req.url.substring("/thumbnails".length);
   var items = [] // files, directories, symlinks, etc
   var promises = new Array();
   klaw(config.photosPath + folder)
