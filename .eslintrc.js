@@ -1,11 +1,12 @@
 module.exports = {
     "env": {
-        "browser": true,
+        "browser": false,
         "es6": true,
         "node": true
     },
     "extends": "eslint:recommended",
     "rules": {
+		"no-console":0,
         "indent": [
             "error",
             "tab"
