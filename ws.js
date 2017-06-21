@@ -1,6 +1,6 @@
 #!/usr/bin/env nodejs
 var express = require('express');
-var klaw = require('klaw')
+var fileservice = require('./fileservice');
 var Thumbnail = require('thumbnail');
 var exif = require('fast-exif');
 var mp4boxModule = require('mp4box');
@@ -79,50 +79,14 @@ function getPhotoDate (photoFilename, promises, callback) {
 app.get("/thumbnails*", function (req, res) {
   console.log("get photos of folder " + req.url);
   var start = new Date().getTime();
+
   var firstPartUrl = req.protocol + '://' + req.get('host')
   //console.log(firstPartUrl)
   var folder = req.url.substring("/thumbnails".length);
   console.log("folder=", folder)
-  readFolderisting(folder)
-  .then(folderContent => {
-      res.json(folderContent);
-  })
-  .catch(function(err) {
-    console.error(err);
-    var items = [] // files, directories, symlinks, etc
-    var promises = new Array();
-    klaw(config.photosPath + folder)
-    .on('data', function (item) {
-      // item.path = ''\\\\RASPBERRYPI\\PiPhotos\\photos\\2016\\DSCF2749.JPG'
-      var filename = item.path.substring(config.photosPath.length);
-      // filename = '2016\\DSCF2749.JPG'
-      if (!item.stats.isDirectory()) {
-        var date = getPhotoDate(item.path, promises, function(date){
-    	  var obj = {}
-    	  obj.url = /*firstPartUrl + */ config.thumbnailUrl + '/' + filename.replace(/\\/g,'/');
-    	  obj.date = date;
-    	  // console.log(item.path + "," + date);
-    	  items.push(obj)
-      });
-      }
-    })
-    .on('end', function () {
-    	Promise.all(promises).then(function () {
-    		res.header("Access-Control-Allow-Origin", "*");
-    		items = items.sort(function(a, b) {
-    		  if (a.date > b.date) {
-    			     return -1;
-    		  } else if (a.date < b.date) {
-    			     return 1;
-    		  } else {
-    			     return 0;
-    		  }
-    		})
-        writeFolderContent(folder, items);
-    		res.json(items);
-	    })
-    })
-  });
+  var files = fileservice.walk(config.photosPath + folder, '');
+  res.json(files);
+
   var end = new Date().getTime();
   console.log("GET /thumbnails duration : " + (end - start));
 });
