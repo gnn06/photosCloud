@@ -48,6 +48,10 @@ describe('fileservice', function() {
       result = service.walk('E:/temp/dev/mochetest/test3', '');
       assert.deepEqual(result, [{url:'file.jpg'}]);
     });
+	
+	it('should not store absolute url');
+	
+	it('should return relative path including root');
   })
 })
 
