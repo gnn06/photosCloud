@@ -99,7 +99,7 @@ app.get("/thumbnails*", function (req, res) {
       if (!item.stats.isDirectory()) {
         var date = getPhotoDate(item.path, promises, function(date){
     	  var obj = {}
-    	  obj.url = firstPartUrl + config.thumbnailUrl + '/' + filename.replace(/\\/g,'/');
+    	  obj.url = /*firstPartUrl + */ config.thumbnailUrl + '/' + filename.replace(/\\/g,'/');
     	  obj.date = date;
     	  // console.log(item.path + "," + date);
     	  items.push(obj)
