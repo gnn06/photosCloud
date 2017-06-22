@@ -81,6 +81,9 @@ describe('fileservice', function() {
 			expect(file('E:/temp/dev/mochetest/test2/folder.json')).to.not.contain('test2');
 			expect(file('E:/temp/dev/mochetest/test2/subfolder/folder.json')).to.not.contain('subfolder');
 		});
+		
+		it('should returns url conainting parent folder but not should store it');
+		// usefull to the GET /thumbnails sinon le client doit rajouter le folder 
   })
 })
 
