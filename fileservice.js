@@ -11,8 +11,8 @@ exports.walk = function (folder, options) {
 	var flattenContent = [];
 
 	// Récupérer ancien contenu
-	if (fs.existsSync(options.photoFolder + '/' + folder + '/folder.json')) {
-		let content = fs.readFileSync(options.photoFolder + '/' + folder + '/folder.json', 'utf-8');
+	if (fs.existsSync(options.dataFolder + '/' + folder + '/folder.json')) {
+		let content = fs.readFileSync(options.dataFolder + '/' + folder + '/folder.json', 'utf-8');
 		currentContent = JSON.parse(content);
 		currentContentFromCache = currentContent.length > 0;
 	}
