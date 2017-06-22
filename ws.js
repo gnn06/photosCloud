@@ -84,7 +84,7 @@ app.get('/thumbnails*', function (req, res) {
 	//console.log(firstPartUrl)
 	var folder = req.url.substring('/thumbnails'.length);
 	console.log('folder=', folder);
-	var files = fileservice.walk(folder, { photoFolder : config.photosPath, dataFolder : config.dataFolder});
+	var files = fileservice.walk(folder, { photoFolder : config.photosPath, dataFolder : config.dataPath});
 	res.json(files);
 
 	var end = new Date().getTime();
