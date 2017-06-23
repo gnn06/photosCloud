@@ -5,7 +5,10 @@ module.exports = {
         "node": true
     },
     "extends": "eslint:recommended",
-    "rules": {
+    "plugins": [
+		"mocha"
+	],"rules": {
+		"mocha/no-exclusive-tests": "error",
 		"no-console":0,
         "indent": [
             "error",

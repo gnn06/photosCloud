@@ -83,6 +83,9 @@ app.get('/thumbnails*', function (req, res) {
 	// var firstPartUrl = req.protocol + '://' + req.get('host')
 	//console.log(firstPartUrl)
 	var folder = req.url.substring('/thumbnails'.length);
+	if (folder[0] == '/') {
+		folder = folder.substring(1);
+	}
 	console.log('folder=', folder);
 	var files = fileservice.walk(folder, { photoFolder : config.photosPath, dataFolder : config.dataPath});
 	res.json(files);
