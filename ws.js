@@ -1,11 +1,10 @@
 #!/usr/bin/env nodejs
 var express = require('express');
-var fileservice = require('./fileservice');
-// var Thumbnail = require('thumbnail');
-var exif = require('fast-exif');
-var mp4boxModule = require('mp4box');
-var fs = require('fs');
 var bodyParser = require('body-parser');
+var fileservice = require('./fileservice');
+var dataService = require('./dataservice');
+var fs = require('fs');
+// var Thumbnail = require('thumbnail');
 // var ExifImage = require('exif').ExifImage;
 
 var config = require('./config');
@@ -19,65 +18,7 @@ config.photosUrl = '/thumbnails';
 config.photoUrl = '/photo';
 config.thumbnailUrl = '/thumbnail';
 
-function getPhotoDate (photoFilename, promises, callback) {
-	if (photoFilename.substr(-4).toLowerCase() === '.jpg') {
-		var p = exif.read(photoFilename);
-		p.then(function(data){
-			var date = data && data.image && data.image.ModifyDate;
-			callback(date);
-		})
-			.catch(function(data){
-				console.error(photoFilename, data);
-				callback(null);
-			});
-		promises.push(p);
-	} else if (photoFilename.substr(-4).toLowerCase() === '.mp4') {
-		var mp4box = new mp4boxModule.MP4Box();
-		var pM = new Promise(function(resolve, reject) {
-			fs.readFile(photoFilename, (err, content) => {
-				console.log('read : ' + content.length);
-				if (err) reject(err);
-				var arrayBuffer = new Uint8Array(content).buffer;
-				arrayBuffer.fileStart = 0;
-				mp4box.onMoovStart = function () {
-					console.log('Starting to receive File Information');
-				};
-				mp4box.onReady = function info () {
-					console.log('Received File Information');
-				};
-				mp4box.onError = function (e) {
-					console.log('Received Error Message '+e);
-				};
-				mp4box.appendBuffer(arrayBuffer);
-				var date = mp4box.getInfo().created;
-				resolve(date);
-			});
-		});
-		pM.then(function(){
-			var date = mp4box.getInfo().created;
-			callback(date);
-		})
-			.catch(function(err){
-				console.error(photoFilename, err);
-				callback(null);
-			});
-		promises.push(pM);
-	}
-	// TODO récupére date du fichier si on ne peut rien faire d'autre
-}
-
-// function getPhotoDateSync (photoFilename, callback) {
-//	 try {
-//		 var result = exif.readSync(photoFilename);
-//		 return result.image.ModifyDate;
-//	 } catch (ex) {
-//		 console.error('error reading EXIF of ' + photoFilename + ' ' + ex);
-//		 return null;
-//	 }
-// }
-
 app.get('/thumbnails*', function (req, res) {
-	console.log('get photos of folder ' + req.url);
 	var start = new Date().getTime();
 
 	// var firstPartUrl = req.protocol + '://' + req.get('host')
@@ -86,9 +27,9 @@ app.get('/thumbnails*', function (req, res) {
 	if (folder[0] == '/') {
 		folder = folder.substring(1);
 	}
-	console.log('folder=', folder);
+	console.log('GET /thumbnails of folder ' + folder);
 	var files = fileservice.walk(folder, { photoFolder : config.photosPath, dataFolder : config.dataPath});
-	res.json(files);
+	Promise.all(dataService.getData(files)).then(res.json(files));
 
 	var end = new Date().getTime();
 	console.log('GET /thumbnails duration : ' + (end - start));

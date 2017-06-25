@@ -1,7 +1,5 @@
 'use strict';
 
-var service = require('../fileservice.js');
-var fs = require('fs');
 var chai = require('chai');
 var chaiFiles = require('chai-files');
 
@@ -11,6 +9,10 @@ var assert = chai.assert;
 var expect = chai.expect;
 var file = chaiFiles.file;
 //var dir = chaiFiles.dir;
+
+var service = require('../fileservice.js');
+var fs = require('fs');
+//var config = require('./config');
 
 function deleteFile (filename) {
 	if (fs.existsSync(filename)) {
@@ -23,6 +25,10 @@ describe('fileservice', function() {
 	it('should returns array, only jpg, case insensitive, store into <data> Folder', function () {
 		deleteFile('E:/temp/dev/mochetest/test1/data/folder.json');
 		deleteFile('E:/temp/dev/mochetest/test1/photo/folder.json');
+    var config = { 
+      photoFolder : 'E:/temp/dev/mochetest/test1/photo/', 
+      dataFolder  : 'E:/temp/dev/mochetest/test1/data/'
+    };
 		var result = service.walk('', { photoFolder : 'E:/temp/dev/mochetest/test1/photo/', dataFolder : 'E:/temp/dev/mochetest/test1/data/' });
     var expected = [
       { url : '/file1.jpg' },
@@ -34,9 +40,23 @@ describe('fileservice', function() {
 		expect(file('E:/temp/dev/mochetest/test1/data/folder.json')).to.exist;
   });
 
+  it('should returns data', function () {
+    var config = {
+      photoFolder : 'E:/temp/dev/mochetest/test1/photo/',
+      dataFolder  : 'E:/temp/dev/mochetest/test1/data/'
+    };
+    var result = service.walk('', { photoFolder : 'E:/temp/dev/mochetest/test1/photo/', dataFolder : 'E:/temp/dev/mochetest/test1/data/' });
+    console.log(result);
+    expect(result[0].date).to.be.not.empty;
+  });
+
   it('should returns subfolder', function () {
 		delete('E:/temp/dev/mochetest/test2/folder.json');
 		delete('E:/temp/dev/mochetest/test2/subfolder/folder.json');
+    var config = {
+      photoFolder : 'E:/temp/dev/mochetest/test2/',
+      dataFolder  : 'E:/temp/dev/mochetest/test2/'
+    };
     var result = service.walk('', { photoFolder : 'E:/temp/dev/mochetest/test2/', dataFolder : 'E:/temp/dev/mochetest/test2/' });
     var expected = [
       { url : '/parentfile.jpg'},
@@ -48,6 +68,10 @@ describe('fileservice', function() {
 	it('should returns full url even when called on subfolder', function () {
 		delete('E:/temp/dev/mochetest/test2/folder.json');
 		delete('E:/temp/dev/mochetest/test2/subfolder/folder.json');
+    var config = {
+      photoFolder : 'E:/temp/dev/mochetest/test2/',
+      dataFolder  : 'E:/temp/dev/mochetest/test2/'
+    };
     var result = service.walk('subfolder', { photoFolder : 'E:/temp/dev/mochetest/test2/', dataFolder : 'E:/temp/dev/mochetest/test2/' });
     var expected = [
       { url : '/subfolder/subfile.jpg' }
@@ -63,7 +87,10 @@ describe('fileservice', function() {
     if (fs.existsSync('E:/temp/dev/mochetest/test2/subfolder/folder.json')) {
         fs.unlinkSync('E:/temp/dev/mochetest/test2/subfolder/folder.json');
     }
-
+    var config = {
+      photoFolder : 'E:/temp/dev/mochetest/test2/',
+      dataFolder  : 'E:/temp/dev/mochetest/test2/'
+    };
     var result = service.walk('', { photoFolder : 'E:/temp/dev/mochetest/test2/', dataFolder : 'E:/temp/dev/mochetest/test2/' });
 
     var existPost = fs.existsSync('E:/temp/dev/mochetest/test2/folder.json');
@@ -83,6 +110,10 @@ describe('fileservice', function() {
     var fileNotExist = fs.existsSync('E:/temp/dev/mochetest/test3/file.jpg');
     assert.ok(!fileNotExist);
     var result = [];
+    var config = {
+      photoFolder : 'E:/temp/dev/mochetest/test3/',
+      dataFolder  : 'E:/temp/dev/mochetest/test3/'
+    };
     result = service.walk('', { photoFolder : 'E:/temp/dev/mochetest/test3/', dataFolder : 'E:/temp/dev/mochetest/test3/' });
     assert.deepEqual(result, [{url:'/file.jpg'}]);
   });
