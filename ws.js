@@ -29,10 +29,14 @@ app.get('/thumbnails*', function (req, res) {
 	}
 	console.log('GET /thumbnails of folder ' + folder);
 	var files = fileservice.walk(folder, { photoFolder : config.photosPath, dataFolder : config.dataPath});
-	Promise.all(dataService.getData(files)).then(res.json(files));
-
-	var end = new Date().getTime();
-	console.log('GET /thumbnails duration : ' + (end - start));
+	
+	files.then(function(files){
+		files.forEach(item => { item.url = '/thumbnail' + item.url; });
+		res.json(files);
+		var end = new Date().getTime();
+		console.log('GET /thumbnails files found count', files.length, 
+		', duration : ' + (end - start), ' ms');
+	});
 });
 
 // app.get(config.photoUrl + '/*', function (req, res) {
@@ -100,3 +104,5 @@ app.post('/data/*', jsonParser, function(req, res) {
 		res.send('ok');
 	});
 });
+
+exports.app = app;

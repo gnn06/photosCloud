@@ -16,6 +16,9 @@ exports.walk = function (folder, config) {
 		let content = fs.readFileSync(config.dataFolder + folder + '/folder.json', 'utf-8');
 		currentContent = JSON.parse(content);
 		currentContentFromCache = currentContent.length > 0;
+		if (currentContentFromCache) {
+			console.log('use cache for ', folder, ' ', currentContent.length, ' items read');
+		}
 	}
 	// parcourir pour soit créer le contenu soit récupérer les sous-contenus
 	var files = fs.readdirSync (config.photoFolder + folder, 'utf-8');
