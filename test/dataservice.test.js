@@ -2,14 +2,10 @@
 
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
-//var chaiFiles = require('chai-files');
 
 chai.use(chaiAsPromised);
 
 var expect = chai.expect;
-//var file = chaiFiles.file;
-
-//var config = require('../config');
 
 const service = require('../dataservice');
 

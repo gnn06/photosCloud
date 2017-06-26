@@ -20,7 +20,7 @@ function getData(files, config) {
 	return promises;
 }
 
-function getPhotoDate (photoFilename, config) {
+function getPhotoDate (photoFilename) {
 	if (photoFilename.substr(-4).toLowerCase() === '.jpg') {
 		var p = exif.read(photoFilename)
         .then(data => {
