@@ -8,22 +8,38 @@
  * Controller of the photosAngularApp
  */
 angular.module('photosAngularApp')
-  .controller('PhotoCtrl', function ($scope, $resource, $rootScope, $location, $route, $routeParams, $http) {
+  .controller('PhotoCtrl', function ($scope, $rootScope, $location, $route, $routeParams, $http) {
 	console.log("dans PhotoCtrl")
 
 	if (!$rootScope.photos) {
-		console.log('photos null');
-		var ws = $resource('thumbnails');
-		$rootScope.photos = $scope.photos = ws.query();
+		$http({method: 'GET',
+		   url: '/thumbnails'
+		   /*, cache: $templateCache*/}).
+        then(function(response) {
+          $rootScope.photos = $scope.photos = response.data;
+					$rootScope.photos.sort((a, b) => {
+						if (a.date < b.date) {
+							return 1;
+						} else if (a.date > b.date) {
+							return -1;
+						} else {
+							return 0;
+						}
+					});
+        }, function(response) {
+          console.error('error');
+		});		
 	}
 
-	$scope.$location = $location
-	$scope.$route = $route
-	$scope.$routeParams = $routeParams
-	var host = $location.$$absUrl.substr(0,$location.$$absUrl.indexOf("#!"))
-  $scope.currentPhoto = $rootScope.photos
+	$scope.$location = $location;
+	$scope.$route = $route;
+	$scope.$routeParams = $routeParams;
+
+	var host = $location.$$absUrl.substr(0,$location.$$absUrl.indexOf("#!"));
+  
+	$scope.currentPhoto = $rootScope.photos
     .map(function(item){return item.url})
-      .indexOf(host + "thumbnail/" + $routeParams.folder)
+      .indexOf("/thumbnail/" + $routeParams.folder)
 
 	$http({method: 'GET',
 		   url: '/data/' + $routeParams.folder

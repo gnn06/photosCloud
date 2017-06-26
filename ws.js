@@ -39,11 +39,12 @@ app.get('/thumbnails*', function (req, res) {
 	});
 });
 
-// app.get(config.photoUrl + '/*', function (req, res) {
-//	 console.log('get photo ' + req.url);
-//	 var photoPath = req.url.substr((config.photoUrl + '/').length)
-//	 res.sendFile(config.photosPath + '/' + photoPath)
-// })
+/* indispensable pour les vidéo */
+app.get(config.photoUrl + '/*', function (req, res) {
+	 console.log('get photo ' + req.url);
+	 var photoPath = req.url.substr((config.photoUrl + '/').length)
+	 res.sendFile(config.photosPath + '/' + photoPath)
+})
 
 app.get('/large/*', function (req, res) {
 	console.log('get large of ' + req.url);

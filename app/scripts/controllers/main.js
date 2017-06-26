@@ -8,9 +8,24 @@
  * Controller of the photosAngularApp
  */
 angular.module('photosAngularApp')
-  .controller('MainCtrl', function ($scope, $resource, $rootScope) {
+  .controller('MainCtrl', function ($scope, $rootScope, $http) {
 	if (!$rootScope.photos) {
-		var ws = $resource('thumbnails');
-		$rootScope.photos = $scope.photos = ws.query()
+		$http({method: 'GET',
+		   url: '/thumbnails'
+		   /*, cache: $templateCache*/}).
+        then(function(response) {
+          $rootScope.photos = $scope.photos = response.data;
+					$rootScope.photos.sort((a, b) => {
+						if (a.date < b.date) {
+							return 1;
+						} else if (a.date > b.date) {
+							return -1;
+						} else {
+							return 0;
+						}
+					});
+        }, function(response) {
+          console.error('error');
+		});		
 	}
-  });
+});
