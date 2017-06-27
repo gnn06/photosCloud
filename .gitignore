@@ -59,3 +59,8 @@ typings/
 
 # notepad++ backup file
 *.bak
+
+# dotenvdist et binaries folders
+dist/
+binaries/
+
