@@ -12,6 +12,9 @@ exports.walk = function (folder, config) {
 	var flattenContent = [];
 
 	// Récupérer ancien contenu
+	if (!fs.existsSync(config.dataFolder + folder)) {
+		fs.mkdirSync(config.dataFolder + folder);
+	}
 	if (fs.existsSync(config.dataFolder + folder + '/folder.json')) {
 		let content = fs.readFileSync(config.dataFolder + folder + '/folder.json', 'utf-8');
 		currentContent = JSON.parse(content);
@@ -32,6 +35,8 @@ exports.walk = function (folder, config) {
 			promises.push(subResult);
 			subResult.then(function (result) {
 				allSubContent = allSubContent.concat(result);
+			}).catch(function(err){
+				console.error('catch of subwalk', folder, err);
 			});
 		} else if (!currentContentFromCache) {
 			// Ne faire la récupération que si le contenu n'a pas été préalablement récupéré
@@ -46,6 +51,8 @@ exports.walk = function (folder, config) {
 				promises.push(p);
 				p.then( date => {
 					item.date = date;
+				}).catch(function (err) {
+					console.error('catch of walk of folder=', folder, err);
 				});
 			}
 		}
@@ -55,7 +62,11 @@ exports.walk = function (folder, config) {
 	return Promise.all(promises).then(function(){
 		if (!currentContentFromCache) {
 			let content = JSON.stringify(currentContent, null, 2);
-			fs.writeFileSync(config.dataFolder + folder + '/folder.json', content, 'utf-8');
+			try {
+				fs.writeFileSync(config.dataFolder + folder + '/folder.json', content, 'utf-8');
+			} catch (exception) {
+				console.error('error write folder.json', config.dataFolder + folder + '/folder.json', exception);
+			}
 		}
 		// adapte les urls du répertoire courant pour avoir des url absolu à partir de la racine
 		// qu'il soit généré maintenant ou récupéré du cache.
