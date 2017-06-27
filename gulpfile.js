@@ -1,21 +1,21 @@
 const gulp = require('gulp');
-const tar = require('gulp-tar');
+const zip = require('gulp-zip');
 
 gulp.task('default', function() {
   // place code for your default task here
 });
 
 gulp.task('dist', function() {
-    gulp.src(['ws.js', 'fileservice.js', 'dataservice.js'])
+    gulp.src(['src/*'])
       .pipe(gulp.dest('dist/'));
-    gulp.src(['app/**'])
+    gulp.src(['src/app/**'])
         .pipe(gulp.dest('dist/app'));
     gulp.src(['node_modules/**'])
       .pipe(gulp.dest('dist/node_modules'));
 });
 
-gulp.task('tar', function () {
+gulp.task('zip', function () {
   gulp.src('dist/**')
-  .pipe(tar(`photosCloud-${new Date().toLocaleString()}.tar`))
+  .pipe(zip(`photosCloud-${new Date().toLocaleString().substr(0,9)}.zip`))
   .pipe(gulp.dest('binaries/'));
 })

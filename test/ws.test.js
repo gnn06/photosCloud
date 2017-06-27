@@ -1,7 +1,7 @@
 const request = require('supertest');
 const express = require('express');
  
-const ws = require('../ws.js');
+const ws = require('../src/ws.js');
 
 const chai = require('chai');
 

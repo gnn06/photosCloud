@@ -7,7 +7,7 @@ chai.use(chaiAsPromised);
 
 var expect = chai.expect;
 
-const service = require('../dataservice');
+const service = require('../src/dataservice');
 
 describe('dataservice', function() {
 

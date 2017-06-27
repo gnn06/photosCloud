@@ -10,7 +10,7 @@ var expect = chai.expect;
 var file = chaiFiles.file;
 //var dir = chaiFiles.dir;
 
-var service = require('../fileservice.js');
+var service = require('../src/fileservice.js');
 var fs = require('fs');
 
 function deleteFile (filename) {

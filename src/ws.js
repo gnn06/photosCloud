@@ -73,7 +73,7 @@ app.get('/thumbnail/*', function (req, res) {
 	// });
 });
 
-app.use(express.static('app'));
+app.use(express.static('src/app'));
 
 app.listen(8080, function () {
 	console.log('Example app listening on port 8080!');
