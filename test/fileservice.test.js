@@ -1,5 +1,7 @@
 'use strict';
 
+var proxyquire = require('proxyquire');
+
 var chai = require('chai');
 var chaiFiles = require('chai-files');
 
@@ -18,6 +20,7 @@ function deleteFile (filename) {
 		fs.unlinkSync(filename);
 	}
 }
+
 
 describe('fileservice', function() {
 
