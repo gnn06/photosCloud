@@ -3,8 +3,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var fileservice = require('./fileservice');
 var dataService = require('./dataservice');
+var thumbnail   = require('./thumbnailservice.js')
 var fs = require('fs');
-// var Thumbnail = require('thumbnail');
 // var ExifImage = require('exif').ExifImage;
 
 var config = require('./config');
@@ -28,7 +28,7 @@ app.get('/thumbnails*', function (req, res) {
 		folder = folder.substring(1);
 	}
 	console.log('GET /thumbnails of folder ' + folder);
-	var files = fileservice.walk(folder, { photoFolder : config.photosPath, dataFolder : config.dataPath});
+	var files = fileservice.walk(folder, { photoFolder : config.photoPath, dataFolder : config.dataPath});
 	
 	files.then(function(files){
 		files.forEach(item => { item.url = '/thumbnail' + item.url; });
@@ -43,7 +43,7 @@ app.get('/thumbnails*', function (req, res) {
 app.get(config.photoUrl + '/*', function (req, res) {
 	 console.log('get photo ' + req.url);
 	 var photoPath = req.url.substr((config.photoUrl + '/').length)
-	 res.sendFile(config.photosPath + '/' + photoPath)
+	 res.sendFile(config.photoPath + '/' + photoPath)
 })
 
 app.get('/large/*', function (req, res) {
@@ -56,21 +56,22 @@ app.get('/thumbnail/*', function (req, res) {
 	console.log('get thumbnail of ' + req.url);
 	var photoPath = req.url.substr(('/thumbnail/').length);
 	// console.log(photoPath)
-	var folder = photoPath.substring(0,photoPath.lastIndexOf('/'));
-	var photo = photoPath.substr(photoPath.lastIndexOf('/') + 1);
 	// console.log(folder)
 	// console.log(photo)
-	// console.log(config.photosPath + folder)
-	// console.log(config.thumbnailsPath + folder)
+	// console.log(config.photoPath + folder)
+	// console.log(config.thumbnailPath + folder)
 	// le module ne descend pas dans l'arbo.
-	// il faut créer les répertoires à l'avance
-	// var thumbnail = new Thumbnail(config.photosPath + folder, config.thumbnailsPath + folder);
-	// thumbnail.ensureThumbnail(photo, null, 100, function (err, filename) {
-	// 'filename' is the name of the thumb in '/path/to/thumbnails'
-	// console.log(err, filename)
-	var filename = photo;
-	res.sendFile(config.thumbnailsPath + folder + '/' + filename);
-	// });
+	// TODO il faut créer les répertoires à l'avance
+
+	thumbnail.makeThumbnail(photoPath, config, status => {
+		if (status != -1) {
+			var thumbnailPath = photoPath.replace('.jpg', '-100x100.jpg').replace('.JPG', '-100x100.JPG');;
+			res.sendFile(config.thumbnailPath + thumbnailPath);
+		} else {
+			res.status(500).send('error');
+		}
+	});
+	// res.sendFile('//RASPBERRYPI/PiPhotos/thumbnail/2016/DSCF2939-100x100.JPG');
 });
 
 app.use(express.static('src/app'));

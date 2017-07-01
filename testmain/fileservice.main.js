@@ -7,7 +7,7 @@ console.log(config);
 var result = [];
 
 result = service.walk('',
-{ photoFolder : config.photosPath,
+{ photoFolder : config.photoPath,
 	dataFolder :  config.dataPath
 });
 result.then(function(result){
@@ -15,7 +15,7 @@ result.then(function(result){
 });
 
 // result = service.walk('2016',
-// 	{ photoFolder : config.photosPath,
+// 	{ photoFolder : config.photoPath,
 // 		dataFolder :  config.dataPath
 // 	});
 // result.then(function(result){

@@ -15,18 +15,13 @@ var file = chaiFiles.file;
 var service = require('../src/fileservice.js');
 var fs = require('fs');
 
-function deleteFile (filename) {
-	if (fs.existsSync(filename)) {
-		fs.unlinkSync(filename);
-	}
-}
-
+var testutil = require('./utiltest');
 
 describe('fileservice', function() {
 
 	it('should returns array, only jpg, case insensitive, store into <data> Folder', function () {
-		deleteFile('E:/temp/dev/mochetest/test1/data/folder.json');
-		deleteFile('E:/temp/dev/mochetest/test1/photo/folder.json');
+		testutil.deleteFile('E:/temp/dev/mochetest/test1/data/folder.json');
+		testutil.deleteFile('E:/temp/dev/mochetest/test1/photo/folder.json');
     var result = service.walk('', { photoFolder : 'E:/temp/dev/mochetest/test1/photo/', dataFolder : 'E:/temp/dev/mochetest/test1/data/' });
     return result.then(function(result) {
       expect(result[0].url).eq('/file1.jpg');
