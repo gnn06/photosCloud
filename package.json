@@ -23,6 +23,7 @@
     "chai": "^4.0.2",
     "chai-as-promised": "^7.0.0",
     "chai-files": "^1.4.0",
+    "chai-http": "^3.0.0",
     "eslint": "^4.0.0",
     "eslint-plugin-mocha": "^4.11.0",
     "gulp": "^3.9.1",
