@@ -1,6 +1,6 @@
 // const request    = require('supertest');
 const express    = require('express');
-// const sinon      = require('sinon');
+const sinon      = require('sinon');
 // const proxyquire = require('proxyquire');
 
 const chai     = require('chai');
@@ -11,7 +11,7 @@ chai.use(chaiHttp);
 var assert = chai.assert;
 var expect = chai.expect;
 
-var ws = require('../src/ws');
+// var ws = require('../src/ws');
 
 describe('ws for thumbnails', function() {
     var ws;
@@ -47,17 +47,16 @@ describe('ws for thumbnails', function() {
 });
 
 describe('ws thumbnail', function() {
-//     var makeThumbnailSpy;
-//     // var ws;
-//     var thumbnail;
+    var ws,
+        thumbnail, makeThumbnailSpy;
 
-//     before(function() {
-//         thumbnail = require('../src/thumbnailservice');
-//         makeThumbnailSpy = sinon.spy(thumbnail, 'makeThumbnail');
-//         // ws = require('../src/ws.js');
+    before(function() {
+        ws = require('../src/ws.js');
+        thumbnail = require('../src/thumbnailservice');
+        makeThumbnailSpy = sinon.spy(thumbnail, 'makeThumbnail');
 //         // ws = proxyquire('../src/ws.js', { thumbnail : { makeThumbnail : makeThumbnailSpy}});
+    });
 
-//     })
     it('should call thumbnail and returns the generated file', function(done) {
 //         request(ws.app)
 //          .get('/thumbnail/2016/DSCF2749.JPG')
@@ -75,6 +74,7 @@ describe('ws thumbnail', function() {
             .end(function(err, res) {
                 expect(res).to.have.status(200);
                 expect(res).to.have.header('Content-Type', 'image/jpeg');
+                expect(makeThumbnailSpy.called).to.be.true;
                 done();
             });
     });

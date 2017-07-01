@@ -12,6 +12,7 @@ module.exports = {
 };
 
 function makeThumbnail (filename, config, cb) {
+    console.log('makeThumbnail with arg ', filename);
     var func;
     if (util.isJpeg(filename)) {
         func = makeThumbnailOfJpeg;
