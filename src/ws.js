@@ -53,7 +53,7 @@ app.get('/large/*', function (req, res) {
 });
 
 app.get('/thumbnail/*', function (req, res) {
-	console.log('get thumbnail of ' + req.url);
+	console.log('GET /thumbnail of ' + req.url);
 	var photoPath = req.url.substr(('/thumbnail/').length);
 	// console.log(photoPath)
 	// console.log(folder)
@@ -71,7 +71,6 @@ app.get('/thumbnail/*', function (req, res) {
 			res.status(500).send('error');
 		}
 	});
-	// res.sendFile('//RASPBERRYPI/PiPhotos/thumbnail/2016/DSCF2939-100x100.JPG');
 });
 
 app.use(express.static('src/app'));
