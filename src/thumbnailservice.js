@@ -22,10 +22,9 @@ function makeThumbnail (filename, config, cb) {
 };
 
 function makeThumbnailOfJpeg (photoPath, config, cb) {
-    var folder = photoPath.substring(0,photoPath.lastIndexOf('/')).replace(/ /g,'\\ ');
+    var folder = photoPath.substring(0,photoPath.lastIndexOf('/'));
 	var filename = photoPath.substr(photoPath.lastIndexOf('/') + 1);
     var thumbnail = new Thumbnail(config.photoPath + folder, config.thumbnailPath + folder);
-	console.log('makeThumbnailOfJpeg:',folder);
     thumbnail.ensureThumbnail(filename, 100, 100, function (err, thumbnailPath) {
         if (err) {
             console.trace('makeThumbnailOfJpeg ', err);
