@@ -1,11 +1,12 @@
 #!/usr/bin/env nodejs
-var express = require('express');
-var bodyParser = require('body-parser');
+var express     = require('express');
+var bodyParser  = require('body-parser');
+var fs          = require('fs');
+
 var fileservice = require('./fileservice');
 var dataService = require('./dataservice');
 var thumbnail   = require('./thumbnailservice.js')
-var fs = require('fs');
-// var ExifImage = require('exif').ExifImage;
+var chemin      = require('./chemin');
 
 var config = require('./config');
 console.log(config);
@@ -27,6 +28,7 @@ app.get('/thumbnails*', function (req, res) {
 	if (folder[0] == '/') {
 		folder = folder.substring(1);
 	}
+	folder = chemin.urlToFolder(folder);
 	console.log('GET /thumbnails of folder ' + folder);
 	var files = fileservice.walk(folder, { photoFolder : config.photoPath, dataFolder : config.dataPath});
 	
@@ -54,7 +56,7 @@ app.get('/large/*', function (req, res) {
 
 app.get('/thumbnail/*', function (req, res) {
 	console.log('GET /thumbnail of ' + req.url);
-	var photoPath = req.url.substr(('/thumbnail/').length);
+	var photoPath = decodeURI(req.url.substr(('/thumbnail/').length));
 	// console.log(photoPath)
 	// console.log(folder)
 	// console.log(photo)

@@ -9,7 +9,8 @@ chai.use(chaiHttp);
 var assert = chai.assert;
 var expect = chai.expect;
 
-var ws = require('../src/ws');
+var   ws   = require('../src/ws');
+const util = require('./utiltest');
 
 describe('ws for thumbnails', function() {
     before(function() {
@@ -33,9 +34,13 @@ describe('ws for thumbnail', function() {
         sendFileSpy;
 
     before(function() {
-        var thumbnail = require('../src/thumbnailservice');
+        var thumbnail    = require('../src/thumbnailservice');
         makeThumbnailSpy = sinon.spy(thumbnail, 'makeThumbnail');
         sendFileSpy      = sinon.spy(express.response, 'sendFile');
+    });
+    
+    beforeEach(function() {
+        util.deleteFile('E:/temp/dev/mochetest/test4/thumbnail/subfolder\ withspace/file1-100x100.jpg');
     });
 
     it('should call makeThumbnail and sendFile', function(done) {
@@ -50,5 +55,19 @@ describe('ws for thumbnail', function() {
                 expect(sendFileSpy.args[0][0]).to.eq('//RASPBERRYPI/PiPhotos/thumbnail/2016/DSCF2749-100x100.JPG');
                 done();
             });
+    });
+
+    afterEach(function() {
+        makeThumbnailSpy.reset();
+        sendFileSpy.reset();
+    });
+    
+    it('should decode url', function(done) {
+        chai.request(ws.app)
+            .get('/thumbnail/upload/HUAWEI%20HUAWEI%20CAN-L11/All/IMG_20170629_140551.jpg')
+            .end(function(err, res) {
+                expect(makeThumbnailSpy.args[0][0]).to.eq('upload/HUAWEI HUAWEI CAN-L11/All/IMG_20170629_140551.jpg');
+                done(err);
+            })
     });
 });
