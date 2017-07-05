@@ -12,9 +12,14 @@ var expect = chai.expect;
 var   ws   = require('../src/ws');
 const util = require('./utiltest');
 
+var sendFileSpy;
+
+before(function() {
+    sendFileSpy      = sinon.spy(express.response, 'sendFile');
+});
+
 describe('ws for thumbnails', function() {
-    before(function() {
-    });
+    
     it('returns url with contextroot', function (done) {
         chai.request(ws.app)
           .get('/thumbnails')
@@ -30,13 +35,11 @@ describe('ws for thumbnails', function() {
 });
 
 describe('ws for thumbnail', function() {
-    var makeThumbnailSpy,
-        sendFileSpy;
+    var makeThumbnailSpy;
 
     before(function() {
         var thumbnail    = require('../src/thumbnailservice');
         makeThumbnailSpy = sinon.spy(thumbnail, 'makeThumbnail');
-        sendFileSpy      = sinon.spy(express.response, 'sendFile');
     });
     
     beforeEach(function() {
@@ -70,4 +73,30 @@ describe('ws for thumbnail', function() {
                 done(err);
             })
     });
+});
+
+
+describe('ws for large', function() {
+
+    var makeLargeSpy;
+
+    before(function() {
+        var photoSrv     = require('../src/photoservice');
+        makeLargeSpy     = sinon.spy(photoSrv, 'makeLarge');
+    });
+
+    it('should call makeLarge and sendFile', function(done) {
+        chai.request(ws.app)
+            .get('/large/upload/HUAWEI%20HUAWEI%20CAN-L11/Camera/IMG_20170629_140551.jpg')
+            .end(function(err, res) {
+                expect(sendFileSpy.args[0][0]).to.eq('//RASPBERRYPI/PiPhotos/large/upload/HUAWEI HUAWEI CAN-L11/Camera/IMG_20170629_140551.jpg');
+                done(err);
+            })
+    });
+
+    afterEach(function() {
+        makeLargeSpy.reset();
+        sendFileSpy.reset();
+    });
+    
 });

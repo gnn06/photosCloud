@@ -28,6 +28,7 @@
     "eslint-plugin-mocha": "^4.11.0",
     "gulp": "^3.9.1",
     "gulp-zip": "^4.0.0",
+    "image-size": "^0.6.0",
     "mocha": "^3.4.2",
     "proxyquire": "^1.8.0",
     "sinon": "^2.3.5",

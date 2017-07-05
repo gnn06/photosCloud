@@ -3,10 +3,11 @@ var express     = require('express');
 var bodyParser  = require('body-parser');
 var fs          = require('fs');
 
-var fileservice = require('./fileservice');
-var dataService = require('./dataservice');
-var thumbnail   = require('./thumbnailservice.js')
-var chemin      = require('./chemin');
+var fileservice  = require('./fileservice');
+var dataService  = require('./dataservice');
+var photoService = require('./photoservice');
+var thumbnail    = require('./thumbnailservice.js')
+var chemin       = require('./chemin');
 
 var config = require('./config');
 console.log(config);
@@ -50,8 +51,16 @@ app.get(config.photoUrl + '/*', function (req, res) {
 
 app.get('/large/*', function (req, res) {
 	console.log('get large of ' + req.url);
-	var photoPath = req.url.substr(('/large/').length);
-	res.sendFile(config.largePath + '/' + photoPath);
+	var photoPath = decodeURI(req.url).substr(('/large/').length);
+	res.sendFile(config.largePath + photoPath, err => {
+		if (err && err.code == 'ENOENT') {
+			photoService.makeLarge(photoPath, config, result => {
+				if (result == 1) {
+					res.sendFile(config.largePath + photoPath);
+				}
+			});
+		}
+	});
 });
 
 app.get('/thumbnail/*', function (req, res) {
