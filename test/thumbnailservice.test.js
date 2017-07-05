@@ -13,7 +13,7 @@ describe('thumbnailservice for jpeg', function() {
     before(function(){
         testutil.deleteFile('E:/temp/dev/mochetest/test1/thumbnail/file1-100x100.jpg');
     })
-    it('should creta thumbnail', function (done) {
+    it('should create thumbnail', function (done) {
         service.makeThumbnail('file1.jpg',
         {
             photoPath     : 'E:/temp/dev/mochetest/test1/photo/',
