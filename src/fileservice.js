@@ -13,6 +13,7 @@ exports.walk = function (folder, config) {
 
 	// Récupérer ancien contenu
 	if (!fs.existsSync(config.dataFolder + folder)) {
+		console.log('create folder ', config.dataFolder + folder);
 		fs.mkdirSync(config.dataFolder + folder);
 	}
 	if (fs.existsSync(config.dataFolder + folder + '/folder.json')) {

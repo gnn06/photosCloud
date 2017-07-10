@@ -32,7 +32,7 @@ describe('dataservice', function() {
         });
 
         it('should return a date', function() {            
-            var promise = service.getPhotoDate('E:/temp/dev/mochetest/test1/photo/file1.jpg');
+            var promise = service.getPhotoDate('/tmp/mochetest/test1/photo/file1.jpg');
             return promise.then(function(date) {
                 expect(date).eql(new Date('Jan 01, 2001 12:02:03 Z'));
             });
@@ -64,7 +64,7 @@ describe('dataservice', function() {
             };
             var service = proxyquire('../src/dataservice', { 'mp4box': mp4boxStub, 'fs' : fsStub });
 
-            var promise = service.getPhotoDate('E:/temp/dev/mochetest/test1/photo/file4.mp4');
+            var promise = service.getPhotoDate('/tmp/mochetest/test1/photo/file4.mp4');
             return expect(promise).to.eventually.eql(new Date('May 01, 2017 14:48:04 Z'));
         });
     });
@@ -74,7 +74,7 @@ describe('dataservice', function() {
         it('should return null when exception occurs', function () {
             // var mock = sinon.mock(service);
             // mock.expects("getPhotoDate").throws();
-            // var promise = service.getPhotoDate('E:/temp/dev/mochetest/test1/photo/file4.mp4');
+            // var promise = service.getPhotoDate('/tmp/mochetest/test1/photo/file4.mp4');
             // return promise.catch(function(error){
             //     expect(error).exist;
             // }

@@ -1,9 +1,11 @@
 var config = {}
 
 // � terminer par un slash
-config.photoPath     = "//RASPBERRYPI/PiPhotos/original/";
-config.largePath     = "//RASPBERRYPI/PiPhotos/large/";
-config.thumbnailPath = "//RASPBERRYPI/PiPhotos/thumbnail/";
-config.dataPath      = "//RASPBERRYPI/PiPhotos/data/";
+config.photoPath     = "/var/photos/original/";
+config.largePath     = "/var/photos/large/";
+config.thumbnailPath = "/var/photos/thumbnail/";
+config.dataPath      = "/var/photos/data/";
+config.conv_prog     = "convert";
+config.port          = 8080;
 
 module.exports = config

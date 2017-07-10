@@ -12,42 +12,79 @@ const sizeOf = require('image-size');
 const service  = require('../src/photoservice.js');
 
 describe('photoservice', function() {
+   this.timeout(12000);
 
     before(function(){
-        util.deleteFile('E:/temp/dev/mochetest/test5/large/landscape.jpg');
+        util.deleteFile('/tmp/mochetest/test5/large/landscape.jpg');
+        util.deleteFile('/tmp/mochetest/test5/large/portrait.jpg');
+        util.deleteFile('/tmp/mochetest/test5/thumbnail/landscape.jpg');
     });
 
     it('should create large version of landscape', function (done) {
         service.makeLarge('landscape.jpg',
             {
-                photoPath : 'E:/temp/dev/mochetest/test5/photo/',
-                largePath : 'E:/temp/dev/mochetest/test5/large/'
+                photoPath : '/tmp/mochetest/test5/photo/',
+                largePath : '/tmp/mochetest/test5/large/',
+                conv_prog : 'convert'
             },
             result => {
                 expect(result).eq(1);
-                expect(file('E:/temp/dev/mochetest/test5/large/landscape.jpg')).to.exist;
-                var dimensions = sizeOf('E:/temp/dev/mochetest/test5/large/landscape.jpg');
-                expect(dimensions.width).eq(1400);
+                expect(file('/tmp/mochetest/test5/large/landscape.jpg')).to.exist;
+                var dimensions = sizeOf('/tmp/mochetest/test5/large/landscape.jpg');
+                expect(dimensions.width).eq(800);
                 done();
             }
         );        
     });
 
-    before(function(){
-        util.deleteFile('E:/temp/dev/mochetest/test5/large/portrait.jpg');
-    });
-    
     it('should create large version of portrait', function (done) {
         service.makeLarge('portrait.jpg',
             {
-                photoPath : 'E:/temp/dev/mochetest/test5/photo/',
-                largePath : 'E:/temp/dev/mochetest/test5/large/'
+                photoPath : '/tmp/mochetest/test5/photo/',
+                largePath : '/tmp/mochetest/test5/large/',
+                conv_prog : 'convert'
             },
             result => {
                 expect(result).eq(1);
-                expect(file('E:/temp/dev/mochetest/test5/large/portrait.jpg')).to.exist;
-                var dimensions = sizeOf('E:/temp/dev/mochetest/test5/large/portrait.jpg');
-                expect(dimensions.width).eq(933);
+                expect(file('/tmp/mochetest/test5/large/portrait.jpg')).to.exist;
+                var dimensions = sizeOf('/tmp/mochetest/test5/large/portrait.jpg');
+                expect(dimensions.width).eq(533);
+                done();
+            }
+        );        
+    });
+
+    it('should create thumbnail version of landscape', function (done) {
+        service.makeThumbnail('landscape.jpg',
+            {
+                photoPath     : '/tmp/mochetest/test5/photo/',
+                thumbnailPath : '/tmp/mochetest/test5/thumbnail/',
+                conv_prog     : 'convert'
+            },
+            result => {
+                expect(result).eq(1);
+                expect(file('/tmp/mochetest/test5/large/landscape.jpg')).to.exist;
+                var dimensions = sizeOf('/tmp/mochetest/test5/thumbnail/landscape.jpg');
+                expect(dimensions.width).eq(100);
+                expect(dimensions.height).eq(100);
+                done();
+            }
+        );        
+    });
+
+    it('should create thumbnail version of portrait', function (done) {
+        service.makeThumbnail('portrait.jpg',
+            {
+                photoPath     : '/tmp/mochetest/test5/photo/',
+                thumbnailPath : '/tmp/mochetest/test5/thumbnail/',
+                conv_prog     : 'convert'
+            },
+            result => {
+                expect(result).eq(1);
+                expect(file('/tmp/mochetest/test5/large/portrait.jpg')).to.exist;
+                var dimensions = sizeOf('/tmp/mochetest/test5/thumbnail/portrait.jpg');
+                expect(dimensions.width).eq(100);
+                expect(dimensions.height).eq(100);
                 done();
             }
         );        

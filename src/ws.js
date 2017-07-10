@@ -30,7 +30,7 @@ app.get('/thumbnails*', function (req, res) {
 		folder = folder.substring(1);
 	}
 	folder = chemin.urlToFolder(folder);
-	console.log('GET /thumbnails of folder ' + folder);
+	console.log('GET /thumbnails of folder ', config.photoPath + folder);
 	var files = fileservice.walk(folder, { photoFolder : config.photoPath, dataFolder : config.dataPath});
 	
 	files.then(function(files){
@@ -76,7 +76,7 @@ app.get('/thumbnail/*', function (req, res) {
 
 	thumbnail.makeThumbnail(photoPath, config, status => {
 		if (status != -1) {
-			var thumbnailPath = photoPath.replace('.jpg', '-100x100.jpg').replace('.JPG', '-100x100.JPG');;
+			var thumbnailPath = photoPath;
 			res.sendFile(config.thumbnailPath + thumbnailPath);
 		} else {
 			res.status(500).send('error');
@@ -86,8 +86,8 @@ app.get('/thumbnail/*', function (req, res) {
 
 app.use(express.static('src/app'));
 
-app.listen(8080, function () {
-	console.log('Example app listening on port 8080!');
+app.listen(config.port, function () {
+	console.log('Example app listening on port ', config.port);
 });
 
 app.get('/data/*', function(req, res) {

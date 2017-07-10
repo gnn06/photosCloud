@@ -10,36 +10,39 @@ const service  = require('../src/thumbnailservice.js');
 const testutil = require('./utiltest');
 
 describe('thumbnailservice for jpeg', function() {
+    this.timeout(12000);
     before(function(){
-        testutil.deleteFile('E:/temp/dev/mochetest/test1/thumbnail/file1-100x100.jpg');
+        testutil.deleteFile('/tmp/mochetest/test1/thumbnail/file1.jpg');
     })
     it('should create thumbnail', function (done) {
         service.makeThumbnail('file1.jpg',
         {
-            photoPath     : 'E:/temp/dev/mochetest/test1/photo/',
-            thumbnailPath : 'E:/temp/dev/mochetest/test1/thumbnail/'
+            photoPath     : '/tmp/mochetest/test1/photo/',
+            thumbnailPath : '/tmp/mochetest/test1/thumbnail/',
+            conv_prog   : 'convert'
         },
         result => {
             expect(result).to.eq(1);
-            expect(file('E:/temp/dev/mochetest/test1/thumbnail/file1-100x100.jpg')).to.exist;
+            expect(file('/tmp/mochetest/test1/thumbnail/file1.jpg')).to.exist;
             done();
         })
     });
 });
 
 describe('thumbnailservice for mpeg', function() {
+    this.timeout(12000);
     before(function(){
-        testutil.deleteFile('E:/temp/dev/mochetest/test1/thumbnail/file4-100x100.jpg');
+        testutil.deleteFile('/tmp/mochetest/test1/thumbnail/file4.jpg');
     })
     it('should creta thumbnail', function (done) {
         service.makeThumbnail('file4.mp4',
         {
-            photoPath     : 'E:/temp/dev/mochetest/test1/photo/',
-            thumbnailPath : 'E:/temp/dev/mochetest/test1/thumbnail/'
+            photoPath     : '/tmp/mochetest/test1/photo/',
+            thumbnailPath : '/tmp/mochetest/test1/thumbnail/'
         },
         result => {
             expect(result).to.eq(1);
-            expect(file('E:/temp/dev/mochetest/test1/thumbnail/file4-100x100.jpg')).to.exist;
+            expect(file('/tmp/mochetest/test1/thumbnail/file4.jpg')).to.exist;
             done();
         })
     });

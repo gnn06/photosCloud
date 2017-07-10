@@ -1,3 +1,5 @@
+'use strict';
+
 const express    = require('express');
 const sinon      = require('sinon');
 
@@ -9,32 +11,21 @@ chai.use(chaiHttp);
 var assert = chai.assert;
 var expect = chai.expect;
 
+var config = require('../src/config');
+config.port = 8120;
+
 var   ws   = require('../src/ws');
 const util = require('./utiltest');
 
-var sendFileSpy;
+var sendFileStub;
 
-before(function() {
-    sendFileSpy      = sinon.spy(express.response, 'sendFile');
-});
-
-describe('ws for thumbnails', function() {
-    
-    it('returns url with contextroot', function (done) {
-        chai.request(ws.app)
-          .get('/thumbnails')
-          .end(function(err, res) {
-              expect(res).to.have.status(200);
-              expect(res).to.have.header('Content-Type', /json/);
-              expect(res).to.have.header('Content-Length', '55837');
-              expect(res.body.length).to.eq(598);
-              expect(res.body[0].url).to.eq('/thumbnail/2016/DSCF2939.JPG');
-              done();
-          });
-    });
-});
 
 describe('ws for thumbnail', function() {
+    before(function() {
+        sendFileStub      = sinon.spy(express.response, 'sendFile');
+    });
+
+    this.timeout(30000);
     var makeThumbnailSpy;
 
     before(function() {
@@ -43,60 +34,78 @@ describe('ws for thumbnail', function() {
     });
     
     beforeEach(function() {
-        util.deleteFile('E:/temp/dev/mochetest/test4/thumbnail/subfolder\ withspace/file1-100x100.jpg');
+        util.deleteFile('/tmp/mochetest/test4/thumbnail/subfolder\ withspace/file1.jpg');
+        config.photoPath     = "/tmp/mochetest/test6/original/";
+        config.largePath     = "/tmp/mochetest/test6/large/";
+        config.thumbnailPath = "/tmp/mochetest/test6/thumbnail/";
+        config.dataPath      = "/tmp/mochetest/test6/data/";
+        config.port          = 8120;
     });
 
     it('should call makeThumbnail and sendFile', function(done) {
         chai.request(ws.app)
-            .get('/thumbnail/2016/DSCF2749.JPG')
+            .get('/thumbnail/landscape.jpg')
             .end(function(err, res) {
                 expect(res).to.have.status(200);
                 expect(res).to.have.header('Content-Type', 'image/jpeg');
                 expect(makeThumbnailSpy.called).to.be.true;
-                expect(makeThumbnailSpy.args[0][0]).to.eq('2016/DSCF2749.JPG');
-                expect(sendFileSpy.called).to.be.true;
-                expect(sendFileSpy.args[0][0]).to.eq('//RASPBERRYPI/PiPhotos/thumbnail/2016/DSCF2749-100x100.JPG');
+                expect(makeThumbnailSpy.args[0][0]).to.eq('landscape.jpg');
+                expect(sendFileStub.called).to.be.true;
+                expect(sendFileStub.args[0][0]).to.eq('/tmp/mochetest/test6/thumbnail/landscape.jpg');
                 done();
             });
     });
 
     afterEach(function() {
         makeThumbnailSpy.reset();
-        sendFileSpy.reset();
+        sendFileStub.reset();
     });
     
     it('should decode url', function(done) {
+        config.photoPath     = "/tmp/mochetest/test4/original/";
+        config.largePath     = "/tmp/mochetest/test4/large/";
+        config.thumbnailPath = "/tmp/mochetest/test4/thumbnail/";
+        config.dataPath      = "/tmp/mochetest/test4/data/";
+        config.port          = 8120;
         chai.request(ws.app)
-            .get('/thumbnail/upload/HUAWEI%20HUAWEI%20CAN-L11/Camera/IMG_20170629_140551.jpg')
+            .get('/thumbnail/subfolder%20withspace/file1.jpg')
             .end(function(err, res) {
-                expect(makeThumbnailSpy.args[0][0]).to.eq('upload/HUAWEI HUAWEI CAN-L11/Camera/IMG_20170629_140551.jpg');
+                expect(makeThumbnailSpy.args[0][0]).to.eq('subfolder withspace/file1.jpg');
                 done(err);
             })
     });
+
+    after(function() {
+        sendFileStub.restore();
+    })
 });
 
-
-describe('ws for large', function() {
-
-    var makeLargeSpy;
-
+describe('ws for thumbnails', function() {
     before(function() {
-        var photoSrv     = require('../src/photoservice');
-        makeLargeSpy     = sinon.spy(photoSrv, 'makeLarge');
+        sendFileStub      = sinon.spy(express.response, 'sendFile');
+        config.photoPath     = "/tmp/mochetest/test1/photo/";
+        config.largePath     = "/tmp/mochetest/test1/large/";
+        config.thumbnailPath = "/tmp/mochetest/test1/thumbnail/";
+        config.dataPath      = "/tmp/mochetest/test1/data/";
+        config.port          = 8120;
     });
 
-    it('should call makeLarge and sendFile', function(done) {
-        chai.request(ws.app)
-            .get('/large/upload/HUAWEI%20HUAWEI%20CAN-L11/Camera/IMG_20170629_140551.jpg')
-            .end(function(err, res) {
-                expect(sendFileSpy.args[0][0]).to.eq('//RASPBERRYPI/PiPhotos/large/upload/HUAWEI HUAWEI CAN-L11/Camera/IMG_20170629_140551.jpg');
-                done(err);
-            })
-    });
-
-    afterEach(function() {
-        makeLargeSpy.reset();
-        sendFileSpy.reset();
-    });
+    this.timeout(20000);
     
+    it('returns url with contextroot', function (done) {
+        chai.request(ws.app)
+          .get('/thumbnails')
+          .end(function(err, res) {
+              expect(res).to.have.status(200);
+              expect(res).to.have.header('Content-Type', /json/);
+            // console.log(res.body);
+              expect(res.body.length).to.eq(3);
+              expect(res.body[0].url).to.eq('/thumbnail/file1.jpg');
+              done();
+          });
+    });
+
+    after(function() {
+        sendFileStub.restore();
+    })
 });

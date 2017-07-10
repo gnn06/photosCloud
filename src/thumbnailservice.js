@@ -3,9 +3,10 @@
 const proc = require('child_process');
 const Thumbnail = require('thumbnail');
 
-const VIDEO_PROG = 'ffmpeg';
+const VIDEO_PROG = 'avconv';
 
-const util = require('./util');
+const util  = require('./util');
+const photo = require('./photoservice');
 
 module.exports = {
 	makeThumbnail: makeThumbnail
@@ -14,7 +15,7 @@ module.exports = {
 function makeThumbnail (filename, config, cb) {
     var func;
     if (util.isJpeg(filename)) {
-        func = makeThumbnailOfJpeg;
+        func = makeThumbnailOfJpegV2;
     } else if (util.isMpeg(filename)) {
         func = makeThumbnailOfMpeg;
     }
@@ -35,11 +36,17 @@ function makeThumbnailOfJpeg (photoPath, config, cb) {
     });
 };
 
+function makeThumbnailOfJpegV2 (photoPath, config, cb) {
+    var folder = photoPath.substring(0,photoPath.lastIndexOf('/'));
+	var filename = photoPath.substr(photoPath.lastIndexOf('/') + 1);
+    photo.makeThumbnail(photoPath, config, cb);
+};
+
 function makeThumbnailOfMpeg (filename, config, cb) {
     // avconv -i input.mp4 -f image2 -ss 0 -vframes 1 output.jpg
     // 
 
-    var fileoutput = filename.replace('.mp4', '-100x100.jpg');
+    var fileoutput = filename.replace('.mp4', '.jpg');
 
     var argv = [];
     argv = argv.concat(['-i', config.photoPath + filename]);
