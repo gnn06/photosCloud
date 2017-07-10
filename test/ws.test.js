@@ -109,3 +109,29 @@ describe('ws for thumbnails', function() {
         sendFileStub.restore();
     })
 });
+
+describe('ws for thumbnails with space', function() {
+    before(function() {
+        config.photoPath     = "/tmp/mochetest/test4/original/";
+        config.largePath     = "/tmp/mochetest/test4/large/";
+        config.thumbnailPath = "/tmp/mochetest/test4/thumbnail/";
+        config.dataPath      = "/tmp/mochetest/test4/data/";
+        config.port          = 8120;
+    });
+
+    this.timeout(20000);
+    
+    it('should returns url with contextroot with encode', function (done) {
+        chai.request(ws.app)
+          .get('/thumbnails')
+          .end(function(err, res) {
+              expect(res).to.have.status(200);
+              expect(res).to.have.header('Content-Type', /json/);
+            // console.log(res.body);
+              expect(res.body.length).to.eq(1);
+              expect(res.body[0].url).to.eq('/thumbnail/subfolder%20withspace/file1.jpg');
+              done();
+          });
+    });
+
+});

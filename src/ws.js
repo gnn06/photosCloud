@@ -34,7 +34,7 @@ app.get('/thumbnails*', function (req, res) {
 	var files = fileservice.walk(folder, { photoFolder : config.photoPath, dataFolder : config.dataPath});
 	
 	files.then(function(files){
-		files.forEach(item => { item.url = '/thumbnail' + item.url; });
+		files.forEach(item => { item.url = '/thumbnail' + encodeURI(item.url); });
 		res.json(files);
 		var end = new Date().getTime();
 		console.log('GET /thumbnails files found count', files.length, 
