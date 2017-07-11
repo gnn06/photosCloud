@@ -34,12 +34,17 @@ describe('ws for thumbnail', function() {
     });
     
     beforeEach(function() {
-        util.deleteFile('/tmp/mochetest/test4/thumbnail/subfolder\ withspace/file1.jpg');
+        util.createJpeg('/tmp/mochetest/test6/original/landscape.jpg');
+        util.mkdirp('/tmp/mochetest/test6/thumbnail/');
+        util.mkdirp('/tmp/mochetest/test6/data/');
         config.photoPath     = "/tmp/mochetest/test6/original/";
         config.largePath     = "/tmp/mochetest/test6/large/";
         config.thumbnailPath = "/tmp/mochetest/test6/thumbnail/";
         config.dataPath      = "/tmp/mochetest/test6/data/";
         config.port          = 8120;
+
+        util.createJpeg('/tmp/mochetest/test4/original/subfolder withspace/file1.jpg');
+        util.mkdirp('/tmp/mochetest/test4/thumbnail/subfolder withspace/')
     });
 
     it('should call makeThumbnail and sendFile', function(done) {

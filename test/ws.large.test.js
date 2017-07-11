@@ -34,6 +34,8 @@ describe('ws for large', function() {
     before(function() {
         var photoSrv     = require('../src/photoservice');
         makeLargeSpy     = sinon.spy(photoSrv, 'makeLarge');
+        util.createJpeg('/tmp/mochetest/test6/original/landscape.jpg');
+        util.mkdirp('/tmp/mochetest/test6/large');
     });
 
     it('should call makeLarge and sendFile', function(done) {

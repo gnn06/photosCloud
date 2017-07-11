@@ -1,4 +1,6 @@
 var fs = require('fs');
+var fsE = require('fs-extra');
+const path = require('path');
 
 function deleteFile (filename) {
 	if (fs.existsSync(filename)) {
@@ -6,4 +8,36 @@ function deleteFile (filename) {
 	}
 }
 
-exports.deleteFile = deleteFile;
+function createJpeg (filename) {
+	_copy('./test/media/landscape.jpg', filename);
+}
+
+function createJpegPortrait (filename) {
+	_copy('./test/media/portrait.jpg', filename);
+}
+
+function createMpeg (filename) {
+	_copy('./test/media/video.mp4', filename);
+}
+
+function _copy (source, dest) {
+	if (!fs.existsSync(dest)) {
+		fsE.mkdirpSync(path.dirname(dest));
+		fsE.copySync(source, dest);
+	}
+}
+
+function createTxt (filename, content) {
+	var fd = fs.openSync(filename, 'w');
+	fs.writeSync(fd, content);
+	fs.closeSync(fd);
+}
+
+module.exports = {
+	deleteFile         : deleteFile,
+	createJpeg         : createJpeg,
+	createJpegPortrait : createJpegPortrait,
+	createMpeg         : createMpeg,
+	createTxt          : createTxt,
+	mkdirp             : fsE.mkdirpSync
+};

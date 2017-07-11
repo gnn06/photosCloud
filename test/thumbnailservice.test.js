@@ -10,9 +10,13 @@ const service  = require('../src/thumbnailservice.js');
 const testutil = require('./utiltest');
 
 describe('thumbnailservice for jpeg', function() {
+
     this.timeout(12000);
     before(function(){
+        testutil.mkdirp('/tmp/mochetest/test1/thumbnail/');
         testutil.deleteFile('/tmp/mochetest/test1/thumbnail/file1.jpg');
+        testutil.createJpeg('/tmp/mochetest/test1/photo/file1.jpg');
+
     })
     it('should create thumbnail', function (done) {
         service.makeThumbnail('file1.jpg',
@@ -32,7 +36,9 @@ describe('thumbnailservice for jpeg', function() {
 describe('thumbnailservice for mpeg', function() {
     this.timeout(12000);
     before(function(){
-        testutil.deleteFile('/tmp/mochetest/test1/thumbnail/file4.jpg');
+        testutil.mkdirp('/tmp/mochetest/test1/thumbnail/');
+        testutil.deleteFile('/tmp/mochetest/test1/thumbnail/file4.jpg');      
+        testutil.createMpeg('/tmp/mochetest/test1/photo/file4.mp4');
     })
     it('should creta thumbnail', function (done) {
         service.makeThumbnail('file4.mp4',

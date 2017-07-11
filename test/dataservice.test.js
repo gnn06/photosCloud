@@ -13,9 +13,13 @@ var proxyquire = require('proxyquire');
 var exif       = require('fast-exif');
 var fs         = require('fs');
 var mp4box     = require('mp4box');
-
+const util     = require('./utiltest');
 
 describe('dataservice', function() {
+
+    before(function() {
+        util.createJpeg('/tmp/mochetest/test1/photo/file1.jpg');
+    })
 
     describe('getPhotoDate of a jpeg', function() {
         var service;
@@ -43,7 +47,10 @@ describe('dataservice', function() {
         });
     });
 
-    describe('getPhotoDate', function() {
+    describe('getPhotoDate of a mpeg', function() {
+        before(function(){
+            util.createMpeg('/tmp/mochetest/test1/photo/file4.mp4');
+        })
         it('should return date of mpeg', function () {
             var fsStub = {
                 readFile : function (photoFilename, cb) {
@@ -71,14 +78,16 @@ describe('dataservice', function() {
 
     describe('getPhotoDate', function() {
     
-        it('should return null when exception occurs', function () {
+        it('should return null when exception occurs'
+        //, function () {
             // var mock = sinon.mock(service);
             // mock.expects("getPhotoDate").throws();
             // var promise = service.getPhotoDate('/tmp/mochetest/test1/photo/file4.mp4');
             // return promise.catch(function(error){
             //     expect(error).exist;
             // }
-        });
+        //}
+        );
     });
 
 });

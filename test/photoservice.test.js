@@ -17,7 +17,10 @@ describe('photoservice', function() {
     before(function(){
         util.deleteFile('/tmp/mochetest/test5/large/landscape.jpg');
         util.deleteFile('/tmp/mochetest/test5/large/portrait.jpg');
-        util.deleteFile('/tmp/mochetest/test5/thumbnail/landscape.jpg');
+
+        util.createJpeg('/tmp/mochetest/test5/photo/landscape.jpg');
+        util.createJpegPortrait('/tmp/mochetest/test5/photo/portrait.jpg');
+        util.mkdirp('/tmp/mochetest/test5/large/');
     });
 
     it('should create large version of landscape', function (done) {
@@ -52,6 +55,19 @@ describe('photoservice', function() {
                 done();
             }
         );        
+    });
+});
+
+describe('makeThumbnail', function () {
+     this.timeout(12000);
+
+    before(function(){
+        util.deleteFile('/tmp/mochetest/test5/thumbnail/landscape.jpg');
+        util.deleteFile('/tmp/mochetest/test5/thumbnail/portrait.jpg');
+
+        util.createJpeg('/tmp/mochetest/test5/photo/landscape.jpg');
+        util.createJpegPortrait('/tmp/mochetest/test5/photo/portrait.jpg');
+        util.mkdirp('/tmp/mochetest/test5/thumbnail/');
     });
 
     it('should create thumbnail version of landscape', function (done) {

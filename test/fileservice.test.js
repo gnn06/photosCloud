@@ -15,13 +15,19 @@ var file = chaiFiles.file;
 var service = require('../src/fileservice.js');
 var fs = require('fs');
 
-var testutil = require('./utiltest');
+var utiltest = require('./utiltest');
 
-describe('fileservice', function() {
+describe('fileservice of basic case', function() {
+  before(function() {
+    utiltest.createJpeg('/tmp/mochetest/test1/photo/file1.jpg');
+    utiltest.createJpeg('/tmp/mochetest/test1/photo/file2.JPG');
+    utiltest.createTxt('/tmp/mochetest/test1/photo/file3.txt');
+    utiltest.createMpeg('/tmp/mochetest/test1/photo/file4.mp4');
+  });
 
 	it('should returns array, only jpg, case insensitive, store into <data> Folder', function () {
-		testutil.deleteFile('/tmp/mochetest/test1/data/folder.json');
-		testutil.deleteFile('/tmp/mochetest/test1/photo/folder.json');
+		utiltest.deleteFile('/tmp/mochetest/test1/data/folder.json');
+		utiltest.deleteFile('/tmp/mochetest/test1/photo/folder.json');
     var result = service.walk('', { photoFolder : '/tmp/mochetest/test1/photo/', dataFolder : '/tmp/mochetest/test1/data/' });
     return result.then(function(result) {
       expect(result[0].url).eq('/file1.jpg');
@@ -36,6 +42,13 @@ describe('fileservice', function() {
       expect(data[0].date).to.be.not.empty;
       expect(data[1].date).to.be.not.empty;
     });
+  });
+});
+
+describe('when called on subfolder', function () {
+  before(function() {
+    utiltest.createJpeg('/tmp/mochetest/test2/parentfile.jpg');
+    utiltest.createJpeg('/tmp/mochetest/test2/subfolder/subfile.jpg');
   });
 
   it('should returns subfolder', function () {
@@ -57,8 +70,7 @@ describe('fileservice', function() {
     });
   });
 
-
-	it('should store result in current and also in subfolder, level by level', function () {
+  it('should store result in current and also in subfolder, level by level', function () {
     if (fs.existsSync('/tmp/mochetest/test2/folder.json')) {
         fs.unlinkSync('/tmp/mochetest/test2/folder.json');
     }
@@ -78,25 +90,29 @@ describe('fileservice', function() {
     });
   });
 
-  it('should use stored data', function () {
-    var folderExist = fs.existsSync('/tmp/mochetest/test3/folder.json');
-    assert.ok(folderExist);
-    var fileNotExist = fs.existsSync('/tmp/mochetest/test3/file.jpg');
-    assert.ok(!fileNotExist);
-    var promise = service.walk('', { photoFolder : '/tmp/mochetest/test3/', dataFolder : '/tmp/mochetest/test3/' });
-    return promise.then(function(result){
-      assert.deepEqual(result[0].url, '/file.jpg');
-    });
-  });
-
-	// usefull to the GET /thumbnails sinon le client doit rajouter le folder
+  // usefull to the GET /thumbnails sinon le client doit rajouter le folder
 	it('should not store absolute url', function () {
 		expect(file('/tmp/mochetest/test2/folder.json')).to.not.contain('E:');
 		expect(file('/tmp/mochetest/test2/folder.json')).to.not.contain('test2');
 		expect(file('/tmp/mochetest/test2/subfolder/folder.json')).to.not.contain('subfolder').to.not.contain('test2');
 	});
 
-})
+});
 
-// var result = service.walk('//RASPBERRYPI/PiPhotos/photos');
-// console.log(result);
+describe('when data is available', function () {
+  before(function() {
+    utiltest.createTxt('/tmp/mochetest/test3/folder.json', '[{"url":"file.jpg"}]');
+  });
+
+  it('should use stored data', function () {
+    var folderExist = fs.existsSync('/tmp/mochetest/test3/folder.json');
+    assert.ok(folderExist);
+    var fileNotExist = fs.existsSync('/tmp/mochetest/test3/file.jpg');
+    assert.ok(!fileNotExist, 'image should not exist');
+    var promise = service.walk('', { photoFolder : '/tmp/mochetest/test3/', dataFolder : '/tmp/mochetest/test3/' });
+    return promise.then(function(result){
+      assert.deepEqual(result[0].url, '/file.jpg');
+    });
+  });
+});
+
