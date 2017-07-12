@@ -48,33 +48,23 @@ describe('dataservice', function() {
     });
 
     describe('getPhotoDate of a mpeg', function() {
+        var service= require('../src/dataservice.js');
         before(function(){
             util.createMpeg('/tmp/mochetest/test1/photo/file4.mp4');
-        })
-        it('should return date of mpeg', function () {
-            var fsStub = {
-                readFile : function (photoFilename, cb) {
-                    cb(null, 'content');
-                }
-            };
-            // var fsReadFileStub = sinon.stub(fs, 'readFile');
-            // fsReadFileStub.callArgWith(1, null, 'content');
-            var mp4boxStub = {
-                MP4Box : function () {
-                    return {
-                        appendBuffer : function () {},
-                        getInfo : function() {
-                            return { created : new Date('May 01, 2017 14:48:04 Z') };
-                        }
-                    };
-                }
-            };
-            var service = proxyquire('../src/dataservice', { 'mp4box': mp4boxStub, 'fs' : fsStub });
+            util.createMpeg2('/tmp/mochetest/test1/photo/file5.mp4');
+        });
 
+        it('should call mp4Box  on smartphone video', function () {
+           var promise = service.getPhotoDate('/tmp/mochetest/test1/photo/file5.mp4');
+           return expect(promise).to.eventually.eql(new Date('June 18, 2017 14:47:52 Z'));
+        });
+
+        it('should return date of mpeg', function () {
             var promise = service.getPhotoDate('/tmp/mochetest/test1/photo/file4.mp4');
-            return expect(promise).to.eventually.eql(new Date('May 01, 2017 14:48:04 Z'));
+            return expect(promise).to.eventually.eql(new Date('May 25, 2017 15:48:04 Z'));
         });
     });
+
 
     describe('getPhotoDate', function() {
     

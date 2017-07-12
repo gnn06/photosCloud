@@ -104,7 +104,7 @@ describe('ws for thumbnails', function() {
               expect(res).to.have.status(200);
               expect(res).to.have.header('Content-Type', /json/);
             // console.log(res.body);
-              expect(res.body.length).to.eq(3);
+              expect(res.body.length).to.eq(4);
               expect(res.body[0].url).to.eq('/thumbnail/file1.jpg');
               done();
           });

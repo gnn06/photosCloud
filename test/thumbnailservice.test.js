@@ -39,6 +39,8 @@ describe('thumbnailservice for mpeg', function() {
         testutil.mkdirp('/tmp/mochetest/test1/thumbnail/');
         testutil.deleteFile('/tmp/mochetest/test1/thumbnail/file4.jpg');      
         testutil.createMpeg('/tmp/mochetest/test1/photo/file4.mp4');
+        testutil.createMpeg2('/tmp/mochetest/test7/photo/video2.mp4');
+        testutil.mkdirp('/tmp/mochetest/test7/thumbnail/');
     })
     it('should creta thumbnail', function (done) {
         service.makeThumbnail('file4.mp4',
@@ -51,5 +53,17 @@ describe('thumbnailservice for mpeg', function() {
             expect(file('/tmp/mochetest/test1/thumbnail/file4.jpg')).to.exist;
             done();
         })
+    });
+    it('should create thumbnail for mp4 smartphone', function (done) {
+        service.makeThumbnail('video2.mp4',
+        {
+            photoPath     : '/tmp/mochetest/test7/photo/',
+            thumbnailPath : '/tmp/mochetest/test7/thumbnail/'
+        },
+        result => {
+            expect(result).to.eq(1);
+            expect(file('/tmp/mochetest/test7/thumbnail/video2.jpg')).to.exist;
+            done();
+        });
     });
 });

@@ -1,8 +1,7 @@
 'use strict';
 
 var exif = require('fast-exif');
-var mp4boxModule = require('mp4box');
-var fs = require('fs');
+var proc = require('child_process');
 
 //var config = require('./config');
 //console.log('service',config);
@@ -11,38 +10,33 @@ function getPhotoDate (photoFilename) {
 	// console.log('getting data of ', photoFilename);
 	if (photoFilename.substr(-4).toLowerCase() === '.jpg') {
 		var p = exif.read(photoFilename)
-        .then(data => {
-			var date = data && data.image && data.image.ModifyDate;
-            return date;
-        }).catch(function(err){
-			console.error('catch of getData', err);
-			resolve(null);
-		});
-        return p;
+			.then(data => {
+				var date = data && data.image && data.image.ModifyDate;
+				return date;
+			}).catch(function(err){
+				console.error('catch of getData', err);
+				Promise.resolve(null);
+			});
+		return p;
 	} else if (photoFilename.substr(-4).toLowerCase() === '.mp4') {
-		var mp4box = new mp4boxModule.MP4Box();
 		var pM = new Promise(function(resolve, reject) {
-			fs.readFile(photoFilename, (err, content) => {
-				if (err) reject(err);
-				try {
-					var arrayBuffer = new Uint8Array(content).buffer;
-					arrayBuffer.fileStart = 0;
-					mp4box.onMoovStart = function () {
-						//console.log('Starting to receive File Information');
-					};
-					mp4box.onReady = function info () {
-						//console.log('Received File Information');
-					};
-					mp4box.onError = function (e) {
-						//console.log('Received Error Message '+e);
-					};
-					mp4box.appendBuffer(arrayBuffer);
-					var date = mp4box.getInfo().created;
-					resolve(date);
-				} catch (exception) {
-					console.error('error reading mpeg date of ', photoFilename, exception);
-					resolve(null);
+			
+			var argv = [];
+			argv = argv.concat(['-b']);
+			argv = argv.concat(['-ModifyDate']);
+			argv = argv.concat([photoFilename]);
+			proc.execFile('exiftool', argv, (error, stdout, stderr) => {
+				if (error) {
+					console.error(error);
+					resolve(-1);
 				}
+				var date = new Date(stdout.substring(0,4),
+									stdout.substring(5,7)-1,
+									stdout.substring(8,10),
+									stdout.substring(11,13),
+									stdout.substring(14,16),
+									stdout.substring(17,19));
+				resolve(date);
 			});
 		});
 		return pM;

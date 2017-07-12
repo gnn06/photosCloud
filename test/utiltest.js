@@ -20,6 +20,10 @@ function createMpeg (filename) {
 	_copy('./test/media/video.mp4', filename);
 }
 
+function createMpeg2 (filename) {
+        _copy('./test/media/video-smartphone.mp4', filename);
+}
+
 function _copy (source, dest) {
 	if (!fs.existsSync(dest)) {
 		fsE.mkdirpSync(path.dirname(dest));
@@ -38,6 +42,7 @@ module.exports = {
 	createJpeg         : createJpeg,
 	createJpegPortrait : createJpegPortrait,
 	createMpeg         : createMpeg,
+        createMpeg2       : createMpeg2,
 	createTxt          : createTxt,
 	mkdirp             : fsE.mkdirpSync
 };
