@@ -101,6 +101,7 @@ describe('when called on subfolder', function () {
 
 describe('when data is available', function () {
   before(function() {
+    utiltest.mkdirp('/tmp/mochetest/test3');
     utiltest.createTxt('/tmp/mochetest/test3/folder.json', '[{"url":"file.jpg"}]');
   });
 
