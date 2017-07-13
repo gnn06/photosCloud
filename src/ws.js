@@ -73,18 +73,21 @@ app.get('/thumbnail/*', function (req, res) {
 	// console.log(config.thumbnailPath + folder)
 	// le module ne descend pas dans l'arbo.
 	// TODO il faut créer les répertoires à l'avance
-
-	thumbnail.makeThumbnail(photoPath, config, status => {
-		if (status != -1) {
-			var thumbnailPath = photoPath;
-			res.sendFile(config.thumbnailPath + thumbnailPath);
-		} else {
-			res.status(500).send('error');
+	var thumbnailPath = photoPath.replace(/\.mp4/, '.jpg');
+	res.sendFile(config.thumbnailPath + thumbnailPath, err => {
+		if (err && err.code == 'ENOENT') {
+			thumbnail.makeThumbnail(photoPath, config, status => {
+				if (status != -1) {
+					res.sendFile(config.thumbnailPath + thumbnailPath);
+				} else {
+					res.status(500).send('error');
+				}
+			});
 		}
 	});
 });
 
-app.use(express.static('src/app'));
+app.use(express.static('./src/app'));
 
 app.listen(config.port, function () {
 	console.log('Example app listening on port ', config.port);
