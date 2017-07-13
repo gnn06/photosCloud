@@ -56,12 +56,12 @@ describe('dataservice', function() {
 
         it('should call mp4Box  on smartphone video', function () {
            var promise = service.getPhotoDate('/tmp/mochetest/test1/photo/file5.mp4');
-           return expect(promise).to.eventually.eql(new Date('June 18, 2017 14:47:52 Z'));
+           return expect(promise).to.eventually.eql(new Date('June 18, 2017 16:47:52 GMT+2'));
         });
 
         it('should return date of mpeg', function () {
             var promise = service.getPhotoDate('/tmp/mochetest/test1/photo/file4.mp4');
-            return expect(promise).to.eventually.eql(new Date('May 25, 2017 15:48:04 Z'));
+            return expect(promise).to.eventually.eql(new Date('May 25, 2017 17:48:04 GMT+2'));
         });
     });
 

@@ -6,10 +6,9 @@ console.log(config);
 
 var result = [];
 
-service.getPhotoDate(config.photoPath + '2017/oxford/DSCF3612.mp4')
+service.getPhotoDate(config.photoPath + 'upload/HUAWEI HUAWEI CAN-L11/Camera/VID_20170618_164752.mp4')
 .then(function (date) {
-	console.log('DSCF3456 ', date);
-	console.log(date.toLocaleString());
+	console.log('VID_20170618_164752 ', date.toLocaleString());
 }, function (err) {
 	console.error(err);
 });

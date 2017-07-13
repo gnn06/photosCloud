@@ -30,12 +30,12 @@ function getPhotoDate (photoFilename) {
 					console.error(error);
 					resolve(-1);
 				}
-				var date = new Date(stdout.substring(0,4),
-									stdout.substring(5,7)-1,
+				var date = new Date(Date.UTC(stdout.substring(0,4),
+									stdout.substring(5,7) - 1,
 									stdout.substring(8,10),
 									stdout.substring(11,13),
 									stdout.substring(14,16),
-									stdout.substring(17,19));
+									stdout.substring(17,19)));
 				resolve(date);
 			});
 		});
