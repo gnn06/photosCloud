@@ -47,7 +47,21 @@ describe('ws for thumbnail', function() {
         util.mkdirp('/tmp/mochetest/test4/thumbnail/subfolder withspace/')
     });
 
-    it('should call makeThumbnail and sendFile', function(done) {
+    it('should call makeThumbnail when sendFile throws', function(done) {
+        chai.request(ws.app)
+            .get('/thumbnail/landscape.jpg')
+            .end(function(err, res) {
+                expect(res).to.have.status(200);
+                expect(res).to.have.header('Content-Type', 'image/jpeg');
+                expect(makeThumbnailSpy.called).to.be.true;
+                expect(makeThumbnailSpy.args[0][0]).to.eq('landscape.jpg');
+                expect(sendFileStub.called).to.be.true;
+                expect(sendFileStub.args[0][0]).to.eq('/tmp/mochetest/test6/thumbnail/landscape.jpg');
+                done();
+            });
+    });
+    
+    it('should sendFile when available', function(done) {
         chai.request(ws.app)
             .get('/thumbnail/landscape.jpg')
             .end(function(err, res) {
@@ -83,6 +97,30 @@ describe('ws for thumbnail', function() {
     after(function() {
         sendFileStub.restore();
     })
+});
+
+describe('_sendPhoto', function () {
+    var req, res;
+    before(function(){
+        req = sinon.stub();
+        res = sinon.stub('sendFile');
+        req = { url : '/thumbnail/folder/file.jpg' };
+    });
+
+    it('should return file when no exception is thrown', function () {
+        res = sinon.stub('sendFile');
+        res.callArgWith(1, null);
+        ws._sendPhoto(req, res, 'thumbnail');
+    });
+
+    it('should calls operation when exception throws', function () {
+        res = sinon.stub('sendFile');
+        serviceMaekeThumbnailSpy = sinon.spy(photoService, 'makeThumbnail');
+        serviceMaekeLargeSpy     = sinon.spy(photoService, 'makeLarge');
+        res.callArgWith(1, { code : 'ENOENT' } );
+        ws._sendPhoto(req, res, 'thumbnail');
+    });
+
 });
 
 describe('ws for thumbnails', function() {

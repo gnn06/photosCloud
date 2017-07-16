@@ -49,6 +49,31 @@ app.get(config.photoUrl + '/*', function (req, res) {
 	 res.sendFile(config.photoPath + '/' + photoPath)
 })
 
+function _sendPhoto (req, res, photoVersion) {
+	var photoPath = decodeURI(req.url).replace((/^\\.+\\/, ''));
+	res.sendFile(config.largePath + photoPath, err => {
+		if (err && err.code == 'ENOENT') {
+			var func;
+			switch (photoVersion) {
+				case 'large':
+					func = photoService.makeLarge
+					break;
+				case 'thumbnail':
+					func = photoService.makeLarge
+					break;
+				default :
+					console.error('version photo to returns unknownw', photoVersion);
+					return;
+			}				  
+			func(photoPath, config, result => {
+				if (result == 1) {
+					res.sendFile(config.largePath + photoPath);
+				}
+			});
+		}
+	});
+}
+
 app.get('/large/*', function (req, res) {
 	console.log('get large of ' + req.url);
 	var photoPath = decodeURI(req.url).substr(('/large/').length);
@@ -66,12 +91,6 @@ app.get('/large/*', function (req, res) {
 app.get('/thumbnail/*', function (req, res) {
 	console.log('GET /thumbnail of ' + req.url);
 	var photoPath = decodeURI(req.url.substr(('/thumbnail/').length));
-	// console.log(photoPath)
-	// console.log(folder)
-	// console.log(photo)
-	// console.log(config.photoPath + folder)
-	// console.log(config.thumbnailPath + folder)
-	// le module ne descend pas dans l'arbo.
 	// TODO il faut créer les répertoires à l'avance
 	var thumbnailPath = photoPath.replace(/\.mp4/, '.jpg');
 	res.sendFile(config.thumbnailPath + thumbnailPath, err => {
@@ -120,4 +139,5 @@ app.post('/data/*', jsonParser, function(req, res) {
 	});
 });
 
-exports.app = app;
+exports.app        = app;
+exports._sendPhoto = _sendPhoto;
