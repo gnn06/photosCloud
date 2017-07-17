@@ -6,6 +6,7 @@ config.largePath     = "/var/photos/large/";
 config.thumbnailPath = "/var/photos/thumbnail/";
 config.dataPath      = "/var/photos/data/";
 config.conv_prog     = "convert";
+config.video_prog    = 'ffmpeg';
 config.port          = 8190;
 
 module.exports = config

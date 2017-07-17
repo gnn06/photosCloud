@@ -15,7 +15,7 @@ var config = require('../src/config');
 config.port = 8120;
 
 var   ws   = require('../src/ws');
-const util = require('./utiltest');
+const utiltest = require('./utiltest');
 
 var sendFileStub;
 
@@ -34,20 +34,21 @@ describe('ws for thumbnail', function() {
     });
     
     beforeEach(function() {
-        util.createJpeg('/tmp/mochetest/test6/original/landscape.jpg');
-        util.mkdirp('/tmp/mochetest/test6/thumbnail/');
-        util.mkdirp('/tmp/mochetest/test6/data/');
-        config.photoPath     = "/tmp/mochetest/test6/original/";
-        config.largePath     = "/tmp/mochetest/test6/large/";
-        config.thumbnailPath = "/tmp/mochetest/test6/thumbnail/";
-        config.dataPath      = "/tmp/mochetest/test6/data/";
+        utiltest.createJpeg(utiltest.FOLDER_TEST + 'test6/original/landscape.jpg');
+        utiltest.mkdirp(utiltest.FOLDER_TEST + 'test6/thumbnail/');
+        utiltest.mkdirp(utiltest.FOLDER_TEST + 'test6/data/');
+        config.photoPath     = utiltest.FOLDER_TEST + "test6/original/";
+        config.largePath     = utiltest.FOLDER_TEST + "test6/large/";
+        config.thumbnailPath = utiltest.FOLDER_TEST + "test6/thumbnail/";
+        config.dataPath      = utiltest.FOLDER_TEST + "test6/data/";
         config.port          = 8120;
 
-        util.createJpeg('/tmp/mochetest/test4/original/subfolder withspace/file1.jpg');
-        util.mkdirp('/tmp/mochetest/test4/thumbnail/subfolder withspace/')
+        utiltest.createJpeg(utiltest.FOLDER_TEST + 'test4/original/subfolder withspace/file1.jpg');
+        utiltest.mkdirp(utiltest.FOLDER_TEST + 'test4/thumbnail/subfolder withspace/')
     });
 
     it('should call makeThumbnail and sendFile', function(done) {
+        utiltest.deleteFile(utiltest.FOLDER_TEST + 'test6/thumbnail/' + 'landscape.jpg');
         chai.request(ws.app)
             .get('/thumbnail/landscape.jpg')
             .end(function(err, res) {
@@ -56,7 +57,20 @@ describe('ws for thumbnail', function() {
                 expect(makeThumbnailSpy.called).to.be.true;
                 expect(makeThumbnailSpy.args[0][0]).to.eq('landscape.jpg');
                 expect(sendFileStub.called).to.be.true;
-                expect(sendFileStub.args[0][0]).to.eq('/tmp/mochetest/test6/thumbnail/landscape.jpg');
+                expect(sendFileStub.args[0][0]).to.eq(utiltest.FOLDER_TEST + 'test6/thumbnail/landscape.jpg');
+                done();
+            });
+    });
+
+    it('should call sendFile and not call makeThumbnail', function(done) {
+        chai.request(ws.app)
+            .get('/thumbnail/landscape.jpg')
+            .end(function(err, res) {
+                expect(res).to.have.status(200);
+                expect(res).to.have.header('Content-Type', 'image/jpeg');
+                expect(makeThumbnailSpy.called).to.be.false;
+                expect(sendFileStub.called).to.be.true;
+                expect(sendFileStub.args[0][0]).to.eq(utiltest.FOLDER_TEST + 'test6/thumbnail/landscape.jpg');
                 done();
             });
     });
@@ -67,15 +81,15 @@ describe('ws for thumbnail', function() {
     });
     
     it('should decode url', function(done) {
-        config.photoPath     = "/tmp/mochetest/test4/original/";
-        config.largePath     = "/tmp/mochetest/test4/large/";
-        config.thumbnailPath = "/tmp/mochetest/test4/thumbnail/";
-        config.dataPath      = "/tmp/mochetest/test4/data/";
+        config.photoPath     = utiltest.FOLDER_TEST + "test4/original/";
+        config.largePath     = utiltest.FOLDER_TEST + "test4/large/";
+        config.thumbnailPath = utiltest.FOLDER_TEST + "test4/thumbnail/";
+        config.dataPath      = utiltest.FOLDER_TEST + "test4/data/";
         config.port          = 8120;
         chai.request(ws.app)
             .get('/thumbnail/subfolder%20withspace/file1.jpg')
             .end(function(err, res) {
-                expect(makeThumbnailSpy.args[0][0]).to.eq('subfolder withspace/file1.jpg');
+                expect(sendFileStub.args[0][0]).to.eq(utiltest.FOLDER_TEST + 'test4/thumbnail/' + 'subfolder withspace/file1.jpg');
                 done(err);
             })
     });
@@ -88,10 +102,10 @@ describe('ws for thumbnail', function() {
 describe('ws for thumbnails', function() {
     before(function() {
         sendFileStub      = sinon.spy(express.response, 'sendFile');
-        config.photoPath     = "/tmp/mochetest/test1/photo/";
-        config.largePath     = "/tmp/mochetest/test1/large/";
-        config.thumbnailPath = "/tmp/mochetest/test1/thumbnail/";
-        config.dataPath      = "/tmp/mochetest/test1/data/";
+        config.photoPath     = utiltest.FOLDER_TEST + "/test1/photo/";
+        config.largePath     = utiltest.FOLDER_TEST + "/test1/large/";
+        config.thumbnailPath = utiltest.FOLDER_TEST + "/test1/thumbnail/";
+        config.dataPath      = utiltest.FOLDER_TEST + "/test1/data/";
         config.port          = 8120;
     });
 
@@ -117,10 +131,10 @@ describe('ws for thumbnails', function() {
 
 describe('ws for thumbnails with space', function() {
     before(function() {
-        config.photoPath     = "/tmp/mochetest/test4/original/";
-        config.largePath     = "/tmp/mochetest/test4/large/";
-        config.thumbnailPath = "/tmp/mochetest/test4/thumbnail/";
-        config.dataPath      = "/tmp/mochetest/test4/data/";
+        config.photoPath     = utiltest.FOLDER_TEST + "/test4/original/";
+        config.largePath     = utiltest.FOLDER_TEST + "/test4/large/";
+        config.thumbnailPath = utiltest.FOLDER_TEST + "/test4/thumbnail/";
+        config.dataPath      = utiltest.FOLDER_TEST + "/test4/data/";
         config.port          = 8120;
     });
 

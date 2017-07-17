@@ -38,11 +38,12 @@ function createTxt (filename, content) {
 }
 
 module.exports = {
+	FOLDER_TEST        : 'e:/temp/dev/mochtest/',
 	deleteFile         : deleteFile,
 	createJpeg         : createJpeg,
 	createJpegPortrait : createJpegPortrait,
 	createMpeg         : createMpeg,
-        createMpeg2       : createMpeg2,
+    createMpeg2        : createMpeg2,
 	createTxt          : createTxt,
 	mkdirp             : fsE.mkdirpSync
 };
