@@ -46,7 +46,8 @@ describe('thumbnailservice for mpeg', function() {
         service.makeThumbnail('file4.mp4',
         {
             photoPath     : '/tmp/mochetest/test1/photo/',
-            thumbnailPath : '/tmp/mochetest/test1/thumbnail/'
+            thumbnailPath : '/tmp/mochetest/test1/thumbnail/',
+            video_prog : 'ffmpeg'
         },
         result => {
             expect(result).to.eq(1);
@@ -58,7 +59,8 @@ describe('thumbnailservice for mpeg', function() {
         service.makeThumbnail('video2.mp4',
         {
             photoPath     : '/tmp/mochetest/test7/photo/',
-            thumbnailPath : '/tmp/mochetest/test7/thumbnail/'
+            thumbnailPath : '/tmp/mochetest/test7/thumbnail/',
+            video_prog : 'ffmpeg'
         },
         result => {
             expect(result).to.eq(1);

@@ -2,8 +2,6 @@
 
 const proc = require('child_process');
 
-const VIDEO_PROG = 'avconv';
-
 const util  = require('./util');
 const photo = require('./photoservice');
 
@@ -45,7 +43,7 @@ function makeThumbnailOfMpeg (filename, config, cb) {
 
     // TODO la thumbnail est déformée par le 100x100.
 
-    proc.execFile(VIDEO_PROG, argv, (error, stdout, stderr) => {
+    proc.execFile(config.video_prog, argv, (error, stdout, stderr) => {
         if (error) {
             console.error(error);
             cb(-1);
