@@ -19,16 +19,16 @@ var utiltest = require('./utiltest');
 
 describe('fileservice of basic case', function() {
   before(function() {
-    utiltest.createJpeg('/tmp/mochetest/test1/photo/file1.jpg');
-    utiltest.createJpeg('/tmp/mochetest/test1/photo/file2.JPG');
-    utiltest.createTxt('/tmp/mochetest/test1/photo/file3.txt');
-    utiltest.createMpeg('/tmp/mochetest/test1/photo/file4.mp4');
+    utiltest.createJpeg(utiltest.FOLDER_TEST + 'test1/photo/file1.jpg');
+    utiltest.createJpeg(utiltest.FOLDER_TEST + 'test1/photo/file2.JPG');
+    utiltest.createTxt(utiltest.FOLDER_TEST + 'test1/photo/file3.txt');
+    utiltest.createMpeg(utiltest.FOLDER_TEST + 'test1/photo/file4.mp4');
   });
 
 	it('should returns array, only jpg, case insensitive, store into <data> Folder', function () {
-		utiltest.deleteFile('/tmp/mochetest/test1/data/folder.json');
-		utiltest.deleteFile('/tmp/mochetest/test1/photo/folder.json');
-    var result = service.walk('', { photoFolder : '/tmp/mochetest/test1/photo/', dataFolder : '/tmp/mochetest/test1/data/' });
+		utiltest.deleteFile(utiltest.FOLDER_TEST + 'test1/data/folder.json');
+		utiltest.deleteFile(utiltest.FOLDER_TEST + 'test1/photo/folder.json');
+    var result = service.walk('', { photoFolder : utiltest.FOLDER_TEST + 'test1/photo/', dataFolder : utiltest.FOLDER_TEST + 'test1/data/' });
     return result.then(function(result) {
       expect(result[0].url).eq('/file1.jpg');
       expect(result[1].url).eq('/file2.JPG');
@@ -37,7 +37,7 @@ describe('fileservice of basic case', function() {
   });
 
   it('should returns data', function () {
-    var result = service.walk('', { photoFolder : '/tmp/mochetest/test1/photo/', dataFolder : '/tmp/mochetest/test1/data/' });
+    var result = service.walk('', { photoFolder : utiltest.FOLDER_TEST + 'test1/photo/', dataFolder : utiltest.FOLDER_TEST + 'test1/data/' });
     return result.then(function(data) {
       expect(data[0].date).to.be.not.empty;
       expect(data[1].date).to.be.not.empty;
@@ -47,14 +47,14 @@ describe('fileservice of basic case', function() {
 
 describe('when called on subfolder', function () {
   before(function() {
-    utiltest.createJpeg('/tmp/mochetest/test2/parentfile.jpg');
-    utiltest.createJpeg('/tmp/mochetest/test2/subfolder/subfile.jpg');
+    utiltest.createJpeg(utiltest.FOLDER_TEST + 'test2/parentfile.jpg');
+    utiltest.createJpeg(utiltest.FOLDER_TEST + 'test2/subfolder/subfile.jpg');
   });
 
   it('should returns subfolder', function () {
-		delete('/tmp/mochetest/test2/folder.json');
-		delete('/tmp/mochetest/test2/subfolder/folder.json');
-    var p = service.walk('', { photoFolder : '/tmp/mochetest/test2/', dataFolder : '/tmp/mochetest/test2/' });
+		delete(utiltest.FOLDER_TEST + 'test2/folder.json');
+		delete(utiltest.FOLDER_TEST + 'test2/subfolder/folder.json');
+    var p = service.walk('', { photoFolder : utiltest.FOLDER_TEST + 'test2/', dataFolder : utiltest.FOLDER_TEST + 'test2/' });
     return p.then(function(result) {
       expect(result[0].url).eq('/parentfile.jpg');
       expect(result[1].url).eq('/subfolder/subfile.jpg');
@@ -62,55 +62,55 @@ describe('when called on subfolder', function () {
   });
 
 	it('should returns full url even when called on subfolder', function () {
-		delete('/tmp/mochetest/test2/folder.json');
-		delete('/tmp/mochetest/test2/subfolder/folder.json');
-    var promise = service.walk('subfolder', { photoFolder : '/tmp/mochetest/test2/', dataFolder : '/tmp/mochetest/test2/' });
+		delete(utiltest.FOLDER_TEST + 'test2/folder.json');
+		delete(utiltest.FOLDER_TEST + 'test2/subfolder/folder.json');
+    var promise = service.walk('subfolder', { photoFolder : utiltest.FOLDER_TEST + 'test2/', dataFolder : utiltest.FOLDER_TEST + 'test2/' });
     return promise.then(function(result){
       assert.deepEqual(result[0].url,  '/subfolder/subfile.jpg');
     });
   });
 
   it('should store result in current and also in subfolder, level by level', function () {
-    if (fs.existsSync('/tmp/mochetest/test2/folder.json')) {
-        fs.unlinkSync('/tmp/mochetest/test2/folder.json');
+    if (fs.existsSync(utiltest.FOLDER_TEST + 'test2/folder.json')) {
+        fs.unlinkSync(utiltest.FOLDER_TEST + 'test2/folder.json');
     }
-    if (fs.existsSync('/tmp/mochetest/test2/subfolder/folder.json')) {
-        fs.unlinkSync('/tmp/mochetest/test2/subfolder/folder.json');
+    if (fs.existsSync(utiltest.FOLDER_TEST + 'test2/subfolder/folder.json')) {
+        fs.unlinkSync(utiltest.FOLDER_TEST + 'test2/subfolder/folder.json');
     }
-    var promise = service.walk('', { photoFolder : '/tmp/mochetest/test2/', dataFolder : '/tmp/mochetest/test2/' });
+    var promise = service.walk('', { photoFolder : utiltest.FOLDER_TEST + 'test2/', dataFolder : utiltest.FOLDER_TEST + 'test2/' });
     return promise.then(function(result){
-      var existPost = fs.existsSync('/tmp/mochetest/test2/folder.json');
+      var existPost = fs.existsSync(utiltest.FOLDER_TEST + 'test2/folder.json');
       assert.ok(existPost, 'fichier non crée après appel');
-      var existPostSub = fs.existsSync('/tmp/mochetest/test2/subfolder/folder.json');
+      var existPostSub = fs.existsSync(utiltest.FOLDER_TEST + 'test2/subfolder/folder.json');
       assert.ok(existPost, 'sous fichier non crée après appel');
-      expect(file('/tmp/mochetest/test2/folder.json')).to.contain('parentfile');
-      expect(file('/tmp/mochetest/test2/folder.json')).to.not.contain('subfile');
-      expect(file('/tmp/mochetest/test2/subfolder/folder.json')).to.not.contain('parentfile');
-      expect(file('/tmp/mochetest/test2/subfolder/folder.json')).to.contain('subfile');
+      expect(file(utiltest.FOLDER_TEST + 'test2/folder.json')).to.contain('parentfile');
+      expect(file(utiltest.FOLDER_TEST + 'test2/folder.json')).to.not.contain('subfile');
+      expect(file(utiltest.FOLDER_TEST + 'test2/subfolder/folder.json')).to.not.contain('parentfile');
+      expect(file(utiltest.FOLDER_TEST + 'test2/subfolder/folder.json')).to.contain('subfile');
     });
   });
 
   // usefull to the GET /thumbnails sinon le client doit rajouter le folder
 	it('should not store absolute url', function () {
-		expect(file('/tmp/mochetest/test2/folder.json')).to.not.contain('E:');
-		expect(file('/tmp/mochetest/test2/folder.json')).to.not.contain('test2');
-		expect(file('/tmp/mochetest/test2/subfolder/folder.json')).to.not.contain('subfolder').to.not.contain('test2');
+		expect(file(utiltest.FOLDER_TEST + 'test2/folder.json')).to.not.contain('E:');
+		expect(file(utiltest.FOLDER_TEST + 'test2/folder.json')).to.not.contain('test2');
+		expect(file(utiltest.FOLDER_TEST + 'test2/subfolder/folder.json')).to.not.contain('subfolder').to.not.contain('test2');
 	});
 
 });
 
 describe('when data is available', function () {
   before(function() {
-    utiltest.mkdirp('/tmp/mochetest/test3');
-    utiltest.createTxt('/tmp/mochetest/test3/folder.json', '[{"url":"file.jpg"}]');
+    utiltest.mkdirp(utiltest.FOLDER_TEST + 'test3');
+    utiltest.createTxt(utiltest.FOLDER_TEST + 'test3/folder.json', '[{"url":"file.jpg"}]');
   });
 
   it('should use stored data', function () {
-    var folderExist = fs.existsSync('/tmp/mochetest/test3/folder.json');
+    var folderExist = fs.existsSync(utiltest.FOLDER_TEST + 'test3/folder.json');
     assert.ok(folderExist);
-    var fileNotExist = fs.existsSync('/tmp/mochetest/test3/file.jpg');
+    var fileNotExist = fs.existsSync(utiltest.FOLDER_TEST + 'test3/file.jpg');
     assert.ok(!fileNotExist, 'image should not exist');
-    var promise = service.walk('', { photoFolder : '/tmp/mochetest/test3/', dataFolder : '/tmp/mochetest/test3/' });
+    var promise = service.walk('', { photoFolder : utiltest.FOLDER_TEST + 'test3/', dataFolder : utiltest.FOLDER_TEST + 'test3/' });
     return promise.then(function(result){
       assert.deepEqual(result[0].url, '/file.jpg');
     });

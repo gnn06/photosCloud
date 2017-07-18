@@ -13,8 +13,10 @@ function makeLarge (photoPath, config, cb) {
     var argv = [];
     
     argv = argv.concat(['-scale', '800x800']);
-    argv = argv.concat([config.photoPath + photoPath]);
-    argv = argv.concat([config.largePath + photoPath]);
+    var inputfile  = (config.photoPath + photoPath).replace(/\//g,'\\');
+    var outputfile = (config.largePath + photoPath).replace(/\//g,'\\');
+    argv = argv.concat([inputfile]);
+    argv = argv.concat([outputfile]);
 
     proc.execFile(config.conv_prog, argv, (error, stdout, stderr) => {
         if (error) {

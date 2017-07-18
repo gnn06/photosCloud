@@ -9,15 +9,16 @@ chai.use(chaiHttp);
 var assert = chai.assert;
 var expect = chai.expect;
 
+const utiltest = require('./utiltest');
+
 var config = require('../src/config');
-config.photoPath     = "/tmp/mochetest/test6/original/";
-config.largePath     = "/tmp/mochetest/test6/large/";
-config.thumbnailPath = "/tmp/mochetest/test6/thumbnail/";
-config.dataPath      = "/tmp/mochetest/test6/data/";
+config.photoPath     = utiltest.FOLDER_TEST + "test6/original/";
+config.largePath     = utiltest.FOLDER_TEST + "test6/large/";
+config.thumbnailPath = utiltest.FOLDER_TEST + "test6/thumbnail/";
+config.dataPath      = utiltest.FOLDER_TEST + "test6/data/";
 config.port          = 8120;
 
 var   ws   = require('../src/ws');
-const util = require('./utiltest');
 
 var sendFileStub;
 
@@ -34,8 +35,8 @@ describe('ws for large', function() {
     before(function() {
         var photoSrv     = require('../src/photoservice');
         makeLargeSpy     = sinon.spy(photoSrv, 'makeLarge');
-        util.createJpeg('/tmp/mochetest/test6/original/landscape.jpg');
-        util.mkdirp('/tmp/mochetest/test6/large');
+        utiltest.createJpeg(utiltest.FOLDER_TEST + 'test6/original/landscape.jpg');
+        utiltest.mkdirp(utiltest.FOLDER_TEST + 'test6/large');
     });
 
     it('should call makeLarge and sendFile', function(done) {
@@ -44,7 +45,7 @@ describe('ws for large', function() {
         chai.request(ws.app)
             .get('/large/landscape.jpg')
             .end(function(err, res) {
-                expect(sendFileStub.args[0][0]).to.eq('/tmp/mochetest/test6/large/landscape.jpg');
+                expect(sendFileStub.args[0][0]).to.eq(utiltest.FOLDER_TEST + 'test6/large/landscape.jpg');
                 done(err);
             })
     });
@@ -54,7 +55,7 @@ describe('ws for large', function() {
         chai.request(ws.app)
             .get('/large/landscape.jpg')
             .end(function(err, res) {
-                expect(sendFileStub.args[0][0]).to.eq('/tmp/mochetest/test6/large/landscape.jpg');
+                expect(sendFileStub.args[0][0]).to.eq(utiltest.FOLDER_TEST + 'test6/large/landscape.jpg');
                 expect(!makeLargeSpy.called);
                 done(err);
             })
