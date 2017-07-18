@@ -99,32 +99,6 @@ describe('ws for thumbnail', function() {
     })
 });
 
-/*
-describe('_sendPhoto', function () {
-    var req, res;
-    before(function(){
-        req = sinon.stub();
-        res = sinon.stub('sendFile');
-        req = { url : '/thumbnail/folder/file.jpg' };
-    });
-
-    it('should return file when no exception is thrown', function () {
-        res = sinon.stub('sendFile');
-        res.callArgWith(1, null);
-        ws._sendPhoto(req, res, 'thumbnail');
-    });
-
-    it('should calls operation when exception throws', function () {
-        res = sinon.stub('sendFile');
-        serviceMaekeThumbnailSpy = sinon.spy(photoService, 'makeThumbnail');
-        serviceMaekeLargeSpy     = sinon.spy(photoService, 'makeLarge');
-        res.callArgWith(1, { code : 'ENOENT' } );
-        ws._sendPhoto(req, res, 'thumbnail');
-    });
-
-});
-*/
-
 describe('ws for thumbnails', function() {
     before(function() {
         sendFileStub      = sinon.spy(express.response, 'sendFile');

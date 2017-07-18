@@ -49,25 +49,27 @@ app.get(config.photoUrl + '/*', function (req, res) {
 	 res.sendFile(config.photoPath + '/' + photoPath)
 })
 
-function _sendPhoto (req, res, photoVersion) {
-	var photoPath = decodeURI(req.url).replace((/^\\.+\\/, ''));
-	res.sendFile(config.largePath + photoPath, err => {
+function _sendPhoto (req, res, config, photoVersion) {
+	var photoPath = decodeURI(req.url).replace(/^\/[^/]+\//, '');
+	var toSendPath, func;
+	switch (photoVersion) {
+		case 'large':
+			func = photoService.makeLarge;
+			toSendPath = config.largePath;
+			break;
+		case 'thumbnail':
+			func = photoService.makeThumbnail;
+			toSendPath = config.thumbnailPath;
+			break;
+		default :
+			console.error('version photo to returns unknownw', photoVersion);
+			return;
+	}				  
+	res.sendFile(toSendPath + photoPath, err => {
 		if (err && err.code == 'ENOENT') {
-			var func;
-			switch (photoVersion) {
-				case 'large':
-					func = photoService.makeLarge
-					break;
-				case 'thumbnail':
-					func = photoService.makeLarge
-					break;
-				default :
-					console.error('version photo to returns unknownw', photoVersion);
-					return;
-			}				  
 			func(photoPath, config, result => {
 				if (result == 1) {
-					res.sendFile(config.largePath + photoPath);
+					res.sendFile(toSendPath + photoPath);
 				}
 			});
 		}
