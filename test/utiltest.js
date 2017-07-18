@@ -37,6 +37,16 @@ function createTxt (filename, content) {
 	fs.closeSync(fd);
 }
 
+var config = {
+	photoPath     : "c:/temp/dev/photos/original/",
+	largePath     : "c:/temp/dev/photos/large/",
+	thumbnailPath : "c:/temp/dev/photos/thumbnail/",
+	dataPath      : "c:/temp/dev/photos/data/",
+	conv_prog     : "convert",
+	video_prog    : 'ffmpeg',
+	port          : 8190
+};
+
 module.exports = {
 	FOLDER_TEST        : 'e:/temp/dev/mochtest/',
 	deleteFile         : deleteFile,
@@ -45,5 +55,7 @@ module.exports = {
 	createMpeg         : createMpeg,
     createMpeg2        : createMpeg2,
 	createTxt          : createTxt,
-	mkdirp             : fsE.mkdirpSync
+	mkdirp             : fsE.mkdirpSync,
+	config             : config
+
 };
