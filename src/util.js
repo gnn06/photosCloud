@@ -8,5 +8,11 @@ function isMpeg(filename) {
     return filename.substr(-4).toLowerCase() === '.mp4';
 }
 
-exports.isJpeg = isJpeg;
-exports.isMpeg = isMpeg;
+function getThumbnailPath(filename) {
+    var fileoutput = filename.replace('.mp4', '.jpg');
+    return fileoutput;
+}
+
+exports.isJpeg           = isJpeg;
+exports.isMpeg           = isMpeg;
+exports.getThumbnailPath = getThumbnailPath;

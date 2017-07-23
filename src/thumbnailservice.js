@@ -29,7 +29,7 @@ function makeThumbnailOfMpeg (filename, config, cb) {
     // avconv -i input.mp4 -f image2 -ss 0 -vframes 1 output.jpg
     // 
 
-    var fileoutput = filename.replace('.mp4', '.jpg');
+    var fileoutput = util.getThumbnailPath(filename);
 
     var argv = [];
     argv = argv.concat(['-i', config.photoPath + filename]);

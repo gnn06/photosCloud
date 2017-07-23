@@ -8,6 +8,7 @@ var dataService  = require('./dataservice');
 var photoService = require('./photoservice');
 var thumbnail    = require('./thumbnailservice.js')
 var chemin       = require('./chemin');
+const util       = require('./util');
 
 var config = require('./config');
 console.log(config);
@@ -44,28 +45,35 @@ app.get('/thumbnails*', function (req, res) {
 
 function _sendPhoto (req, res, config, photoVersion) {
 	var photoPath = decodeURI(req.url).replace(/^\/[^/]+\//, '');
-	var toSendPath, func;
+	var toSendPath, toSendPhotoName, func;
 	switch (photoVersion) {
 		case 'large':
 			func = photoService.makeLarge;
 			toSendPath = config.largePath;
+			toSendPhotoName = photoPath;
 			break;
 		case 'thumbnail':
-			func = photoService.makeThumbnail;
+			func = thumbnail.makeThumbnail;
 			toSendPath = config.thumbnailPath;
+			if (util.isMpeg(photoPath)) {
+				toSendPhotoName = util.getThumbnailPath(photoPath);;
+			} else {
+				toSendPhotoName = photoPath;
+			}
 			break;
 		case 'original':
 			toSendPath = config.photoPath;
+			toSendPhotoName = photoPath;
 			break;
 		default :
 			console.error('version photo to returns unknownw', photoVersion);
 			return;
 	}				  
-	res.sendFile(toSendPath + photoPath, err => {
+	res.sendFile(toSendPath + toSendPhotoName, err => {
 		if (func && err && err.code == 'ENOENT') {
 			func(photoPath, config, result => {
 				if (result == 1) {
-					res.sendFile(toSendPath + photoPath);
+					res.sendFile(toSendPath + toSendPhotoName);
 				}
 			});
 		}
