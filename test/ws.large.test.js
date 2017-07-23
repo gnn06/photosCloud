@@ -68,6 +68,7 @@ describe('ws for large', function() {
 
     after(function() {
         sendFileStub.restore();
+        makeLargeSpy.restore();
     })    
 });
 

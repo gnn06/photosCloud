@@ -42,13 +42,6 @@ app.get('/thumbnails*', function (req, res) {
 	});
 });
 
-/* indispensable pour les vidéo */
-app.get(config.photoUrl + '/*', function (req, res) {
-	 console.log('get photo ' + req.url);
-	 var photoPath = req.url.substr((config.photoUrl + '/').length)
-	 res.sendFile(config.photoPath + '/' + photoPath)
-})
-
 function _sendPhoto (req, res, config, photoVersion) {
 	var photoPath = decodeURI(req.url).replace(/^\/[^/]+\//, '');
 	var toSendPath, func;
@@ -61,12 +54,15 @@ function _sendPhoto (req, res, config, photoVersion) {
 			func = photoService.makeThumbnail;
 			toSendPath = config.thumbnailPath;
 			break;
+		case 'original':
+			toSendPath = config.photoPath;
+			break;
 		default :
 			console.error('version photo to returns unknownw', photoVersion);
 			return;
 	}				  
 	res.sendFile(toSendPath + photoPath, err => {
-		if (err && err.code == 'ENOENT') {
+		if (func && err && err.code == 'ENOENT') {
 			func(photoPath, config, result => {
 				if (result == 1) {
 					res.sendFile(toSendPath + photoPath);
@@ -78,35 +74,19 @@ function _sendPhoto (req, res, config, photoVersion) {
 
 app.get('/large/*', function (req, res) {
 	console.log('get large of ' + req.url);
-	var photoPath = decodeURI(req.url).substr(('/large/').length);
-	res.sendFile(config.largePath + photoPath, err => {
-		if (err && err.code == 'ENOENT') {
-			photoService.makeLarge(photoPath, config, result => {
-				if (result == 1) {
-					res.sendFile(config.largePath + photoPath);
-				}
-			});
-		}
-	});
+	_sendPhoto(req, res, config, 'large');
 });
 
 app.get('/thumbnail/*', function (req, res) {
 	console.log('GET /thumbnail of ' + req.url);
-	var photoPath = decodeURI(req.url.substr(('/thumbnail/').length));
-	// TODO il faut créer les répertoires à l'avance
-	var thumbnailPath = photoPath.replace(/\.mp4/, '.jpg');
-	res.sendFile(config.thumbnailPath + thumbnailPath, err => {
-		if (err && err.code == 'ENOENT') {
-			thumbnail.makeThumbnail(photoPath, config, status => {
-				if (status != -1) {
-					res.sendFile(config.thumbnailPath + thumbnailPath);
-				} else {
-					res.status(500).send('error');
-				}
-			});
-		}
-	});
+	_sendPhoto(req, res, config, 'thumbnail');
 });
+
+/* indispensable pour les vidéo */
+app.get('/photo/*', function (req, res) {
+	 console.log('get /photo of ' + req.url);
+	_sendPhoto(req, res, config, 'original');
+})
 
 app.use(express.static('./src/app'));
 

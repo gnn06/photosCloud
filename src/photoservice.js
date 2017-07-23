@@ -12,7 +12,8 @@ function makeLarge (photoPath, config, cb) {
 
     var argv = [];
     
-    argv = argv.concat(['-scale', '800x800']);
+    argv = argv.concat(['-size', '800x800']);
+    argv = argv.concat(['-thumbnail', '800x800']);
     var inputfile  = (config.photoPath + photoPath).replace(/\//g,'\\');
     var outputfile = (config.largePath + photoPath).replace(/\//g,'\\');
     argv = argv.concat([inputfile]);
@@ -36,6 +37,7 @@ function makeThumbnail (photoPath, config, cb) {
     argv = argv.concat(['-gravity', 'center']);
     argv = argv.concat(['-extent', '100x100']);
 
+    console.log('photoservice', config.photoPath);
     argv = argv.concat([config.photoPath + photoPath]);
     argv = argv.concat([config.thumbnailPath + photoPath]);
 

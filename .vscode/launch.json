@@ -24,7 +24,7 @@
             "type": "node",
             "request": "launch",
             "name": "Lancer le programme",
-            "program": "${file}"
+            "program": "${workspaceRoot}/src/ws.js"
         }
     ]
 }

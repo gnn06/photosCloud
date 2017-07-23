@@ -47,8 +47,9 @@ describe('ws for thumbnail', function() {
         utiltest.mkdirp(utiltest.FOLDER_TEST + 'test4/thumbnail/subfolder withspace/')
     });
 
-    it('should call makeThumbnail and sendFile', function(done) {
-        utiltest.deleteFile(utiltest.FOLDER_TEST + 'test6/thumbnail/' + 'landscape.jpg');
+    it('when thumbnail is not available, it should call makeThumbnail and sendFile', function(done) {
+        utiltest.deleteFile(utiltest.FOLDER_TEST + 'test6/thumbnail/landscape.jpg');
+        console.log(config.photoPath);
         chai.request(ws.app)
             .get('/thumbnail/landscape.jpg')
             .end(function(err, res) {
@@ -62,7 +63,8 @@ describe('ws for thumbnail', function() {
             });
     });
 
-    it('should call sendFile and not call makeThumbnail', function(done) {
+    it('when thumbnail is available, it should call sendFile and not call makeThumbnail', function(done) {
+        utiltest.createJpegThumbnailLandscape(utiltest.FOLDER_TEST + 'test6/thumbnail/landscape.jpg');
         chai.request(ws.app)
             .get('/thumbnail/landscape.jpg')
             .end(function(err, res) {

@@ -8,7 +8,7 @@ const ws           = require('../src/ws');
 const photoService = require('../src/photoservice');
 const utiltest     = require('./utiltest');
 
-describe.only('_sendPhoto', function () {
+describe('_sendPhoto', function () {
     var req, sendFileStub, sendFileStub, serviceMakeThumbnailSpy, serviceMakeLargeSpy;
     before(function(){
         req = sinon.stub();
@@ -16,10 +16,14 @@ describe.only('_sendPhoto', function () {
         sendFileStub = sinon.stub(express.response, 'sendFile');
         serviceMakeThumbnailSpy = sinon.spy(photoService, 'makeThumbnail');
         serviceMakeLargeSpy     = sinon.spy(photoService, 'makeLarge');
+        utiltest.createJpeg(utiltest.config.photoPath + 'folder/file.jpg');
+        utiltest.mkdirp(utiltest.config.thumbnailPath + 'folder/');
+        utiltest.mkdirp(utiltest.config.largePath + 'folder/');
     });
 
     it('should return file when no exception is thrown without calling makeLarge or makeThumbnail', function () {
         // res.onFirstCall().callsArgWith(1, null);
+        utiltest.createJpegThumbnailLandscape(utiltest.config.thumbnailPath + 'folder/file.jpg');
         ws._sendPhoto(req, express.response, utiltest.config, 'thumbnail');
         expect(sendFileStub.called).to.be.true;
         expect(sendFileStub.calledOnce).to.be.true;
@@ -29,7 +33,7 @@ describe.only('_sendPhoto', function () {
     });
 
     it('should calls operation thumbnail when exception throws', function () {
-        
+        utiltest.deleteFile(utiltest.config.thumbnailPath + 'folder/file.jpg');
         sendFileStub.onFirstCall().callsArgWith(1, { code : 'ENOENT' } );
         ws._sendPhoto(req, express.response, utiltest.config, 'thumbnail');
         expect(serviceMakeThumbnailSpy.called).to.be.true;
@@ -53,6 +57,10 @@ describe.only('_sendPhoto', function () {
         sendFileStub.reset();
         serviceMakeThumbnailSpy.reset();
         serviceMakeLargeSpy.reset();
+    });
+
+    after(function () {
+        sendFileStub.restore();
     })
 
 });

@@ -16,6 +16,14 @@ function createJpegPortrait (filename) {
 	_copy('./test/media/portrait.jpg', filename);
 }
 
+function createJpegThumbnailPortrait (filename) {
+	_copy('./test/media/portrait.thumbnail.jpg', filename);
+}
+
+function createJpegThumbnailLandscape (filename) {
+	_copy('./test/media/landscape.thumbnail.jpg', filename);
+}
+
 function createMpeg (filename) {
 	_copy('./test/media/video.mp4', filename);
 }
@@ -38,24 +46,26 @@ function createTxt (filename, content) {
 }
 
 var config = {
-	photoPath     : "c:/temp/dev/photos/original/",
-	largePath     : "c:/temp/dev/photos/large/",
-	thumbnailPath : "c:/temp/dev/photos/thumbnail/",
-	dataPath      : "c:/temp/dev/photos/data/",
+	photoPath     : "e:/temp/dev/mochtest/photos/original/",
+	largePath     : "e:/temp/dev/mochtest/photos/large/",
+	thumbnailPath : "e:/temp/dev/mochtest/photos/thumbnail/",
+	dataPath      : "e:/temp/dev/mochtest/photos/data/",
 	conv_prog     : "convert",
 	video_prog    : 'ffmpeg',
 	port          : 8190
 };
 
 module.exports = {
-	FOLDER_TEST        : 'e:/temp/dev/mochtest/',
-	deleteFile         : deleteFile,
-	createJpeg         : createJpeg,
-	createJpegPortrait : createJpegPortrait,
-	createMpeg         : createMpeg,
-    createMpeg2        : createMpeg2,
-	createTxt          : createTxt,
-	mkdirp             : fsE.mkdirpSync,
-	config             : config
+	FOLDER_TEST                  : 'e:/temp/dev/mochtest/',
+	deleteFile                   : deleteFile,
+	createJpeg                   : createJpeg,
+	createJpegPortrait           : createJpegPortrait,
+	createJpegThumbnailPortrait  : createJpegThumbnailPortrait,
+	createJpegThumbnailLandscape : createJpegThumbnailLandscape,
+	createMpeg                   :  createMpeg,
+    createMpeg2                  : createMpeg2,
+	createTxt                    : createTxt,
+	mkdirp                       : fsE.mkdirpSync,
+	config                       : config
 
 };
