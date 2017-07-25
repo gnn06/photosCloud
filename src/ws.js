@@ -94,7 +94,7 @@ app.get('/thumbnail/*', function (req, res) {
 app.get('/photo/*', function (req, res) {
 	 console.log('get /photo of ' + req.url);
 	_sendPhoto(req, res, config, 'original');
-})
+});
 
 app.use(express.static('./src/app'));
 

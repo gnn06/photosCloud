@@ -37,7 +37,24 @@ function makeThumbnail (photoPath, config, cb) {
     argv = argv.concat(['-gravity', 'center']);
     argv = argv.concat(['-extent', '100x100']);
 
-    console.log('photoservice', config.photoPath);
+    argv = argv.concat([config.photoPath + photoPath]);
+    argv = argv.concat([config.thumbnailPath + photoPath]);
+
+    proc.execFile(config.conv_prog, argv, (error, stdout, stderr) => {
+        if (error) {
+            console.error(error);
+            cb(-1);
+        }
+        cb(1);
+    })
+};
+
+function preparePhoto (photoPath, config, cb) {
+    console.log('preparing photo ', config.photoPath + photoPath);
+    var argv = [];
+    
+    argv = argv.concat(['-auto-orient']);
+
     argv = argv.concat([config.photoPath + photoPath]);
     argv = argv.concat([config.thumbnailPath + photoPath]);
 

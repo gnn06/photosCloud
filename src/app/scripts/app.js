@@ -12,10 +12,14 @@ angular
   .module('photosAngularApp', ['ngResource', 'ngRoute'])
 
   .filter('thumbnail', function() {
-	return function (input) {
-//		console.log(input);
-      return input.replace(/.*thumbnail/g, 'photo');
-	};
+		return function (input) {
+     	return input.replace(/.*thumbnail/g, 'photo');
+		};
+  })
+  .filter('original', function() {
+		return function (input) {
+     	return input.replace(/.*thumbnail/g, 'original');
+		};
   })
   .config(function($routeProvider, $locationProvider) {
 	  $routeProvider
@@ -26,5 +30,9 @@ angular
 	  .when('/photo/:folder*', {
 		  templateUrl: 'views/photo.html',
 		  controller: 'PhotoCtrl'
-	  })
+		})
+		.when('/original/:folder*', {
+		  templateUrl: 'views/original.html',
+		  controller: 'PhotoCtrl'
+	  })	
   });

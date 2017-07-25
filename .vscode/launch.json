@@ -23,7 +23,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Lancer le programme",
+            "name": "Lancer ws",
             "program": "${workspaceRoot}/src/ws.js"
         }
     ]

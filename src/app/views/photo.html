@@ -1,7 +1,9 @@
 <div class="row marketing" id="photo">
   <div>
-	<a href="#!/{{ photos[currentPhoto - 1].url | thumbnail }} ">Précédente</a>
-	<a href="#!/{{ photos[currentPhoto + 1].url | thumbnail }} ">Suivante</a>
+		{{ currentPhoto }}
+		<a href="#!/{{ photos[currentPhoto - 1].url | thumbnail }} ">Précédente</a>
+		<a href="#!/{{ photos[currentPhoto + 1].url | thumbnail }} ">Suivante</a>
+		<a href="#!/{{ photos[currentPhoto].url | original }} ">Original</a>
   </div>
   <div>
 	<img src="/large/{{$route.current.params.folder}}" ng-show="$route.current.params.folder.indexOf('.jpg') > 0 || $route.current.params.folder.indexOf('.JPG') > 0"/>

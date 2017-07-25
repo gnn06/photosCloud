@@ -36,9 +36,11 @@ angular.module('photosAngularApp')
 	$scope.$routeParams = $routeParams;
 
 	var host = $location.$$absUrl.substr(0,$location.$$absUrl.indexOf("#!"));
+
+	console.log("routeParam", $routeParams.folder);
   
 	$scope.currentPhoto = $rootScope.photos
-    .map(function(item){return item.url})
+    .map(function(item){return decodeURI(item.url)})
       .indexOf("/thumbnail/" + $routeParams.folder)
 
 	$http({method: 'GET',
