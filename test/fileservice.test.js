@@ -45,7 +45,7 @@ describe('fileservice of basic case', function() {
   });
 });
 
-describe('when called on subfolder', function () {
+describe('fileservice, when called on subfolder', function () {
   before(function() {
     utiltest.createJpeg(utiltest.FOLDER_TEST + 'test2/parentfile.jpg');
     utiltest.createJpeg(utiltest.FOLDER_TEST + 'test2/subfolder/subfile.jpg');
@@ -103,6 +103,7 @@ describe('when data is available', function () {
   before(function() {
     utiltest.mkdirp(utiltest.FOLDER_TEST + 'test3');
     utiltest.createTxt(utiltest.FOLDER_TEST + 'test3/folder.json', '[{"url":"file.jpg"}]');
+    utiltest.deleteFile(utiltest.FOLDER_TEST + 'test3/file.jpg');
   });
 
   it('should use stored data', function () {
@@ -115,5 +116,14 @@ describe('when data is available', function () {
       assert.deepEqual(result[0].url, '/file.jpg');
     });
   });
-});
 
+  it('should returns a new file and store it', function () {
+    utiltest.createJpeg(utiltest.FOLDER_TEST + 'test3/file2.jpg');
+    var promise = service.walk('', { photoFolder : utiltest.FOLDER_TEST + 'test3/', dataFolder : utiltest.FOLDER_TEST + 'test3/' });
+    return promise.then(function(result) {
+      assert.deepEqual(result[0].url, '/file.jpg');
+      assert.deepEqual(result[1].url, '/file2.jpg');
+      expect(file(utiltest.FOLDER_TEST + 'test3/folder.json')).to.contain('file2.jpg');
+    });
+  });
+});

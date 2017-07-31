@@ -8,7 +8,7 @@ const extensionsToRetrieve = ['jpg', 'mp4'];
 exports.walk = function (folder, config) {
 	var currentContent = [];
 	var allSubContent = [];
-	var currentContentFromCache = false;
+	var previousCacheCount = false;
 	var flattenContent = [];
 
 	// Récupérer ancien contenu
@@ -19,8 +19,8 @@ exports.walk = function (folder, config) {
 	if (fs.existsSync(config.dataFolder + folder + '/folder.json')) {
 		let content = fs.readFileSync(config.dataFolder + folder + '/folder.json', 'utf-8');
 		currentContent = JSON.parse(content);
-		currentContentFromCache = currentContent.length > 0;
-		if (currentContentFromCache) {
+		previousCacheCount = currentContent.length;
+		if (previousCacheCount > 0) {
 			console.log('use cache for ', folder, ' ', currentContent.length, ' items read');
 		}
 	}
@@ -39,29 +39,32 @@ exports.walk = function (folder, config) {
 			}).catch(function(err){
 				console.error('catch of subwalk', folder, err);
 			});
-		} else if (!currentContentFromCache) {
+		} else {
 			// Ne faire la récupération que si le contenu n'a pas été préalablement récupéré
 			var extension = files[i].substr(-3).toLowerCase();
-			if (extensionsToRetrieve.indexOf(extension) > -1) {
-				let item = {};
-				item.url = files[i];
-				// récupération des informations annexes
-				currentContent.push(item);
-				var photoPath = config.photoFolder + folder + '/' + files[i];
-				var p = dataService.getPhotoDate(photoPath);
-				promises.push(p);
-				p.then( date => {
-					item.date = date;
-				}).catch(function (err) {
-					console.error('catch of walk of folder=', folder, err);
-				});
+			if (!currentContent || currentContent.map(function(item) {return item.url;}).indexOf(files[i]) == -1)
+			{
+				if (extensionsToRetrieve.indexOf(extension) > -1) {
+					let item = {};
+					item.url = files[i];
+					// récupération des informations annexes
+					currentContent.push(item);
+					var photoPath = config.photoFolder + folder + '/' + files[i];
+					var p = dataService.getPhotoDate(photoPath);
+					promises.push(p);
+					p.then( date => {
+						item.date = date;
+					}).catch(function (err) {
+						console.error('catch of walk of folder=', folder, err);
+					});
+				}
 			}
 		}
 	}
 	// stocker le contenu du répertoire courant si on vient de le construire (et pas les sous-contenu)
 	// On stocke les urls sans le chemin.
-	return Promise.all(promises).then(function(){
-		if (!currentContentFromCache) {
+	return Promise.all(promises).then(function() {
+		if (previousCacheCount < currentContent.length) {
 			let content = JSON.stringify(currentContent, null, 2);
 			try {
 				fs.writeFileSync(config.dataFolder + folder + '/folder.json', content, 'utf-8');

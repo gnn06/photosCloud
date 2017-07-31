@@ -7,7 +7,7 @@ var proc = require('child_process');
 //console.log('service',config);
 
 function getPhotoDate (photoFilename) {
-	// console.log('getting data of ', photoFilename);
+	console.log('getting data of ', photoFilename);
 	if (photoFilename.substr(-4).toLowerCase() === '.jpg') {
 		var p = exif.read(photoFilename)
 			.then(data => {
