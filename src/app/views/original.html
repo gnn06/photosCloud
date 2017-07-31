@@ -1,5 +1,9 @@
 <div class="row marketing">
   <div>
+		{{ currentPhoto }}
+		<a href="#!/{{ photos[currentPhoto].url | thumbnail }} ">photo</a>
+  </div>
+  <div>
 		<img src="/photo/{{$route.current.params.folder}}" />
   </div>
 </div>
