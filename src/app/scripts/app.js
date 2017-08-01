@@ -35,4 +35,13 @@ angular
 		  templateUrl: 'views/original.html',
 		  controller: 'PhotoCtrl'
 	  })	
-  });
+	});
+
+	
+window.addEventListener("scroll", function () {
+	var el = document.documentElement;
+	// console.log(el.scrollHeight, window.innerHeight, window.pageYOffset);
+	if(el.scrollHeight === (window.innerHeight + window.pageYOffset)) {
+		console.log("bottom!");
+	}
+});

@@ -14,8 +14,8 @@ angular.module('photosAngularApp')
 		   url: '/thumbnails'
 		   /*, cache: $templateCache*/}).
         then(function(response) {
-          $rootScope.photos = $scope.photos = response.data;
-					$rootScope.photos.sort((a, b) => {
+					$rootScope.allPhotos = response.data;
+					$rootScope.allPhotos.sort((a, b) => {
 						if (a.date < b.date) {
 							return 1;
 						} else if (a.date > b.date) {
@@ -24,6 +24,7 @@ angular.module('photosAngularApp')
 							return 0;
 						}
 					});
+          $rootScope.photos = $scope.photos = $rootScope.allPhotos.slice(0, 12);
         }, function(response) {
           console.error('error');
 		});		
