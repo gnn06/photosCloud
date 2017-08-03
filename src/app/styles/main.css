@@ -84,7 +84,8 @@ body {
 
 
 #photos img {
-  margin: 2px;
+  margin: 1px;
+  width: 24%;
 }
 
 #photo img, video {

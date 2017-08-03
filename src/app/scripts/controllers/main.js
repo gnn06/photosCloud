@@ -24,13 +24,13 @@ angular.module('photosAngularApp')
 								return 0;
 							}
 						});
-						$rootScope.photos = $scope.photos = $rootScope.allPhotos.slice(0, 12);
+						$rootScope.photos = $scope.photos = $rootScope.allPhotos.slice(0, count);
 					}, function(response) {
 						console.error('error');
 			});
 		}
 
-		var count = 12;
+		var count = 36;
 
 		// $scope.retrievePage = function() {
 		// 	console.log('retrieve');
