@@ -1,15 +1,14 @@
-<div class="row marketing" id="photo">
   <div>
-		{{ currentPhoto }}
+		<a href="#!/">Home</a>
 		<a href="#!/{{ photos[currentPhoto - 1].url | thumbnail }} ">Précédente</a>
 		<a href="#!/{{ photos[currentPhoto + 1].url | thumbnail }} ">Suivante</a>
 		<a href="#!/{{ photos[currentPhoto].url | original }} ">Original</a>
   </div>
-  <div>
-	<img src="/large/{{$route.current.params.folder}}" ng-show="$route.current.params.folder.indexOf('.jpg') > 0 || $route.current.params.folder.indexOf('.JPG') > 0"/>
+  <div style="height:100%">
+	<div id="toto" style="background-image:url('http://192.168.1.42:8190/large/{{$route.current.params.folder}}')"></div>
 	<!-- autoplay -->
 	<video ng-show="$route.current.params.folder.indexOf('.mp4') > 0"
-		src="/photo/{{$route.current.params.folder}}"	 controls poster="/large/{{$route.current.params.folder}}">
+		src="http://192.168.1.42:8190/photo/{{$route.current.params.folder}}"	 controls poster="/large/{{$route.current.params.folder}}">
 		Votre navigateur ne permet pas de lire les vidéos.
 		Mais vous pouvez toujours
 		<a href="fichiervideo.webm">la télécharger</a> !
@@ -55,4 +54,3 @@
   		submit
   	</button>status = {{status}}
   </div>
-</div>

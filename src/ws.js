@@ -21,6 +21,12 @@ config.photosUrl = '/thumbnails';
 config.photoUrl = '/photo';
 config.thumbnailUrl = '/thumbnail';
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.get('/thumbnails*', function (req, res) {
 	var start = new Date().getTime();
 
@@ -96,7 +102,7 @@ app.get('/photo/*', function (req, res) {
 	_sendPhoto(req, res, config, 'original');
 });
 
-app.use(express.static('./src/app'));
+app.use(express.static('./app'));
 
 app.listen(config.port, function () {
 	console.log('Example app listening on port ', config.port);
