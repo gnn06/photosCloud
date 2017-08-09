@@ -120,22 +120,24 @@ body {
   height: 100%;
 }
 
-#photo img, video {
-  width: 100%;
-  height:100%;
-}
-
 #photo {
+  display: flex;
+  flex-direction: column;
   height: 100%;
 }
 
-div#picture {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  height:100%;
+#media {
+  flex:1;
 }
 
 #photo #footer {
   background-color: red;
 }
+
+#picture {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  height: 100%;
+}
+
