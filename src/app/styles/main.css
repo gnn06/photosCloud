@@ -70,31 +70,6 @@ body {
   margin-top: 28px;
 }
 
-#photos img {
-  padding: 1px;
-  width: 100%;
-  height: 100%;
-}
-
-#photo img, video {
-  width: 100%;
-  height:100%;
-}
-
-.photos div {
-  height: 100%;
-}
-
-#photo div {
-  height: 100%;
-}
-div#toto {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  height:100%;
-}
-
 /* Responsive: Portrait tablets and up */
 @media screen and (max-width: 760px) {
   .container {
@@ -139,3 +114,28 @@ div#toto {
   }
 }
 
+#photos img {
+  padding: 1px;
+  width: 100%;
+  height: 100%;
+}
+
+#photo img, video {
+  width: 100%;
+  height:100%;
+}
+
+#photo {
+  height: 100%;
+}
+
+div#picture {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  height:100%;
+}
+
+#photo #footer {
+  background-color: red;
+}

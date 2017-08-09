@@ -1,56 +1,58 @@
-<div>
-	<a href="#!/">Home</a>
-	<a href="#!/{{ photos[currentPhoto - 1].url | thumbnail }} ">Précédente</a>
-	<a href="#!/{{ photos[currentPhoto + 1].url | thumbnail }} ">Suivante</a>
-	<a href="#!/{{ photos[currentPhoto].url | original }} ">Original</a>
-</div>
-<div style="height:100%">
-	<div id="toto" style="background-image:url('http://192.168.1.42:8190/large/{{$route.current.params.folder}}')"></div>
-	<!-- autoplay -->
-	<video ng-show="$route.current.params.folder.indexOf('.mp4') > 0"
-		src="http://192.168.1.42:8190/photo/{{$route.current.params.folder}}"	 controls poster="/large/{{$route.current.params.folder}}">
-		Votre navigateur ne permet pas de lire les vidéos.
-		Mais vous pouvez toujours
-		<a href="fichiervideo.webm">la télécharger</a> !
-	</video>
-</div>
-<div>
-	<label>
-		<input type="radio"
-			ng-model="data.star"
-			value="1"
-			name="star1">
-		1
-	</label>
-	<label>
-		<input type="radio"
-			ng-model="data.star"
-			value="2"
-			name="star2">
-		2
-	</label>
-	<label>
-		<input type="radio"
-			ng-model="data.star"
-			value="3"
-			name="star3">
-		3
-	</label>
-	<label>
-		<input type="radio"
-			ng-model="data.star"
-			value="4"
-			name="star4">
-		4
-	</label><label>
-		<input type="radio"
-			ng-model="data.star"
-			value="5"
-			name="star5">
-		5
-	</label>
-	<button id="samplejsonpbtn"
-		ng-click="post()">
-		submit
-	</button>status = {{status}}
+<div id="photo">
+	<div id="header">
+		<a href="#!/">Home</a>
+		<a href="#!/{{ photos[currentPhoto - 1].url | thumbnail }} ">Précédente</a>
+		<a href="#!/{{ photos[currentPhoto + 1].url | thumbnail }} ">Suivante</a>
+		<a href="#!/{{ photos[currentPhoto].url | original }} ">Original</a>
+	</div>
+	<div style="height:100%">
+		<div id="picture" style="background-image:url('http://192.168.1.42:8190/large/{{$route.current.params.folder}}')"></div>
+		<!-- autoplay -->
+		<video ng-show="$route.current.params.folder.indexOf('.mp4') > 0"
+			src="http://192.168.1.42:8190/photo/{{$route.current.params.folder}}"	 controls poster="/large/{{$route.current.params.folder}}">
+			Votre navigateur ne permet pas de lire les vidéos.
+			Mais vous pouvez toujours
+			<a href="fichiervideo.webm">la télécharger</a> !
+		</video>
+	</div>
+	<div id="footer">
+		<label>
+			<input type="radio"
+				ng-model="data.star"
+				value="1"
+				name="star1">
+			1
+		</label>
+		<label>
+			<input type="radio"
+				ng-model="data.star"
+				value="2"
+				name="star2">
+			2
+		</label>
+		<label>
+			<input type="radio"
+				ng-model="data.star"
+				value="3"
+				name="star3">
+			3
+		</label>
+		<label>
+			<input type="radio"
+				ng-model="data.star"
+				value="4"
+				name="star4">
+			4
+		</label><label>
+			<input type="radio"
+				ng-model="data.star"
+				value="5"
+				name="star5">
+			5
+		</label>
+		<button id="samplejsonpbtn"
+			ng-click="post()">
+			submit
+		</button>status = {{status}}
+	</div>
 </div>
