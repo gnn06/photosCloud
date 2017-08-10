@@ -126,6 +126,11 @@ body {
   height: 100%;
 }
 
+#header {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+}
 #media {
   flex:1;
 }

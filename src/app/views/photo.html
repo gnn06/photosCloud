@@ -11,7 +11,7 @@
 			ng-show="$route.current.params.folder.indexOf('.jpg') > 0"
 		></div>
 		<!-- autoplay -->
-		<video ng-show="$route.current.params.folder.indexOf('.mp4') > 0"
+		<video id="video" ng-show="$route.current.params.folder.indexOf('.mp4') > 0"
 			src="/photo/{{$route.current.params.folder}}"	 controls poster="/large/{{$route.current.params.folder}}">
 			Votre navigateur ne permet pas de lire les vidéos.
 			Mais vous pouvez toujours
