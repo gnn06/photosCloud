@@ -7,12 +7,12 @@
 	</div>
 	<div id="media" >
 		<div id="picture"
-			style="background-image:url('http://192.168.1.42:8190/large/{{$route.current.params.folder}}')"
+			style="background-image:url('/large/{{$route.current.params.folder}}')"
 			ng-show="$route.current.params.folder.indexOf('.jpg') > 0"
 		></div>
 		<!-- autoplay -->
 		<video ng-show="$route.current.params.folder.indexOf('.mp4') > 0"
-			src="http://192.168.1.42:8190/photo/{{$route.current.params.folder}}"	 controls poster="/large/{{$route.current.params.folder}}">
+			src="/photo/{{$route.current.params.folder}}"	 controls poster="/large/{{$route.current.params.folder}}">
 			Votre navigateur ne permet pas de lire les vidéos.
 			Mais vous pouvez toujours
 			<a href="fichiervideo.webm">la télécharger</a> !

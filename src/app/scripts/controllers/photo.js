@@ -13,7 +13,7 @@ angular.module('photosAngularApp')
 
 	if (!$rootScope.photos) {
 		$http({method: 'GET',
-		   url: 'http://192.168.1.42:8190/thumbnails'
+		   url: '/thumbnails'
 		   /*, cache: $templateCache*/}).
         then(function(response) {
           $rootScope.photos = $scope.photos = response.data;
