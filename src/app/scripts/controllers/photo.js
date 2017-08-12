@@ -10,25 +10,32 @@
 angular.module('photosAngularApp')
   .controller('PhotoCtrl', function ($scope, $rootScope, $location, $route, $routeParams, $http) {
 	console.log("dans PhotoCtrl")
-
+	
 	if (!$rootScope.photos) {
 		$http({method: 'GET',
-		   url: '/thumbnails'
-		   /*, cache: $templateCache*/}).
-        then(function(response) {
-          $rootScope.photos = $scope.photos = response.data;
-					$rootScope.photos.sort((a, b) => {
-						if (a.date < b.date) {
-							return 1;
-						} else if (a.date > b.date) {
-							return -1;
-						} else {
-							return 0;
-						}
-					});
-        }, function(response) {
-          console.error('error');
+		  url: '/thumbnails'
+		  /*, cache: $templateCache*/}).
+		then(function(response) {
+			$rootScope.photos = $scope.photos = response.data;
+			$rootScope.photos.sort((a, b) => {
+				if (a.date < b.date) {
+					return 1;
+				} else if (a.date > b.date) {
+					return -1;
+				} else {
+					return 0;
+				}
+			});
+			$scope.currentPhoto = $rootScope.photos
+				.map(function(item){return decodeURI(item.url)})
+					.indexOf("/thumbnail/" + $routeParams.folder);
+		}, function(response) {
+			console.error('error');
 		});		
+	} else {
+		$scope.currentPhoto = $rootScope.photos
+			.map(function(item){return decodeURI(item.url)})
+				.indexOf("/thumbnail/" + $routeParams.folder)
 	}
 
 	$scope.$location = $location;
@@ -36,12 +43,6 @@ angular.module('photosAngularApp')
 	$scope.$routeParams = $routeParams;
 
 	var host = $location.$$absUrl.substr(0,$location.$$absUrl.indexOf("#!"));
-
-	console.log("routeParam", $routeParams.folder);
-  
-	$scope.currentPhoto = $rootScope.photos
-    .map(function(item){return decodeURI(item.url)})
-      .indexOf("/thumbnail/" + $routeParams.folder)
 
 	$http({method: 'GET',
 		   url: '/data/' + $routeParams.folder

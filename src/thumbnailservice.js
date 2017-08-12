@@ -26,6 +26,8 @@ function makeLarge (filename, config, cb) {
         func = makeLargeOfJpeg;
     } else if (util.isMpeg(filename)) {
         func = makeLargeOfMpeg;
+    } else {
+        console.log('filename', filename);
     }
     func(filename, config, cb);
 };

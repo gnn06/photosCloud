@@ -9,6 +9,8 @@
  */
 angular.module('photosAngularApp')
   .controller('MainCtrl', function ($scope, $rootScope, $http, $window) {
+	  console.log('mainController');
+	
 		if (!$rootScope.photos) {
 			$http({method: 'GET',
 				url: '/thumbnails'

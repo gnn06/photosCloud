@@ -57,6 +57,10 @@ app.get('/thumbnails*', function (req, res) {
 
 function _sendPhoto (req, res, config, photoVersion) {
 	var photoPath = decodeURI(req.url).replace(/^\/[^/]+\//, '');
+	// angular call /large/ !
+	if (photoPath == '') {
+		return;
+	}
 	var toSendPath, toSendPhotoName, func;
 	switch (photoVersion) {
 		case 'large':
