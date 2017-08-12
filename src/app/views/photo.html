@@ -3,8 +3,9 @@
 		<a href="#!/"><img src="/images/back.png"/></a>
 		<a id="fullscreen" href="#!/{{ photos[currentPhoto].url | original }} "><img src="/images/fullscreen.png"/></a>
 	</div>
-	<a id="prev" href="#!/{{ photos[currentPhoto - 1].url | thumbnail }} "><img src="/images/left_arrow.png"/></a>
-	<a id="next" href="#!/{{ photos[currentPhoto + 1].url | thumbnail }} "><img src="/images/right_arrow.png"/></a>
+	
+	<a id="prev" href="#!/{{ photos[currentPhoto - 1].url | thumbnail }}"><img src="/images/left_arrow.png"/></a>
+	<a id="next" href="#!/{{ photos[currentPhoto + 1].url | thumbnail }}"><img src="/images/right_arrow.png"/></a>
 	<div id="media" >
 		<div id="picture"
 			style="background-image:url('/large/{{$route.current.params.folder}}')"
@@ -12,7 +13,7 @@
 		></div>
 		<!-- autoplay -->
 		<video id="video" ng-show="$route.current.params.folder.indexOf('.mp4') > 0"
-			src="/photo/{{$route.current.params.folder}}"	 controls poster="/large/{{$route.current.params.folder}}">
+			src="/photo/{{$route.current.params.folder}}" controls poster="/large/{{$route.current.params.folder}}">
 			Votre navigateur ne permet pas de lire les vidéos.
 			Mais vous pouvez toujours
 			<a href="fichiervideo.webm">la télécharger</a> !

@@ -1,5 +1,7 @@
 'use strict';
 
+const path = require('path');
+
 const proc = require('child_process');
 
 module.exports = {
@@ -14,8 +16,15 @@ function makeLarge (photoPath, config, cb) {
     
     argv = argv.concat(['-size', '800x800']);
     argv = argv.concat(['-thumbnail', '800x800']);
-    var inputfile  = (config.photoPath + photoPath).replace(/\//g,'\\');
-    var outputfile = (config.largePath + photoPath).replace(/\//g,'\\');
+    
+    var inputfile  = (config.photoPath + photoPath);
+    var outputfile = (config.largePath + photoPath);
+    // as we launch command line program, if it is under windows, we need to transform / into \\
+    if (path.sep == '\\') {
+    	inputfile = inputfile.replace(/\//g,'\\')
+    	outputfile = outputfile.replace(/\//g,'\\');
+    }
+    
     argv = argv.concat([inputfile]);
     argv = argv.concat([outputfile]);
 

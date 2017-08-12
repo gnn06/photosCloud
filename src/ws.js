@@ -60,15 +60,19 @@ function _sendPhoto (req, res, config, photoVersion) {
 	var toSendPath, toSendPhotoName, func;
 	switch (photoVersion) {
 		case 'large':
-			func = photoService.makeLarge;
+			func = thumbnail.makeLarge;
 			toSendPath = config.largePath;
-			toSendPhotoName = photoPath;
+			if (util.isMpeg(photoPath)) {
+				toSendPhotoName = util.getThumbnailPath(photoPath);
+			} else {
+				toSendPhotoName = photoPath;
+			}
 			break;
 		case 'thumbnail':
 			func = thumbnail.makeThumbnail;
 			toSendPath = config.thumbnailPath;
 			if (util.isMpeg(photoPath)) {
-				toSendPhotoName = util.getThumbnailPath(photoPath);;
+				toSendPhotoName = util.getThumbnailPath(photoPath);
 			} else {
 				toSendPhotoName = photoPath;
 			}

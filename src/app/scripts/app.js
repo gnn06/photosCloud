@@ -21,6 +21,11 @@ angular
      	return input.replace(/.*thumbnail/g, 'original');
 		};
   })
+  .filter('large', function () {
+  	return function (input) {
+  		return input.replace(/.*thumbnail/g, 'large').replace(/mp4/,'jpg');
+  	}
+  })
   .config(function($routeProvider, $locationProvider) {
 	  $routeProvider
 	  .when('/', {
