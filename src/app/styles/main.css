@@ -126,27 +126,44 @@ body {
   height: 100%;
 }
 
-#header {
-  position: fixed;
-  top: 5px;
-  left: 5px;
-}
-#media {
-  flex:1;
-}
+  #header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+  }
 
-#photo #footer {
-  background-color: red;
-}
+    #prev {
+      position: fixed;
+      left: 5px;
+      top: 50%;
+    }
 
-#picture {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  height: 100%;
-}
+    #next {
+      position: fixed;
+      right: 5px;
+      top: 50%;
+    }
 
-#photo video {
-  width: 100%;
-  height: 100%;
-}
+  #media {
+    flex:1;
+  }
+
+  #photo #footer {
+    background-color:red;
+  }
+
+  #picture {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    height: 100%;
+  }
+
+  #photo video {
+    width: 100%;
+    height: 100%;
+  }
