@@ -24,6 +24,8 @@ exports.walk = function (folder, config) {
 			console.log('use cache for ', folder, ' ', currentContent.length, ' items read');
 		}
 	}
+	var useCache = true;
+	
 	// parcourir pour soit créer le contenu soit récupérer les sous-contenus
 	var files = fs.readdirSync (config.photoFolder + folder, 'utf-8');
 	var promises = [];
@@ -42,7 +44,7 @@ exports.walk = function (folder, config) {
 		} else {
 			// Ne faire la récupération que si le contenu n'a pas été préalablement récupéré
 			var extension = files[i].substr(-3).toLowerCase();
-			if (!currentContent || currentContent.map(function(item) {return item.url;}).indexOf(files[i]) == -1)
+				if (!useCache && (!currentContent || currentContent.map(function(item) {return item.url;}).indexOf(files[i]) == -1))
 			{
 				if (extensionsToRetrieve.indexOf(extension) > -1) {
 					let item = {};

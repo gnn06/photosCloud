@@ -9,7 +9,7 @@
 	<div id="media" >
 		<div id="picture"
 			style="background-image:url('/large/{{$route.current.params.folder}}')"
-			ng-show="$route.current.params.folder.indexOf('.jpg') > 0"
+			ng-show="$route.current.params.folder.toLowerCase().indexOf('.jpg') > 0"
 		></div>
 		<!-- autoplay -->
 		<video id="video" ng-show="$route.current.params.folder.indexOf('.mp4') > 0"

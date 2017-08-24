@@ -13,12 +13,12 @@ angular
 
   .filter('thumbnail', function() {
 		return function (input) {
-     	return input.replace(/.*thumbnail/g, 'photo');
+     		return input != undefined ?  input.replace(/.*thumbnail/g, 'photo') : "";
 		};
   })
   .filter('original', function() {
 		return function (input) {
-     	return input.replace(/.*thumbnail/g, 'original');
+     		return input != undefined ? input.replace(/.*thumbnail/g, 'original') : "";
 		};
   })
   .filter('large', function () {

@@ -29,7 +29,9 @@ function makeLarge (filename, config, cb) {
     } else {
         console.log('filename', filename);
     }
+    if (func) {
     func(filename, config, cb);
+    }
 };
 
 function makeThumbnailOfJpegV2 (photoPath, config, cb) {
