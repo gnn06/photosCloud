@@ -16,6 +16,7 @@ exports.walk = function (folder, config) {
 		console.log('create folder ', config.dataFolder + folder);
 		fs.mkdirSync(config.dataFolder + folder);
 	}
+	var useCache = true;
 	if (fs.existsSync(config.dataFolder + folder + '/folder.json')) {
 		let content = fs.readFileSync(config.dataFolder + folder + '/folder.json', 'utf-8');
 		currentContent = JSON.parse(content);
@@ -23,8 +24,9 @@ exports.walk = function (folder, config) {
 		if (previousCacheCount > 0) {
 			console.log('use cache for ', folder, ' ', currentContent.length, ' items read');
 		}
+	} else {
+               useCache = false;
 	}
-	var useCache = true;
 	
 	// parcourir pour soit créer le contenu soit récupérer les sous-contenus
 	var files = fs.readdirSync (config.photoFolder + folder, 'utf-8');
@@ -63,6 +65,7 @@ exports.walk = function (folder, config) {
 			}
 		}
 	}
+	
 	// stocker le contenu du répertoire courant si on vient de le construire (et pas les sous-contenu)
 	// On stocke les urls sans le chemin.
 	return Promise.all(promises).then(function() {

@@ -143,5 +143,16 @@ app.post('/data/*', jsonParser, function(req, res) {
 	});
 });
 
+app.delete('/photo/*', function (req, res)  {
+	var photoPath = decodeURI(req.url).replace(/^\/[^/]+\//, '');
+	file.trashPhoto(photoPath, (err) => {
+		if (err) throw err;
+	});
+	// file.delete(large)
+	// file.delete(thumbnail)
+	// file.delete(data)
+});
+
 exports.app        = app;
 exports._sendPhoto = _sendPhoto;
+
