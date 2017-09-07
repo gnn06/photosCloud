@@ -144,13 +144,13 @@ app.post('/data/*', jsonParser, function(req, res) {
 });
 
 app.delete('/photo/*', function (req, res)  {
-	var photoPath = decodeURI(req.url).replace(/^\/[^/]+\//, '');
-	file.trashPhoto(photoPath, (err) => {
-		if (err) throw err;
-	});
+	var photoPath = decodeURI(req.url).replace(/^\/[^/]+\//, ''); // folder/file.jpg
+	console.log('DELETE ', photoPath);
+	fileservice.trashPhoto(photoPath, config);
 	// file.delete(large)
 	// file.delete(thumbnail)
 	// file.delete(data)
+	res.send('ok');
 });
 
 exports.app        = app;

@@ -91,3 +91,7 @@ exports.walk = function (folder, config) {
 		return flattenContent;
 	});
 };
+
+exports.trashPhoto = function (photo, config) {
+	fs.renameSync(config.photoPath + photo, config.trashPath + photo);
+}

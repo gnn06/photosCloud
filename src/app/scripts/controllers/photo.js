@@ -8,7 +8,7 @@
  * Controller of the photosAngularApp
  */
 angular.module('photosAngularApp')
-  .controller('PhotoCtrl', function ($scope, $rootScope, $location, $route, $routeParams, $http) {
+  .controller('PhotoCtrl', function ($scope, $rootScope, $location, $route, $routeParams, $http, $filter, $mdDialog) {
 	console.log("dans PhotoCtrl")
 	
 	if (!$rootScope.photos) {
@@ -60,7 +60,7 @@ angular.module('photosAngularApp')
 		$http({method: 'POST',
 		   url: '/data/' + $routeParams.folder,
 		   data: { star: $scope.data.star }
-		   /*, cache: $templateCache*/}).
+		  }).
         then(function(response) {
           $scope.status = response.status;
           //$scope.data = response.data;
@@ -68,5 +68,37 @@ angular.module('photosAngularApp')
           //$scope.data = response.data || 'Request failed';
           $scope.status = response.status;
 		});
-	}
-  });
+	};
+
+	$scope.deletePhoto = function(ev) {
+		console.log('delete');
+		
+		var confirm = $mdDialog.confirm()
+			// .title('Supprimer la photo ?')
+			.textContent('Voulez-vous vraiment supprimer la photo ?')
+			.ariaLabel('Lucky day')
+			.targetEvent(ev)
+			.ok('Supprimer')
+			.cancel('Annuler');
+
+		$mdDialog.show(confirm).then(function() {
+			$http(
+				{
+					method: 'DELETE',
+					url: '/photo/' + $routeParams.folder
+				}
+			).then(function (response) {
+				console.log('delete successful');
+				var next = $rootScope.photos[$scope.currentPhoto + 1].url;
+				$rootScope.photos.splice($scope.currentPhoto, 1);
+				$location.path($filter('thumbnail')(next));
+			}, function (err) {
+				console.log('delete error');
+			})
+			$scope.status = 'You decided to get rid of your debt.';
+		}, function() {
+			$scope.status = 'You decided to keep your debt.';
+		});
+
+	};		
+});
