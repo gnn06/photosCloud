@@ -1,12 +1,13 @@
 var config = {}
 
 // � terminer par un slash
-config.photoPath     = "//192.168.1.2/PiPhotos/original/";
-config.largePath     = "//192.168.1.2/PiPhotos/large/";
-config.thumbnailPath = "//192.168.1.2/PiPhotos/thumbnail/";
-config.dataPath      = "//192.168.1.2/PiPhotos/data/";
+config.photoPath     = "/home/pi/dev/photosCloud/real_sample/photo/";
+config.largePath     = "/home/pi/dev/photosCloud/real_sample/large/";
+config.thumbnailPath = "/home/pi/dev/photosCloud/real_sample/thumbnail/";
+config.dataPath      = "/home/pi/dev/photosCloud/real_sample/data/";
+config.trashPath     = "/home/pi/dev/photosCloud/real_sample/corbeille/";
 config.conv_prog     = "convert";
-config.video_prog    = 'ffmpeg';
-config.port          = 8190;
+config.video_prog    = 'avconv';
+config.port          = 8090;
 
 module.exports = config
