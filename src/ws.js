@@ -3,12 +3,13 @@ var express     = require('express');
 var bodyParser  = require('body-parser');
 var fs          = require('fs');
 
-var fileservice  = require('./fileservice');
-var dataService  = require('./dataservice');
-var photoService = require('./photoservice');
-var thumbnail    = require('./thumbnailservice.js')
-var chemin       = require('./chemin');
-const util       = require('./util');
+var   fileservice  = require('./fileservice');
+var   dataService  = require('./dataservice');
+var   photoService = require('./photoservice');
+var   thumbnail    = require('./thumbnailservice.js')
+const dispatcher   = require('./dispatcher');
+var   chemin       = require('./chemin');
+const util         = require('./util');
 
 var config = require('./config');
 console.log(config);
@@ -146,7 +147,7 @@ app.post('/data/*', jsonParser, function(req, res) {
 app.delete('/photo/*', function (req, res)  {
 	var photoPath = decodeURI(req.url).replace(/^\/[^/]+\//, ''); // folder/file.jpg
 	console.log('DELETE ', photoPath);
-	fileservice.trashPhoto(photoPath, config);
+	dispatcher.trashPhoto(photoPath, config);
 	// file.delete(large)
 	// file.delete(thumbnail)
 	// file.delete(data)

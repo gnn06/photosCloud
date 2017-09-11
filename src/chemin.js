@@ -12,5 +12,13 @@ function getFolder (photoPath) {
 	return folder;
 }
 
+// returns filename without starting slash
+function getPhoto (photoPath) {
+	var photo = photoPath.substring(photoPath.lastIndexOf('/') + 1);
+	return photo;
+}
+
 exports.urlToFolder = urlToFolder;
 exports.getFolder = getFolder;
+exports.getPhoto  = getPhoto;
+

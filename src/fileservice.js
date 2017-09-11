@@ -94,4 +94,6 @@ exports.walk = function (folder, config) {
 
 exports.trashPhoto = function (photo, config) {
 	fs.renameSync(config.photoPath + photo, config.trashPath + photo);
+	fs.unlinkSync(config.thumbnailPath + photo);
+	fs.unlinkSync(config.largePath + photo);
 }
