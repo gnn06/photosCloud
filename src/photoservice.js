@@ -13,7 +13,8 @@ function makeLarge (photoPath, config, cb) {
     console.log('create large of ', config.photoPath + photoPath);
 
     var argv = [];
-    
+   
+    /* -thumbnail et -resize donnent quasiment la même image. -resize un poil plus lourde. */
     argv = argv.concat(['-size', '800x800']);
     argv = argv.concat(['-thumbnail', '800x800']);
     
