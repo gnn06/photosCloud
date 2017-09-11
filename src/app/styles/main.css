@@ -142,12 +142,14 @@
       position: fixed;
       left: 5px;
       top: 50%;
+      z-index:1; //need for video
     }
 
     #next {
       position: fixed;
       right: 5px;
       top: 50%;
+      z-index:1; //need for video
     }
 
   #media {

@@ -1,5 +1,5 @@
- <div id="photos">
-    <a ng-repeat="p in photos" href="/#!/{{p.url | thumbnail }}">
-      <img src="{{p.url}}"/>
-    </a>
-  </div>
+<md-grid-list id="photos" md-cols="7" md-cols-xs="4" md-gutter="1px" md-row-height="1:1">
+  <md-grid-tile ng-repeat="p in photos">
+      <a href="/#!/{{p.url | thumbnail }}">      <img src="{{p.url}}"/>      </a>
+  </md-grid-tile>
+</md-grid-list>
