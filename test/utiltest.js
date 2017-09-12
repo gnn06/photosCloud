@@ -45,18 +45,21 @@ function createTxt (filename, content) {
 	fs.closeSync(fd);
 }
 
+const ROOT_FOLDER_TEST = 'c:/temp/dev/mochtest/';
+
 var config = {
-	photoPath     : "e:/temp/dev/mochtest/photos/original/",
-	largePath     : "e:/temp/dev/mochtest/photos/large/",
-	thumbnailPath : "e:/temp/dev/mochtest/photos/thumbnail/",
-	dataPath      : "e:/temp/dev/mochtest/photos/data/",
+	photoPath     : ROOT_FOLDER_TEST + "photos/original/",
+	largePath     : ROOT_FOLDER_TEST + "photos/large/",
+	thumbnailPath : ROOT_FOLDER_TEST + "photos/thumbnail/",
+	dataPath      : ROOT_FOLDER_TEST + "photos/data/",
 	conv_prog     : "convert",
 	video_prog    : 'ffmpeg',
-	port          : 8190
+	port          : 8090
 };
 
 module.exports = {
-	FOLDER_TEST                  : 'e:/temp/dev/mochtest/',
+	ROOT_FOLDER_TEST                  : ROOT_FOLDER_TEST,
+	ROOT_FOLDER_TEST             : ROOT_FOLDER_TEST,
 	deleteFile                   : deleteFile,
 	createJpeg                   : createJpeg,
 	createJpegPortrait           : createJpegPortrait,

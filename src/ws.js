@@ -22,7 +22,7 @@ config.photosUrl = '/thumbnails';
 config.photoUrl = '/photo';
 config.thumbnailUrl = '/thumbnail';
 
-app.use(express.static('./src/app'));
+app.use(express.static('./app'));
 
 app.listen(config.port, function () {
 	console.log('Example app listening on port ', config.port);
@@ -57,9 +57,9 @@ app.get('/thumbnails*', function (req, res) {
 });
 
 function _sendPhoto (req, res, config, photoVersion) {
-	var photoPath = decodeURI(req.url).replace(/^\/[^/]+\//, '');
+	var relPhotoPath = decodeURI(req.url).replace(/^\/[^/]+\//, '');
 	// angular call /large/ !
-	if (photoPath == '') {
+	if (relPhotoPath == '') {
 		return;
 	}
 	var toSendPath, toSendPhotoName, func;
@@ -67,38 +67,39 @@ function _sendPhoto (req, res, config, photoVersion) {
 		case 'large':
 			func = thumbnail.makeLarge;
 			toSendPath = config.largePath;
-			if (util.isMpeg(photoPath)) {
-				toSendPhotoName = util.getThumbnailPath(photoPath);
+			if (util.isMpeg(relPhotoPath)) {
+				toSendPhotoName = util.getThumbnailPath(relPhotoPath);
 			} else {
-				toSendPhotoName = photoPath;
+				toSendPhotoName = relPhotoPath;
 			}
 			break;
 		case 'thumbnail':
 			func = thumbnail.makeThumbnail;
 			toSendPath = config.thumbnailPath;
-			if (util.isMpeg(photoPath)) {
-				toSendPhotoName = util.getThumbnailPath(photoPath);
+			if (util.isMpeg(relPhotoPath)) {
+				toSendPhotoName = util.getThumbnailPath(relPhotoPath);
 			} else {
-				toSendPhotoName = photoPath;
+				toSendPhotoName = relPhotoPath;
 			}
 			break;
 		case 'original':
 			toSendPath = config.photoPath;
-			toSendPhotoName = photoPath;
+			toSendPhotoName = relPhotoPath;
 			break;
 		default :
 			console.error('version photo to returns unknownw', photoVersion);
 			return;
-	}				  
-	res.sendFile(toSendPath + toSendPhotoName, err => {
-		if (func && err && err.code == 'ENOENT') {
-			func(photoPath, config, result => {
-				if (result == 1) {
-					res.sendFile(toSendPath + toSendPhotoName);
-				}
-			});
-		}
-	});
+	}
+	// si dérivé dispo, le'envoi sinon le génère et l'envoi
+	if (fileservice.childSendable(config.photoPath + relPhotoPath, toSendPath + toSendPhotoName)) {
+		res.sendFile(toSendPath + toSendPhotoName);
+	} else {
+		func(relPhotoPath, config, result => {
+			if (result == 1) {
+				res.sendFile(toSendPath + toSendPhotoName);
+			}
+		});
+	}
 }
 
 app.get('/large/*', function (req, res) {

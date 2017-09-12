@@ -97,3 +97,25 @@ exports.trashPhoto = function (photo, config) {
 	fs.unlinkSync(config.thumbnailPath + photo);
 	fs.unlinkSync(config.largePath + photo);
 }
+
+exports.childSendable = function childSendable (fullPathOriginal, fullPathChild) {
+	const fdOrig = fs.openSync(fullPathOriginal, 'r');
+	var result = false;
+	try {
+		const fdChild = fs.openSync(fullPathChild, 'r');
+		if (fdChild != -1) {
+			var statOrig = fs.fstatSync(fdOrig);
+			var dateOriginal = statOrig.mtime;
+			var statChild = fs.fstatSync(fdChild);
+			var dateChild = statChild.mtime;
+			result = dateOriginal <= dateChild;
+		} else {
+			result = false;
+		}
+		fs.closeSync(fdChild);
+	} catch (ex) {
+		result = false;
+	}
+	fs.closeSync(fdOrig);
+	return result;
+};
