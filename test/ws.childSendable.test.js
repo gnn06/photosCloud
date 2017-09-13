@@ -1,20 +1,57 @@
 'use strict';
 
-const util = require('./utiltest');
-const ws   = require('../src/ws');
+var assert = require('assert');
 
-util.mkdirp(util.ROOT_FOLDER_TEST + 'sendable/' + 'original/');
-util.mkdirp(util.ROOT_FOLDER_TEST + 'sendable/' + 'thumbnail/');
+const util   = require('./utiltest');
+const ws     = require('../src/fileservice');
+const config = require('../src/config');
 
-util.deleteFile(util.ROOT_FOLDER_TEST + 'sendable/' + 'original/' + 'file.jpg');
-util.deleteFile(util.ROOT_FOLDER_TEST + 'sendable/' + 'thumbnail/' + 'file.jpg');
+const ROOT_FOLDER_TEST = 'e:/temp/dev/mochtest/';
 
-// util.createJpeg                  (util.ROOT_FOLDER_TEST + 'sendable/' + 'original/'  + 'file.jpg');
-//util.createJpegThumbnailLandscape(util.ROOT_FOLDER_TEST + 'sendable/' + 'thumbnail/' + 'file.jpg');
+describe('childSendable', function() {
+    before(function() {
+        config.photoPath     = ROOT_FOLDER_TEST + "/sendable/original/";
+        config.largePath     = ROOT_FOLDER_TEST + "/sendable/large/";
+        config.thumbnailPath = ROOT_FOLDER_TEST + "/sendable/thumbnail/";
+        config.dataPath      = ROOT_FOLDER_TEST + "/sendable/data/";
+        config.trashPath     = ROOT_FOLDER_TEST + "/sendable/corbeille/";
+        
+        util.mkdirp(config.photoPath);
+        util.mkdirp(config.thumbnailPath);
+    });
 
-var result = ws.childSendable
-    (util.ROOT_FOLDER_TEST + 'sendable/' + 'original/'  + 'file.jpg',
-     util.ROOT_FOLDER_TEST + 'sendable/' + 'thumbnail/' + 'file.jpg');
+    beforeEach(function() {
+        util.deleteFile(config.photoPath + 'file.jpg');
+        util.deleteFile(config.thumbnailPath + 'file.jpg');
+    });
 
-console.log(result);
+    it('should', function() {
+        util.createJpeg                  (config.photoPath  + 'file.jpg');
+        
+        var result = ws.childSendable
+            (config.photoPath  + 'file.jpg',
+            config.thumbnailPath + 'file.jpg');
+        assert(!result);
+    });
 
+    it('should', function() {
+        util.createJpegThumbnailLandscape(config.thumbnailPath + 'file.jpg');
+        util.createJpeg                  (config.photoPath  + 'file.jpg');
+        
+        var result = ws.childSendable
+            (config.photoPath  + 'file.jpg',
+            config.thumbnailPath + 'file.jpg');
+        assert(!result);
+    });
+
+    it('should', function() {
+        util.createJpeg                  (config.photoPath  + 'file.jpg');
+        util.createJpegThumbnailLandscape(config.thumbnailPath + 'file.jpg');
+
+        var result = ws.childSendable
+            (config.photoPath  + 'file.jpg',
+            config.thumbnailPath + 'file.jpg');
+        assert(result);
+    });
+
+});
