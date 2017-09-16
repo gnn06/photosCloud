@@ -45,7 +45,7 @@ app.get('/thumbnails*', function (req, res) {
 	}
 	folder = chemin.urlToFolder(folder);
 	console.log('GET /thumbnails of folder ', config.photoPath + folder);
-	var files = fileservice.walk(folder, { photoFolder : config.photoPath, dataFolder : config.dataPath});
+	var files = fileservice.walk(folder, config);
 	
 	files.then(function(files){
 		files.forEach(item => { item.url = '/thumbnail' + encodeURI(item.url); });

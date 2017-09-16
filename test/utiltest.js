@@ -45,6 +45,13 @@ function createTxt (filename, content) {
 	fs.closeSync(fd);
 }
 
+function createJSON (filename, content) {
+	var fd = fs.openSync(filename, 'w');
+	var contentS = JSON.stringify(content);
+	fs.writeSync(fd, contentS);
+	fs.closeSync(fd);
+}
+
 const ROOT_FOLDER_TEST = 'c:/temp/dev/mochtest/';
 
 var config = {
@@ -68,7 +75,9 @@ module.exports = {
 	createMpeg                   :  createMpeg,
     createMpeg2                  : createMpeg2,
 	createTxt                    : createTxt,
+	createJSON                   : createJSON,
 	mkdirp                       : fsE.mkdirpSync,
+	emptydir                     : fsE.emptyDirSync,
 	config                       : config
 
 };

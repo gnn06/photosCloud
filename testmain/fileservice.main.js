@@ -1,13 +1,24 @@
 'use strict';
 
-var service = require('../fileservice.js');
-const config  = require('../config.js');
+var service = require('../src/fileservice.js');
+const config  = require('../src/config.js');
+
+const ROOT_FOLDER = '//RASPBERRYPI/pi/dev/photosCloud/real_sample/';
+// const ROOT_FOLDER = '//RASPBERRYPI/home/pi/dev/photosCloud/real_sample/';
+
+// à terminer par un slash
+config.photoPath     = ROOT_FOLDER + "original/";
+config.largePath     = ROOT_FOLDER + "large/";
+config.thumbnailPath = ROOT_FOLDER + "thumbnail/";
+config.dataPath      = ROOT_FOLDER + "data/";
+config.trashPath     = ROOT_FOLDER + "corbeille/";
 console.log(config);
 
 var result = [];
 
 result = service.walk('',
-{ photoFolder : config.photoPath,
+{
+	photoFolder : config.photoPath,
 	dataFolder :  config.dataPath
 });
 result.then(function(result){
