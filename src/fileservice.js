@@ -1,8 +1,9 @@
 'use strict';
 
-var fs = require('fs');
-var dataService = require('./dataservice');
-const timer = require('minimal-timer');
+const fs          = require('fs');
+const dataService = require('./dataservice');
+const chemin      = require('./chemin');
+const timer       = require('minimal-timer');
 const time = timer() ;
 
 const extensionsToRetrieve = ['jpg', 'mp4'];
@@ -115,6 +116,10 @@ exports.walk = function (folder, config) {
 };
 
 exports.trashPhoto = function (photo, config) {
+	var folder = chemin.getFolder(photo);
+	if (!fs.existsSync(config.trashPath + folder)) {
+		fs.mkdirSync(config.trashPath + folder);
+	}
 	fs.renameSync(config.photoPath + photo, config.trashPath + photo);
 	fs.unlinkSync(config.thumbnailPath + photo);
 	fs.unlinkSync(config.largePath + photo);
