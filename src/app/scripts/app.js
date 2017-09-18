@@ -23,7 +23,7 @@ angular
   })
   .filter('large', function () {
   	return function (input) {
-  		return input.replace(/.*thumbnail/g, 'large').replace(/mp4/,'jpg');
+  		return input != undefined ? input.replace(/.*thumbnail/g, 'large').replace(/mp4/,'jpg') : "";
   	}
   })
   .config(function($routeProvider, $locationProvider) {
