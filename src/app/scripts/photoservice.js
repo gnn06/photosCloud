@@ -14,25 +14,16 @@ angular.module('photosAngularApp')
 
 		return $mdDialog.show(confirm)
 			.then(function() {
-				return new Promise(function(resolve, reject) {
-					var photoUrl = $filter('thumbnail')($rootScope.photos[photosIdx[0]].url);
-					$http({
-						method: 'DELETE',
-						url: photoUrl
-					})
-					.then(function () {
-						console.log('delete successful');
-						$rootScope.photos.splice(photosIdx[0], 1);
-						resolve();
-					}, function (err) {
-						console.log('delete error', err);
-						reject();
-					})
+				var photoUrl = $filter('thumbnail')($rootScope.photos[photosIdx[0]].url);
+				return $http({
+					method: 'DELETE',
+					url: photoUrl
 				});
-			}/*, function() {
-				console.log('cancel');
-				throw "cancel";
-			}*/);
-	} 
+			})
+			.then(function () {
+				console.log('delete successful');
+				$rootScope.photos.splice(photosIdx[0], 1);
+			});
+	}
 	return photoNewServiceInstance;
 });
