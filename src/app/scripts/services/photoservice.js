@@ -12,6 +12,10 @@ angular.module('photosAngularApp')
 			.ok('Supprimer')
 			.cancel('Annuler');
 
+		if (photosIdx.length == 0) {
+			return Promise.reject();
+		}
+
 		return $mdDialog.show(confirm)
 			.then(function() {
 				return Promise.all(photosIdx.map(url => {
