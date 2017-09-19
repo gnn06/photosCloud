@@ -121,8 +121,14 @@ exports.trashPhoto = function (photo, config) {
 		fs.mkdirSync(config.trashPath + folder);
 	}
 	fs.renameSync(config.photoPath + photo, config.trashPath + photo);
-	fs.unlinkSync(config.thumbnailPath + photo);
-	fs.unlinkSync(config.largePath + photo);
+	try {
+		fs.unlinkSync(config.thumbnailPath + photo);
+		fs.unlinkSync(config.largePath + photo);
+	} catch (ex) {
+		// large and thumbnail doesn't exist
+		// do nothing
+	}
+	// TODO update json
 }
 
 exports.childSendable = function childSendable (fullPathOriginal, fullPathChild) {
