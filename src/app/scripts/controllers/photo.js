@@ -73,7 +73,7 @@ angular.module('photosAngularApp')
 	$scope.deletePhoto = function(ev) {
 		console.log('delete');
 		var photosIdx = [];
-		photosIdx.push($scope.currentPhoto);
+		photosIdx.push($rootScope.photos[$scope.currentPhoto].url);
 		photoservice.delete(photosIdx, ev)
 		.then(function () {
 			// currentPhoto target next as array was reduced.

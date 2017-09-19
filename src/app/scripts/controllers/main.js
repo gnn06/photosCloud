@@ -8,7 +8,7 @@
  * Controller of the photosAngularApp
  */
 angular.module('photosAngularApp')
-	.controller('MainCtrl', function ($scope, $rootScope, $http, $document, $window, $location, $timeout) {
+	.controller('MainCtrl', function ($scope, $rootScope, $http, $document, $window, $location, $timeout, photoservice) {
 		console.log('mainController');
 	
 		if (!$rootScope.photos) {
@@ -93,6 +93,25 @@ angular.module('photosAngularApp')
 				$scope.okSaveScroll = true;
 			}, 100);
 		});
+
+		$scope.photoSelection = {};
+
+		$scope.deletePhotos = function (ev) {
+			console.log('deletePhotos');
+			var photosIdx = [];
+			for (var key in $scope.photoSelection) {
+				if ($scope.photoSelection[key] == true) {
+					photosIdx.push(key);
+				}
+			}
+			photoservice.delete(photosIdx, ev)
+			.then(function () {
+				$scope.photoSelection = {};
+				$scope.$apply();
+			}, function () {
+				console.log('rejected');
+			});
+		};
 
 	});
 
