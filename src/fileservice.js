@@ -3,6 +3,7 @@
 const fs          = require('fs');
 const dataService = require('./dataservice');
 const chemin      = require('./chemin');
+const jsonS       = require('./jsonservice');
 const timer       = require('minimal-timer');
 const time = timer() ;
 
@@ -128,7 +129,7 @@ exports.trashPhoto = function (photo, config) {
 		// large and thumbnail doesn't exist
 		// do nothing
 	}
-	// TODO update json
+	jsonS.delete(photo);
 }
 
 exports.childSendable = function childSendable (fullPathOriginal, fullPathChild) {
