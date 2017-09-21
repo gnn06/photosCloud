@@ -22,7 +22,10 @@ config.photosUrl = '/thumbnails';
 config.photoUrl = '/photo';
 config.thumbnailUrl = '/thumbnail';
 
-app.use(express.static('./app'));
+console.log(__dirname);
+
+// app.use(express.static(__dirname + './app'));
+app.use(express.static(__dirname + '/app'));
 
 app.listen(config.port, function () {
 	console.log('Example app listening on port ', config.port);
