@@ -98,6 +98,13 @@ angular.module('photosAngularApp')
 
 		$scope.photoSelection = {};
 
+		$scope.toggleSelection = function () {
+			$scope.selection = !$scope.selection;
+			if ($scope.selection == false) {
+				$scope.photoSelection = {};
+			}
+		};
+
 		$scope.deletePhotos = function (ev) {
 			console.log('deletePhotos');
 			var photosIdx = [];
