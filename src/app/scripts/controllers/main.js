@@ -94,6 +94,8 @@ angular.module('photosAngularApp')
 			}, 100);
 		});
 
+		$scope.selection = false;
+
 		$scope.photoSelection = {};
 
 		$scope.deletePhotos = function (ev) {

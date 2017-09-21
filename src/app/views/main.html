@@ -1,17 +1,19 @@
 <md-toolbar class="md-toolbar-tools">
   <div flex></div>    
+  <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="selection = !selection">
+    <md-icon md-font-set="material-icons">check_box</md-icon>
+  </md-button>
   <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="deletePhotos($event)">
-    <md-icon md-font-set="material-icons"><i class="material-icons">delete</i></md-icon>
+    <md-icon md-font-set="material-icons">delete</md-icon>
   </md-button>
 </md-toolbar>
 <md-grid-list id="photos" md-cols="7" md-cols-xs="4" md-gutter="1px" md-row-height="1:1">
-  <md-grid-tile ng-repeat="p in photos">
-    <input type="checkbox" ng-model="photoSelection[p.url]"/>
-    <!-- <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="">
-      <md-icon md-font-set="material-icons"><i class="material-icons">delete</i></md-icon>
-    </md-button> -->
-    <a href="/#!/{{p.url | thumbnail }}">
-      <img ng-src="{{p.url}}"/>
-    </a>
+  <md-grid-tile ng-repeat="p in photos" >
+    
+      <md-checkbox ng-model="photoSelection[p.url]" ng-show="selection"></md-checkbox>
+      <a href="/#!/{{p.url | thumbnail }}">
+        <img ng-src="{{p.url}}"/>
+      </a>
+    
   </md-grid-tile>
 </md-grid-list>
