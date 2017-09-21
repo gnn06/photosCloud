@@ -98,8 +98,8 @@ angular.module('photosAngularApp')
 
 		$scope.photoSelection = {};
 
-		$scope.toggleSelection = function () {
-			$scope.selection = !$scope.selection;
+		$scope.toggleSelection = function (changeTo) {
+			$scope.selection = changeTo;
 			if ($scope.selection == false) {
 				$scope.photoSelection = {};
 			}
