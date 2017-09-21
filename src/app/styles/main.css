@@ -119,6 +119,7 @@
   /* padding: 1px; */
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
 }
 
 #photos md-checkbox {
@@ -129,8 +130,6 @@
 
 #photos md-checkbox.md-checked + A > img {
   border : solid 3px red;
-  width:96%;
-  height:96%;
 }
 
 #photo {
