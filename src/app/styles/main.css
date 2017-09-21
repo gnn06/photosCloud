@@ -127,6 +127,12 @@
   left:5px;
 }
 
+#photos md-checkbox.md-checked + A > img {
+  border : solid 3px red;
+  width:96%;
+  height:96%;
+}
+
 #photo {
   display: flex;
   flex-direction: column;
