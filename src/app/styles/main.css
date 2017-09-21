@@ -115,6 +115,10 @@
   }
 }
 
+md-toolbar {
+  position:fixed;
+}
+
 #photos a, img {
   /* padding: 1px; */
   width: 100%;
