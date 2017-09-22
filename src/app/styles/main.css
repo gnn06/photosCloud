@@ -1,124 +1,4 @@
-/* html {
-  width:100%;
-  height:100%
-} */
-
-/* .browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
-} */
-
-/* body {
-  padding: 0;
-  width:100%;
-  height:100%;
-} */
-
-/* Everything but the jumbotron gets side spacing for mobile first views */
-/* .header,
-.marketing,
-.footer {
-  padding-left: 15px;
-  padding-right: 15px;
-} */
-
-/* Custom page header */
-/* .header {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 10px;
-} */
-/* Make the masthead heading the same height as the navigation */
-/* .header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
-} */
-
-/* Custom page footer */
-/* .footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
-} */
-
-#container {
-  height:100%;
-}
-
-/* .container-narrow > hr {
-  margin: 30px 0;
-} */
-
-/* Main marketing message and sign up button */
-/* .jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-} */
-
-/* .jumbotron .btn {
-  font-size: 21px;
-  padding: 14px 24px;
-} */
-
-/* Supporting marketing content */
-/* .marketing {
-  margin: 40px 0;
-}
-.marketing p + h4 {
-  margin-top: 28px;
-} */
-
-/* Responsive: Portrait tablets and up */
-@media screen and (max-width: 760px) {
-  .container {
-    max-width: 730px;
-  }
-
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
-}
-
-@media screen and (max-width: 4000px) {
-  #photos {
-    display: grid;
-    grid-template-columns: repeat(11, auto);
-  }
-}
-
-@media screen and (max-width: 900px) {
-  #photos {
-    display: grid;
-    grid-template-columns: repeat(7, auto);
-  }
-}
-
-@media screen and (max-width: 400px) {
-  #photos {
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-  }
-}
-
-md-toolbar {
-  position:fixed;
-}
-
+/* === Vue photos ================== */
 #photos a, img {
   /* padding: 1px; */
   width: 100%;
@@ -136,22 +16,17 @@ md-toolbar {
   border : solid 3px red;
 }
 
+/* === Vue photo =================== */
+md-toolbar.transparent{
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
 #photo {
   display: flex;
   flex-direction: column;
   height: 100%;
   background-color: black;
 }
-
-  .header {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    /* display: flex; */
-    /* justify-content: space-between; */
-    /* width: 100%; */
-    /* padding: 10px; */
-  }
 
     #prev {
       position: fixed;
@@ -171,11 +46,6 @@ md-toolbar {
     flex:1;
   }
 
-  #photo #footer {
-    background-color:red;
-    display: none;
-  }
-
   #picture {
     background-repeat: no-repeat;
     background-position: center;
@@ -188,6 +58,3 @@ md-toolbar {
     height: 100%;
   }
 
-md-toolbar.transparent{
-  background-color: rgba(0, 0, 0, 0.05);
-}

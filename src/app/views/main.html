@@ -1,27 +1,33 @@
-<md-toolbar ng-if="!selection" class="md-toolbar-tools" md-whiteframe="2">
-  <div flex></div>    
-  <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelection(true)">
-    <md-icon md-font-set="material-icons">check_box</md-icon>
-  </md-button>
-</md-toolbar>
+<div layout="column" flex>
+  <md-toolbar ng-if="!selection" class="md-toolbar-tools" md-whiteframe="2">
+    <div flex></div>    
+    <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelection(true)">
+      <md-icon md-font-set="material-icons">check_box</md-icon>
+    </md-button>
+  </md-toolbar>
 
-<md-toolbar ng-if="selection" class="md-toolbar-tools md-accent" md-whiteframe="6">
-  <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelection(false)">
+  <md-toolbar ng-if="selection" class="md-toolbar-tools md-green" md-whiteframe="6">
+    <div flex></div>    
+    <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="deletePhotos($event)">
+      <md-icon md-font-set="material-icons">delete</md-icon>
+    </md-button>
+    <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelection(false)">
       <md-icon md-font-set="material-icons">close</md-icon>
-  </md-button>
-  <div flex></div>    
-  <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="deletePhotos($event)">
-    <md-icon md-font-set="material-icons">delete</md-icon>
-  </md-button>
-</md-toolbar>
+    </md-button>
+  </md-toolbar>
+  
+  <md-content md-scroll-y flex>
+      <md-grid-list id="photos" md-cols="7" md-cols-xs="4" md-gutter="1px" md-row-height="1:1">
+          <md-grid-tile ng-repeat="p in photos">
+      
+            <md-checkbox ng-model="photoSelection[p.url]" ng-show="selection"></md-checkbox>
+            <a href="/#!/{{p.url | thumbnail }}">
+            <img ng-src="{{p.url}}" ng-href=""/>
+            </a>
+      
+          </md-grid-tile>
+        </md-grid-list>
+  </md-content>
 
-<md-grid-list id="photos" md-cols="7" md-cols-xs="4" md-gutter="1px" md-row-height="1:1">
-  <md-grid-tile ng-repeat="p in photos" >
-    
-      <md-checkbox ng-model="photoSelection[p.url]" ng-show="selection"></md-checkbox>
-      <a href="/#!/{{p.url | thumbnail }}">
-        <img ng-src="{{p.url}}" ng-href=""/>
-      </a>
-    
-  </md-grid-tile>
-</md-grid-list>
+
+</div>
