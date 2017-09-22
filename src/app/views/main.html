@@ -7,13 +7,16 @@
   </md-toolbar>
 
   <md-toolbar ng-if="selection" class="md-toolbar-tools md-green" md-whiteframe="6">
-    <div ng-show="selectionLength() == 0">Sélectionner des photos</div>
-    <div flex></div>    
-    <md-button  ng-show="selectionLength() > 0"class="md-icon-button" aria-label="Custom Icon Button" ng-click="deletePhotos($event)">
-      <md-icon md-font-set="material-icons">delete</md-icon>
-    </md-button>
     <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelection(false)">
       <md-icon md-font-set="material-icons">close</md-icon>
+    </md-button>
+    <div ng-show="selectionLength() == 0">Sélectionner des photos</div>
+    <div ng-show="selectionLength()  > 0">
+      {{ selectionLength() }}
+    </div>
+    <div flex></div>    
+    <md-button ng-show="selectionLength()  > 0" class="md-icon-button" aria-label="Custom Icon Button" ng-click="deletePhotos($event)">
+      <md-icon md-font-set="material-icons">delete</md-icon>
     </md-button>
   </md-toolbar>
   
