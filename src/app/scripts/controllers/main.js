@@ -94,9 +94,19 @@ angular.module('photosAngularApp')
 			}, 100);
 		});
 
-		$scope.selection = false;
+		$scope.selection = true;
 
 		$scope.photoSelection = {};
+
+		$scope.selectionLength = function () {
+			var result = 0;
+			for (var key in $scope.photoSelection) {
+				if ($scope.photoSelection[key] == true) {
+					result += 1;
+				}
+			}
+			return result;
+		}
 
 		$scope.toggleSelection = function (changeTo) {
 			$scope.selection = changeTo;

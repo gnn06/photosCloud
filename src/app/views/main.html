@@ -7,8 +7,9 @@
   </md-toolbar>
 
   <md-toolbar ng-if="selection" class="md-toolbar-tools md-green" md-whiteframe="6">
+    <div ng-show="selectionLength() == 0">Sélectionner des photos</div>
     <div flex></div>    
-    <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="deletePhotos($event)">
+    <md-button  ng-show="selectionLength() > 0"class="md-icon-button" aria-label="Custom Icon Button" ng-click="deletePhotos($event)">
       <md-icon md-font-set="material-icons">delete</md-icon>
     </md-button>
     <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelection(false)">
@@ -17,10 +18,11 @@
   </md-toolbar>
   
   <md-content md-scroll-y flex>
+      
       <md-grid-list id="photos" md-cols="7" md-cols-xs="4" md-gutter="1px" md-row-height="1:1">
           <md-grid-tile ng-repeat="p in photos">
       
-            <md-checkbox ng-model="photoSelection[p.url]" ng-show="selection"></md-checkbox>
+            <md-checkbox ng-model="photoSelection[p.url]" ng-show="selection" aria-label="selectionner"></md-checkbox>
             <a href="/#!/{{p.url | thumbnail }}">
             <img ng-src="{{p.url}}" ng-href=""/>
             </a>
