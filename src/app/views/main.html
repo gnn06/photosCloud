@@ -1,13 +1,13 @@
 <div layout="column" flex>
   <md-toolbar ng-if="!selection" class="md-toolbar-tools" md-whiteframe="2">
     <div flex></div>    
-    <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelection(true)">
+    <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelectionMode(true)">
       <md-icon md-font-set="material-icons">check_box</md-icon>
     </md-button>
   </md-toolbar>
 
   <md-toolbar style="background-color:red" ng-if="selection" class="md-toolbar-tools md-green" md-whiteframe="6">
-    <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelection(false)">
+    <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelectionMode(false)">
       <md-icon md-font-set="material-icons">close</md-icon>
     </md-button>
     <div ng-show="selectionLength() == 0">Sélectionner des photos</div>
@@ -26,7 +26,7 @@
           <md-grid-tile ng-repeat="p in photos">
       
             <md-checkbox ng-model="photoSelection[p.url]" ng-show="selection" aria-label="selectionner"></md-checkbox>
-            <a ng-click="togglePhoto($event, p.url)" href="#!/{{p.url | thumbnail }} " >
+            <a ng-click="togglePhoto($event)" href="#!/{{p.url | thumbnail }} " >
             <img ng-src="{{p.url}}" />
             </a>
       

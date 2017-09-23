@@ -108,22 +108,25 @@ angular.module('photosAngularApp')
 			return result;
 		}
 
-		$scope.toggleSelection = function (changeTo) {
+		$scope.toggleSelectionMode = function (changeTo) {
 			$scope.selection = changeTo;
 			if ($scope.selection == false) {
 				$scope.photoSelection = {};
 			}
 		};
 		
-		$scope.togglePhoto = function (event, url) {
+		$scope.togglePhoto = function (event) {
+			console.log('dans togglePhoto');
 			if ($scope.selection) {
-				var temp = $scope.photoSelection[url];
-				$scope.photoSelection[url] = !temp;
+				// href is absolute
+				// TODO get photoUrl from checkbox
+				var href = event.currentTarget.href;
+				var url = ('/' + href.replace($location.$$absUrl, '').replace('photo','thumbnail'));
+				var currentToggleState = $scope.photoSelection[url];
+				$scope.photoSelection[url] = !currentToggleState;
 				event.preventDefault();
 				return;
 			} 
-			
-			
 		} 
 
 		$scope.deletePhotos = function (ev) {
