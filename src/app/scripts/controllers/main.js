@@ -94,10 +94,11 @@ angular.module('photosAngularApp')
 			}, 100);
 		});
 
-		$scope.selection = false;
+		$scope.selectionMode = false;
 
 		$scope.photoSelection = {};
 
+		// Utilise pour le message "Sélectionner des photo"
 		$scope.selectionLength = function () {
 			var result = 0;
 			for (var key in $scope.photoSelection) {
@@ -109,15 +110,19 @@ angular.module('photosAngularApp')
 		}
 
 		$scope.toggleSelectionMode = function (changeTo) {
-			$scope.selection = changeTo;
-			if ($scope.selection == false) {
+			$scope.selectionMode = changeTo;
+			if ($scope.selectionMode == false) {
 				$scope.photoSelection = {};
 			}
 		};
 		
+		/*
+		 * If selectionMode ON then, click a photo, check corresponding checkbox
+		 * else if selectionMode OFF, click = default event = open photo
+		 */
 		$scope.togglePhoto = function (event) {
 			console.log('dans togglePhoto');
-			if ($scope.selection) {
+			if ($scope.selectionMode) {
 				// href is absolute
 				// TODO get photoUrl from checkbox
 				var href = event.currentTarget.href;
