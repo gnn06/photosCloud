@@ -13,7 +13,7 @@
 }
 
 #photos md-checkbox.md-checked + A > img {
-  border : solid 3px red;
+  border : solid 4px red;
 }
 
 /* === Vue photo =================== */
