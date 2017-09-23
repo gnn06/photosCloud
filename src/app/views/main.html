@@ -19,15 +19,15 @@
       <md-icon md-font-set="material-icons">delete</md-icon>
     </md-button>
   </md-toolbar>
-  
+
   <md-content md-scroll-y flex>
       
       <md-grid-list id="photos" md-cols="7" md-cols-xs="4" md-gutter="1px" md-row-height="1:1">
           <md-grid-tile ng-repeat="p in photos">
       
             <md-checkbox ng-model="photoSelection[p.url]" ng-show="selection" aria-label="selectionner"></md-checkbox>
-            <a href="/#!/{{p.url | thumbnail }}">
-            <img ng-src="{{p.url}}" ng-href=""/>
+            <a ng-click="togglePhoto($event, p.url)" href="#!/{{p.url | thumbnail }} " >
+            <img ng-src="{{p.url}}" />
             </a>
       
           </md-grid-tile>

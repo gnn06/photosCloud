@@ -94,7 +94,7 @@ angular.module('photosAngularApp')
 			}, 100);
 		});
 
-		$scope.selection = true;
+		$scope.selection = false;
 
 		$scope.photoSelection = {};
 
@@ -114,6 +114,17 @@ angular.module('photosAngularApp')
 				$scope.photoSelection = {};
 			}
 		};
+		
+		$scope.togglePhoto = function (event, url) {
+			if ($scope.selection) {
+				var temp = $scope.photoSelection[url];
+				$scope.photoSelection[url] = !temp;
+				event.preventDefault();
+				return;
+			} 
+			
+			
+		} 
 
 		$scope.deletePhotos = function (ev) {
 			console.log('deletePhotos');
