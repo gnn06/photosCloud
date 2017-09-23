@@ -8,12 +8,13 @@
  * Controller of the photosAngularApp
  */
 angular.module('photosAngularApp')
-  .controller('PhotoCtrl', function ($scope, $rootScope, $location, $route, $routeParams, $http, $filter, photoservice) {
+	.controller('PhotoCtrl', function ($scope, $rootScope, $location, $route, $routeParams, $http, 
+		$filter, photoservice, BASE_URL) {
 	console.log("dans PhotoCtrl")
 	
 	if (!$rootScope.photos) {
 		$http({method: 'GET',
-		  url: '/thumbnails'
+		  url: BASE_URL + '/thumbnails'
 		  /*, cache: $templateCache*/}).
 		then(function(response) {
 			$rootScope.photos = $scope.photos = response.data;
@@ -45,7 +46,7 @@ angular.module('photosAngularApp')
 	var host = $location.$$absUrl.substr(0,$location.$$absUrl.indexOf("#!"));
 
 	$http({method: 'GET',
-		   url: '/data/' + $routeParams.folder
+		   url: BASE_URL + '/data/' + $routeParams.folder
 		   /*, cache: $templateCache*/}).
         then(function(response) {
           $scope.status = response.status;
@@ -58,7 +59,7 @@ angular.module('photosAngularApp')
 	$scope.post = function() {
 		console.log('post');
 		$http({method: 'POST',
-		   url: '/data/' + $routeParams.folder,
+		   url: BASE_URL + '/data/' + $routeParams.folder,
 		   data: { star: $scope.data.star }
 		  }).
         then(function(response) {

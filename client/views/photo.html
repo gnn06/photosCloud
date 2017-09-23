@@ -11,7 +11,7 @@
 				<md-icon md-font-set="material-icons"><i class="material-icons">delete</i></md-icon>
 			</md-button>
 			<md-button id="fullscreen" class="md-icon-button" layout-align="end" aria-label="Custom Icon Button"
-				href="#!/{{ photos[currentPhoto].url | original }}">
+				href="#!{{ photos[currentPhoto].url | original }}">
 				<md-icon md-font-set="material-icons"><i class="material-icons">settings_overscan</i></md-icon>
 			</md-button>
 			<!-- <a id="fullscreen" href="#!/{{ photos[currentPhoto].url | original }} "><img src="/images/fullscreen.png"/></a> -->
@@ -19,28 +19,28 @@
 	<!-- </div> -->
 	
 	<md-button id="prev" class="md-icon-button md-raised" aria-label="Custom Icon Button"
-		href="#!/{{ photos[currentPhoto - 1].url | thumbnail }}">
+		href="#!{{ photos[currentPhoto - 1].url | thumbnail }}">
 		<md-icon md-font-set="material-icons"><i class="material-icons">keyboard_arrow_left</i></md-icon>
 	</md-button>
 	<!-- <a id="prev" href="#!/{{ photos[currentPhoto - 1].url | thumbnail }}"><img src="/images/left_arrow.png"/></a> -->
 	
 	<md-button id="next" class="md-icon-button md-raised" aria-label="Custom Icon Button"
-		href="#!/{{ photos[currentPhoto + 1].url | thumbnail }}">
+		href="#!{{ photos[currentPhoto + 1].url | thumbnail }}">
 		<md-icon md-font-set="material-icons"><i class="material-icons">keyboard_arrow_right</i></md-icon>
 	</md-button>
 	<!-- <a id="next" href="#!/{{ photos[currentPhoto + 1].url | thumbnail }}"><img src="/images/right_arrow.png"/></a> -->
 	
-	<div id="media" >
+	<div id="media" ng-cloak>
 		<div id="picture"
-			style="background-image:url('/large/{{$route.current.params.folder}}')"
+			style="background-image:url('{{ BASE_URL + '/large/' + $route.current.params.folder}}')"
 			ng-show="$route.current.params.folder.toLowerCase().indexOf('.jpg') > 0">
 		</div>
 		<!-- mise en cache images adjacentes -->
-		<img style="display:none" src="{{photos[currentPhoto - 1].url | large }}"/>
-		<img style="display:none" src="{{photos[currentPhoto + 1].url | large }}"/>
+		<img style="display:none" src="{{ (BASE_URL + photos[currentPhoto - 1].url) | large }}"/>
+		<img style="display:none" src="{{ (BASE_URL + photos[currentPhoto + 1].url) | large  }}"/>
 		<!-- autoplay -->
 		<video id="video" ng-show="$route.current.params.folder.indexOf('.mp4') > 0"
-			src="/photo/{{$route.current.params.folder}}" controls poster="/large/{{$route.current.params.folder}}">
+			src="{{ BASE_URL + '/photo/' + $route.current.params.folder}}" controls poster="{{ BASE_URL + '/large/' + $route.current.params.folder}}">
 			Votre navigateur ne permet pas de lire les vidéos.
 			Mais vous pouvez toujours
 			<a href="fichiervideo.webm">la télécharger</a> !

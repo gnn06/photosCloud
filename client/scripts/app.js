@@ -13,19 +13,26 @@ angular
 
   .filter('thumbnail', function() {
 		return function (input) {
-     		return input != undefined ?  input.replace(/.*thumbnail/g, 'photo') : "";
+     		return input != undefined ?  input.replace(/thumbnail/g, 'photo') : "";
 		};
   })
   .filter('original', function() {
 		return function (input) {
-     		return input != undefined ? input.replace(/.*thumbnail/g, 'original') : "";
+     		return input != undefined ? input.replace(/thumbnail/g, 'original') : "";
 		};
   })
   .filter('large', function () {
   	return function (input) {
-  		return input != undefined ? input.replace(/.*thumbnail/g, 'large').replace(/mp4/,'jpg') : "";
+  		return input != undefined ? input.replace(/thumbnail/g, 'large').replace(/mp4/,'jpg') : "";
   	}
   })
+
+  .constant('BASE_URL', 'http://192.168.1.2:8090')
+
+  .run(function ($rootScope, BASE_URL) {
+	$rootScope.BASE_URL = BASE_URL;
+  })
+
   .config(function($routeProvider, $locationProvider) {
 	  $routeProvider
 	  .when('/', {

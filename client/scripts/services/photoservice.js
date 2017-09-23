@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('photosAngularApp')
-.factory('photoservice', function($mdDialog, $http, $rootScope, $filter) {
+.factory('photoservice', function($mdDialog, $http, $rootScope, $filter, BASE_URL) {
 	var photoNewServiceInstance = {};
 	photoNewServiceInstance.delete = function (photosIdx, ev) {
 		var confirm = $mdDialog.confirm()
@@ -22,7 +22,7 @@ angular.module('photosAngularApp')
 					var photoUrl = $filter('thumbnail')(url);
 					return $http({
 						method: 'DELETE',
-						url: photoUrl
+						url: BASE_URL + photoUrl
 					});
 				}));
 			})

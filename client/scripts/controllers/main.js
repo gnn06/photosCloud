@@ -8,12 +8,14 @@
  * Controller of the photosAngularApp
  */
 angular.module('photosAngularApp')
-	.controller('MainCtrl', function ($scope, $rootScope, $http, $document, $window, $location, $timeout, photoservice) {
+	.controller('MainCtrl', function ($scope, $rootScope, $http, $document, $window, $location, 
+		$timeout, photoservice, BASE_URL) {
 		console.log('mainController');
+		console.log(BASE_URL);
 	
 		if (!$rootScope.photos) {
 			$http({method: 'GET',
-				url: '/thumbnails'
+				url: BASE_URL + '/thumbnails'
 				/*, cache: $templateCache*/}).
 					then(function(response) {
 						$rootScope.allPhotos = response.data;

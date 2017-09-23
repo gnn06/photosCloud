@@ -24,9 +24,6 @@ config.thumbnailUrl = '/thumbnail';
 
 console.log(__dirname);
 
-// app.use(express.static(__dirname + './app'));
-app.use(express.static(__dirname + '/app'));
-
 app.listen(config.port, function () {
 	console.log('Example app listening on port ', config.port);
 });
@@ -34,6 +31,7 @@ app.listen(config.port, function () {
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "POST, GET, DELETE, OPTIONS");
   next();
 });
 
