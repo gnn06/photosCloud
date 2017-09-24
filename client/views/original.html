@@ -4,6 +4,6 @@
 		<a href="#!{{ photos[currentPhoto].url | thumbnail }} ">photo</a>
   </div>
   <div>
-		<img src="{{ BASE_URL + '/photo/' + $route.current.params.folder }}" />
+		<img src="{{ '/photo/' + $route.current.params.folder }}" />
   </div>
 </div>

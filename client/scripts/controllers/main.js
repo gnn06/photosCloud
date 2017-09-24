@@ -9,13 +9,12 @@
  */
 angular.module('photosAngularApp')
 	.controller('MainCtrl', function ($scope, $rootScope, $http, $document, $window, $location, 
-		$timeout, photoservice, BASE_URL) {
+		$timeout, photoservice) {
 		console.log('mainController');
-		console.log(BASE_URL);
 	
 		if (!$rootScope.photos) {
 			$http({method: 'GET',
-				url: BASE_URL + '/thumbnails'
+				url: '/thumbnails'
 				/*, cache: $templateCache*/}).
 					then(function(response) {
 						$rootScope.allPhotos = response.data;

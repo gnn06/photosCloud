@@ -27,12 +27,6 @@ angular
   	}
   })
 
-  .constant('BASE_URL', '')
-
-  .run(function ($rootScope, BASE_URL) {
-	$rootScope.BASE_URL = BASE_URL;
-  })
-
   .config(function($routeProvider, $locationProvider) {
 	  $routeProvider
 	  .when('/', {

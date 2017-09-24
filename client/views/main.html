@@ -27,7 +27,7 @@
       
             <md-checkbox ng-model="photoSelection[p.url]" ng-show="selectionMode" aria-label="selectionner"></md-checkbox>
             <a ng-click="togglePhoto($event)" href="#!{{p.url | thumbnail }} " >
-              <img ng-src="{{BASE_URL + p.url}}" />
+              <img ng-src="{{p.url}}" />
             </a>
       
           </md-grid-tile>
