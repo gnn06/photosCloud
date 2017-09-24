@@ -27,7 +27,7 @@ angular
   	}
   })
 
-  .constant('BASE_URL', 'http://192.168.1.2:8090')
+  .constant('BASE_URL', '')
 
   .run(function ($rootScope, BASE_URL) {
 	$rootScope.BASE_URL = BASE_URL;

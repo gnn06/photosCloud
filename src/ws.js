@@ -24,6 +24,8 @@ config.thumbnailUrl = '/thumbnail';
 
 console.log(__dirname);
 
+app.use(express.static(__dirname + '/../client/'));
+
 app.listen(config.port, function () {
 	console.log('Example app listening on port ', config.port);
 });
