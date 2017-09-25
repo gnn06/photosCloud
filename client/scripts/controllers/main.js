@@ -8,7 +8,7 @@
  * Controller of the photosAngularApp
  */
 angular.module('photosAngularApp')
-	.controller('MainCtrl', function ($scope, $rootScope, $http, $document, $window, $location, 
+	.controller('MainCtrl', function ($scope, $rootScope, $http, $window, $location, 
 		$timeout, photoservice) {
 		console.log('mainController');
 	
@@ -48,17 +48,17 @@ angular.module('photosAngularApp')
 		}
 
 		console.log('register scroll event');
-		angular.element($window).on("scroll", function () {
-			var el = document.documentElement;
-			// console.log('scroll, el.scrollHeight ', el.scrollHeight, 'window.innerHeight : ', $window.innerHeight, 'window.pageYOffset : ', $window.pageYOffset, 'url:', $location.url());
+		var el = $window.document.getElementsByClassName('loadonscroll')[0];
+		angular.element(el).on("scroll", function () {
+			// console.log('scroll, el.scrollTop ', el.scrollTop, ', el.scrollHeight ', el.scrollHeight, 'el.clientHeight', el.clientHeight, 'url:', $location.url());
 			// console.log('okSaveScroll', $scope.okSaveScroll, 'path', $location.path(),  $(window).scrollTop());
 			// if ($scope.okSaveScroll) {
 				// $rootScope.scrollPos[$location.path()] = $window.scrollTop; // scrollTop is not a function
-				$rootScope.scrollPos[$location.path()] = $window.pageYOffset;
+				$rootScope.scrollPos[$location.path()] = el.scrollTop;
 				// console.log($location.path(), $(window).scrollTop());
 			// }
-			// $rootScope.scrollPosition = window.pageYOffset;
-			if(el.scrollHeight === (window.innerHeight + window.pageYOffset)) {
+			// $rootScope.scrollPosition = el.scrollTop;
+			if(el.scrollHeight === (el.clientHeight + el.scrollTop)) {
 				if ($rootScope.count < $rootScope.allPhotos.length) {
 					console.log('add photos', '$rootScope.count', $rootScope.count);
 					$rootScope.count += 36;
@@ -70,7 +70,7 @@ angular.module('photosAngularApp')
 
 		$scope.$on("$destroy", function() {
 			console.log('destroy');
-			angular.element($window).off("scroll");
+			angular.element(el).off("scroll");
 		});
 
 		// $scope.scrollClear = function(path) {
@@ -81,7 +81,7 @@ angular.module('photosAngularApp')
 			console.log('into routeChangeStart');
 			console.log('scrollPosition: ', $rootScope.scrollPos, 'path', $location.path());
 			// $rootScope.scrollPos[$location.path()] = $window.scrollTop();
-			$rootScope.scrollPos[$location.path()] = $window.pageYOffset;
+			$rootScope.scrollPos[$location.path()] = el.scrollTop;
 			$scope.okSaveScroll = false;
 		})
 
@@ -90,7 +90,7 @@ angular.module('photosAngularApp')
 			$timeout(function() { // wait for DOM, then restore scroll position
 				console.log('into timeout', $location.path(), $rootScope.scrollPos);
 				console.log('restore scroll', $location.path(), $rootScope.scrollPos[$location.path()] ? $rootScope.scrollPos[$location.path()] : 0)
-				$window.scroll(0, $rootScope.scrollPos[$location.path()] ? $rootScope.scrollPos[$location.path()] : 0);
+				el.scrollTop = $rootScope.scrollPos[$location.path()] ? $rootScope.scrollPos[$location.path()] : 0;
 				$scope.okSaveScroll = true;
 			}, 100);
 		});
@@ -157,8 +157,8 @@ angular.module('photosAngularApp')
 
 // window.addEventListener("scroll", function () {
 // 	var el = document.documentElement;
-// 	// console.log(el.scrollHeight, window.innerHeight, window.pageYOffset);
-// 	if(el.scrollHeight === (window.innerHeight + window.pageYOffset)) {
+// 	// console.log(el.scrollHeight, el.clientHeight, el.scrollTop);
+// 	if(el.scrollHeight === (el.clientHeight + el.scrollTop)) {
 // 		console.log("bottom!");
 // 		$rootScope.photos = $scope.photos = $rootScope.allPhotos.slice(0, 12 + count);
 // 		count += 12;
