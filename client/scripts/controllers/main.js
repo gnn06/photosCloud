@@ -9,8 +9,11 @@
  */
 angular.module('photosAngularApp')
 	.controller('MainCtrl', function ($scope, $rootScope, $http, $window, $location, 
-		$timeout, photoservice) {
+		photoservice) {
 		console.log('mainController');
+
+		// $scope.photos, utilisé pour ng-repeat
+		// $rootScope.photos, utilisé de vue en vue
 	
 		if (!$rootScope.photos) {
 			$http({method: 'GET',
@@ -35,65 +38,6 @@ angular.module('photosAngularApp')
 		} else {
 			$rootScope.count = $rootScope.photos.length;
 		}
-
-		// $scope.retrievePage = function() {
-		// 	console.log('retrieve');
-		// 	$rootScope.photos = $scope.photos = $rootScope.allPhotos.slice(0, 12 + count);
-		// 	count += 12;
-		// };
-
-		// Ne pas executer à chaque fois sinon perte des données sauvegardées
-		if ($rootScope.scrollPos == undefined) {
-			$rootScope.scrollPos = {};
-		}
-
-		console.log('register scroll event');
-		var el = $window.document.getElementsByClassName('loadonscroll')[0];
-		angular.element(el).on("scroll", function () {
-			// console.log('scroll, el.scrollTop ', el.scrollTop, ', el.scrollHeight ', el.scrollHeight, 'el.clientHeight', el.clientHeight, 'url:', $location.url());
-			// console.log('okSaveScroll', $scope.okSaveScroll, 'path', $location.path(),  $(window).scrollTop());
-			// if ($scope.okSaveScroll) {
-				// $rootScope.scrollPos[$location.path()] = $window.scrollTop; // scrollTop is not a function
-				$rootScope.scrollPos[$location.path()] = el.scrollTop;
-				// console.log($location.path(), $(window).scrollTop());
-			// }
-			// $rootScope.scrollPosition = el.scrollTop;
-			if(el.scrollHeight === (el.clientHeight + el.scrollTop)) {
-				if ($rootScope.count < $rootScope.allPhotos.length) {
-					console.log('add photos', '$rootScope.count', $rootScope.count);
-					$rootScope.count += 36;
-					$rootScope.photos = $scope.photos = $rootScope.allPhotos.slice(0, $rootScope.count);
-					$scope.$apply();
-				}
-			}
-		}) ;
-
-		$scope.$on("$destroy", function() {
-			console.log('destroy');
-			angular.element(el).off("scroll");
-		});
-
-		// $scope.scrollClear = function(path) {
-		// 	$rootScope.scrollPos[path] = 0;
-		// }
-
-		$scope.$on('$routeChangeStart', function () {
-			console.log('into routeChangeStart');
-			console.log('scrollPosition: ', $rootScope.scrollPos, 'path', $location.path());
-			// $rootScope.scrollPos[$location.path()] = $window.scrollTop();
-			$rootScope.scrollPos[$location.path()] = el.scrollTop;
-			$scope.okSaveScroll = false;
-		})
-
-		$scope.$on('$routeChangeSuccess', function() {
-			// console.log('into routeChangeSuccess');
-			$timeout(function() { // wait for DOM, then restore scroll position
-				console.log('into timeout', $location.path(), $rootScope.scrollPos);
-				console.log('restore scroll', $location.path(), $rootScope.scrollPos[$location.path()] ? $rootScope.scrollPos[$location.path()] : 0)
-				el.scrollTop = $rootScope.scrollPos[$location.path()] ? $rootScope.scrollPos[$location.path()] : 0;
-				$scope.okSaveScroll = true;
-			}, 100);
-		});
 
 		$scope.selectionMode = false;
 
@@ -153,14 +97,3 @@ angular.module('photosAngularApp')
 		};
 
 	});
-
-
-// window.addEventListener("scroll", function () {
-// 	var el = document.documentElement;
-// 	// console.log(el.scrollHeight, el.clientHeight, el.scrollTop);
-// 	if(el.scrollHeight === (el.clientHeight + el.scrollTop)) {
-// 		console.log("bottom!");
-// 		$rootScope.photos = $scope.photos = $rootScope.allPhotos.slice(0, 12 + count);
-// 		count += 12;
-// 	}
-// });
