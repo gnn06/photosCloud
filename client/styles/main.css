@@ -19,6 +19,7 @@
 /* === Vue photo =================== */
 md-toolbar.transparent{
   background-color: rgba(0, 0, 0, 0.05);
+  position: fixed;
 }
 
 #photo {
