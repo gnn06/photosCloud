@@ -6,18 +6,18 @@ angular.module('photosAngularApp')
     return {
         transclude: true,
         
-        template: '<md-toolbar ng-if="selectionMode" style="background-color:red" class="md-toolbar-tools md-green" md-whiteframe="6">' +
-                    '<md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelectionMode(false)">' +
-                        '<md-icon md-font-set="material-icons">close</md-icon>' +
-                    '</md-button>' +
-                    '<div ng-show="selectionLength() == 0">Sélectionner des photos</div>' +
-                    '<div ng-show="selectionLength()  > 0">' +
-                        '{{ selectionLength() }}' +
-                    '</div>' +
-                    '<div flex></div>' +
-                    '<div ng-show="selectionLength()  > 0">' +
-                        '<ng-transclude></ng-transclude>' +
-                    '</div>' +
+        template:   '<md-toolbar ng-if="selectionMode" style="background-color:red" class="md-toolbar-tools md-green" md-whiteframe="6">' +
+                        '<md-button class="md-icon-button" aria-label="close" ng-click="toggleSelectionMode(false)">' +
+                            '<md-icon md-font-set="material-icons">close</md-icon>' +
+                        '</md-button>' +
+                        '<div ng-show="selectionLength() == 0">Sélectionner des photos</div>' +
+                        '<div ng-show="selectionLength()  > 0">' +
+                            '{{ selectionLength() }}' +
+                        '</div>' +
+                        '<div flex></div>' +
+                        '<div ng-show="selectionLength()  > 0">' +
+                            '<ng-transclude></ng-transclude>' +
+                        '</div>' +
                     '</md-toolbar>'
     }
 
