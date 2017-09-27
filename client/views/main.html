@@ -1,34 +1,25 @@
-<div layout="column" flex >
+<div layout="column" flex pc-selection>
   <md-toolbar ng-if="!selectionMode" class="md-toolbar-tools" md-whiteframe="2">
     <div flex></div>    
-    <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelectionMode(true)">
-      <md-icon md-font-set="material-icons">check_box</md-icon>
-    </md-button>
+    <pc-selection-button/>
   </md-toolbar>
 
-  <md-toolbar ng-if="selectionMode" style="background-color:red" class="md-toolbar-tools md-green" md-whiteframe="6">
-    <md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelectionMode(false)">
-      <md-icon md-font-set="material-icons">close</md-icon>
-    </md-button>
-    <div ng-show="selectionLength() == 0">Sélectionner des photos</div>
-    <div ng-show="selectionLength()  > 0">
-      {{ selectionLength() }}
-    </div>
-    <div flex></div>    
-    <md-button ng-show="selectionLength()  > 0" class="md-icon-button" aria-label="Custom Icon Button" ng-click="deletePhotos($event)">
-      <md-icon md-font-set="material-icons">delete</md-icon>
-    </md-button>
-  </md-toolbar>
+  <pc-selection-toolbar>
+      <md-button  class="md-icon-button" aria-label="Custom Icon Button" ng-click="deletePhotos($event)">
+          <md-icon md-font-set="material-icons">delete</md-icon>
+      </md-button>
+  </pc-selection-toolbar>
 
-  <md-content md-scroll-y flex load-on-scroll selection>
+  <md-content md-scroll-y flex load-on-scroll>
       
       <md-grid-list id="photos" md-cols="7" md-cols-xs="4" md-gutter="1px" md-row-height="1:1">
           <md-grid-tile ng-repeat="p in photos">
             
-            <md-checkbox ng-model="photoSelection[p.url]" ng-show="selectionMode" aria-label="selectionner"></md-checkbox>
-            <a ng-click="togglePhoto($event)" href="#!{{p.url | thumbnail }} " >
-              <img ng-src="{{p.url}}" />
-            </a>
+            <pc-selection-item>
+              <a ng-click="togglePhoto($event)" href="#!{{p.url | thumbnail }} " >
+                <img ng-src="{{p.url}}" />
+              </a>
+            </pc-selection-item>
       
           </md-grid-tile>
         </md-grid-list>

@@ -1,9 +1,50 @@
 'use strict';
 
 angular.module('photosAngularApp')
-.directive('selection', function ($location) {
+
+.directive('pcSelectionToolbar', function () {
+    return {
+        transclude: true,
+        
+        template: '<md-toolbar ng-if="selectionMode" style="background-color:red" class="md-toolbar-tools md-green" md-whiteframe="6">' +
+                    '<md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelectionMode(false)">' +
+                        '<md-icon md-font-set="material-icons">close</md-icon>' +
+                    '</md-button>' +
+                    '<div ng-show="selectionLength() == 0">Sélectionner des photos</div>' +
+                    '<div ng-show="selectionLength()  > 0">' +
+                        '{{ selectionLength() }}' +
+                    '</div>' +
+                    '<div flex></div>' +
+                    '<div ng-show="selectionLength()  > 0">' +
+                        '<ng-transclude></ng-transclude>' +
+                    '</div>' +
+                    '</md-toolbar>'
+    }
+
+})
+
+.directive('pcSelectionItem', function () {
+    return {
+        transclude: true,
+        
+        template: '<md-checkbox ng-model="photoSelection[p.url]" ng-show="selectionMode" aria-label="selectionner"></md-checkbox><ng-transclude></ng-transclude>'
+    }
+
+})
+
+.directive('pcSelectionButton', function () {
+    return {
+        
+        template:   '<md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="toggleSelectionMode(true)">' +
+                        '<md-icon md-font-set="material-icons">check_box</md-icon>' +
+                    '</md-button>'
+    }       
+})
+    
+.directive('pcSelection', function ($location) {
 
     return {
+
         link : function (scope, element, attrs) {
 
             scope.selectionMode = false;
@@ -33,12 +74,13 @@ angular.module('photosAngularApp')
             * else if selectionMode OFF, click = default event = open photo
             */
             scope.togglePhoto = function (event) {
-                console.log('dans togglePhoto');
+                console.log('dans togglePhoto', 'mode=', scope.selectionMode);
                 if (scope.selectionMode) {
                     // href is absolute
                     // TODO get photoUrl from checkbox
                     var href = event.currentTarget.href;
                     var url = ('/' + href.replace($location.$$absUrl, '').replace('photo','thumbnail'));
+                    console.log(scope);
                     var currentToggleState = scope.photoSelection[url];
                     scope.photoSelection[url] = !currentToggleState;
                     event.preventDefault();
