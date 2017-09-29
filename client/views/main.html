@@ -16,7 +16,7 @@
           <md-grid-tile ng-repeat="p in photos">
             
             <pc-selection-item>
-              <a ng-click="togglePhoto($event)" href="#!{{p.url | thumbnail }} " >
+              <a href="#!{{p.url | thumbnail }} " >
                 <img ng-src="{{p.url}}" />
               </a>
             </pc-selection-item>

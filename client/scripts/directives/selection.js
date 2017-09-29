@@ -23,11 +23,20 @@ angular.module('photosAngularApp')
 
 })
 
-.directive('pcSelectionItem', function () {
+.directive('pcSelectionItem', function ($compile) {
     return {
         transclude: true,
         
-        template: '<md-checkbox ng-model="photoSelection[p.url]" ng-show="selectionMode" aria-label="selectionner"></md-checkbox><ng-transclude></ng-transclude>'
+        template:   '<md-checkbox ng-model="photoSelection[p.url]" ng-show="selectionMode" aria-label="selectionner">' +
+                    '</md-checkbox><ng-transclude></ng-transclude>',
+
+        link: function (scope, element, attrs) {
+            // console.log('link', element.html());
+            var a = element.find('a');
+            a.attr('ng-click', 'togglePhoto($event)');
+            $compile(a)(scope);
+        }
+
     }
 
 })
