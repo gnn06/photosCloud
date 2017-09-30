@@ -27,7 +27,9 @@ angular.module('photosAngularApp')
     return {
         transclude: true,
         
-        template:   '<md-checkbox ng-model="photoSelection[p.url]" ng-show="selectionMode" aria-label="selectionner">' +
+        template:   '<md-checkbox ng-model="photoSelection[p.url]"' +
+                        'name="{{p.url}}"' +
+                        'ng-show="selectionMode" aria-label="selectionner">' +
                     '</md-checkbox><ng-transclude></ng-transclude>',
 
         link: function (scope, element, attrs) {
@@ -85,11 +87,11 @@ angular.module('photosAngularApp')
             scope.togglePhoto = function (event) {
                 console.log('dans togglePhoto', 'mode=', scope.selectionMode);
                 if (scope.selectionMode) {
-                    // href is absolute
-                    // TODO get photoUrl from checkbox
-                    var href = event.currentTarget.href;
-                    var url = ('/' + href.replace($location.$$absUrl, '').replace('photo','thumbnail'));
-                    console.log(scope);
+                    // <md-checkbox name="/thumbnail/folder/DSCF3853.JPG">
+                    // retrieve url from name attribute and get the current state 
+                    // from photoSelection[]
+                    var url = angular.element(event.currentTarget).parent().parent().find('md-checkbox').attr('name')
+                    // console.log(url);
                     var currentToggleState = scope.photoSelection[url];
                     scope.photoSelection[url] = !currentToggleState;
                     event.preventDefault();
