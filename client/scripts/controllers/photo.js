@@ -45,30 +45,8 @@ angular.module('photosAngularApp')
 
 	var host = $location.$$absUrl.substr(0,$location.$$absUrl.indexOf("#!"));
 
-	$http({method: 'GET',
-		   url: '/data/' + $routeParams.folder
-		   /*, cache: $templateCache*/}).
-        then(function(response) {
-          $scope.status = response.status;
-          $scope.data = response.data;
-        }, function(response) {
-          $scope.data = response.data || 'Request failed';
-          $scope.status = response.status;
-		});
-
 	$scope.post = function() {
-		console.log('post');
-		$http({method: 'POST',
-		   url: '/data/' + $routeParams.folder,
-		   data: { star: $scope.data.star }
-		  }).
-        then(function(response) {
-          $scope.status = response.status;
-          //$scope.data = response.data;
-        }, function(response) {
-          //$scope.data = response.data || 'Request failed';
-          $scope.status = response.status;
-		});
+		
 	};
 
 	$scope.deletePhoto = function(ev) {

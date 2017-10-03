@@ -1,4 +1,4 @@
-<div id="photo">
+<div id="photo" layout="column" flex="grow">
 	<!-- <div id="header" layout="row" layout-fill	> -->
 		<md-toolbar class="md-toolbar-tools transparent header">
 			<!-- <a href="#!/"><img src="/images/back.png"/></a> -->
@@ -30,8 +30,8 @@
 	</md-button>
 	<!-- <a id="next" href="#!/{{ photos[currentPhoto + 1].url | thumbnail }}"><img src="/images/right_arrow.png"/></a> -->
 	
-	<div id="media" ng-cloak>
-		<div id="picture"
+	<div id="media" ng-cloak flex="grow">
+		<div id="picture" 
 			style="background-image:url('{{ '/large/' + $route.current.params.folder}}')"
 			ng-show="$route.current.params.folder.toLowerCase().indexOf('.jpg') > 0">
 		</div>
@@ -46,4 +46,8 @@
 			<a href="fichiervideo.webm">la télécharger</a> !
 		</video>
 	</div>
+
+	<pc-stars/>
+	
 </div>
+

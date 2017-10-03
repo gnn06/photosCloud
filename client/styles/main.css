@@ -1,11 +1,3 @@
-/* === Vue photos ================== */
-#photos a, #photos img, #photos pc-selection-item {
-  /* padding: 1px; */
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-}
-
 #photos md-checkbox {
   position : absolute;
   top:5px;
@@ -16,46 +8,31 @@
   border : solid 4px red;
 }
 
-/* === Vue photo =================== */
-md-toolbar.transparent{
-  background-color: rgba(0, 0, 0, 0.05);
-  position: fixed;
-}
-
-#photo {
-  display: flex;
-  flex-direction: column;
+#photos a, #photos img, #photos pc-selection-item {
+  /* padding: 1px; */
+  width: 100%;
   height: 100%;
-  background-color: black;
+  box-sizing: border-box;
 }
 
-    #prev {
-      position: fixed;
-      left: 5px;
-      top: 50%;
-      z-index:1; //need for video
-    }
+#prev {
+  position: fixed;
+  left: 5px;
+  top: 50%;
+  z-index:1; //need for video
+}
 
-    #next {
-      position: fixed;
-      right: 5px;
-      top: 50%;
-      z-index:1; //need for video
-    }
+#next {
+  position: fixed;
+  right: 5px;
+  top: 50%;
+  z-index:1; //need for video
+}
 
-  #media {
-    flex:1;
-  }
-
-  #picture {
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    height: 100%;
-  }
-
-  #photo video {
-    width: 100%;
-    height: 100%;
-  }
-
+#picture {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width:100%;
+  height:100%
+}

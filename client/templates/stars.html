@@ -1,0 +1,9 @@
+<div layout="row" layout-padding>
+    <md-radio-group  ng-model="stars" layout="row">
+        <md-radio-button ng-repeat="i in [1,2,3,4,5]" ng-value="{{i}}" aria-label="{{i}}"></md-radio-button>
+    </md-radio-group>
+    <div flex></div>
+    <md-button class="md-icon-button" aria-label="close" ng-click="closeStar()">
+        <md-icon md-font-set="material-icons">close</md-icon>
+    </md-button>
+</div>
