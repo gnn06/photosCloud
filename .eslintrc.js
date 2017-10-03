@@ -7,12 +7,13 @@ module.exports = {
     "extends": "eslint:recommended",
     "plugins": [
 		"mocha"
-	],"rules": {
+    ],
+    "rules": {
 		"mocha/no-exclusive-tests": "error",
 		"no-console":0,
         "indent": [
             "error",
-            "tab"
+            "tabs"
         ],
         "linebreak-style": [
             "error",
@@ -26,5 +27,8 @@ module.exports = {
             "error",
             "always"
         ]
+    },
+    "globals": {
+        "angular": 1
     }
 };
