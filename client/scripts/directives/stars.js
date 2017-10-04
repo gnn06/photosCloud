@@ -8,8 +8,14 @@ module.directive('pcStars', function () {
 		templateUrl: 'templates/stars.html',
 		replace: true,
 					
-		controller: function ($scope, $http, $routeParams) {
+		controller: function ($scope, $rootScope, $http, $routeParams) {
 			console.log($routeParams);
+
+			$scope.toggleStarMode = function () {
+				
+				$rootScope.starMode = (!$rootScope.starMode);
+				console.log($rootScope.starMode);
+			};
 
 			$http({method: 'GET',
 				url: '/data/' + $routeParams.folder
