@@ -45,12 +45,14 @@
 		<img style="display:none" src="{{ (photos[currentPhoto - 1].url) | large }}"/>
 		<img style="display:none" src="{{ (photos[currentPhoto + 1].url) | large  }}"/>
 		<!-- autoplay -->
-		<video id="video" ng-show="$route.current.params.folder.indexOf('.mp4') > 0"
-			src="{{ '/photo/' + $route.current.params.folder}}" controls poster="{{ '/large/' + $route.current.params.folder}}">
-			Votre navigateur ne permet pas de lire les vidéos.
-			Mais vous pouvez toujours
-			<a href="fichiervideo.webm">la télécharger</a> !
-		</video>
+		<div id="video">
+			<video ng-show="$route.current.params.folder.indexOf('.mp4') > 0"
+				src="{{ '/photo/' + $route.current.params.folder}}" controls>
+				Votre navigateur ne permet pas de lire les vidéos.
+				Mais vous pouvez toujours
+				<a href="fichiervideo.webm">la télécharger</a> !
+			</video>
+		</div>
 	</div>
 
 </div>
