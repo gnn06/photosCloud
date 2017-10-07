@@ -64,6 +64,10 @@ video {
   margin: 5px;
 }
 
+.panel md-radio-button * {
+  border-color: rgba(255,255,255,0.87);
+}
+
 .transparent-panel {
   opacity: 0.75;
 }
