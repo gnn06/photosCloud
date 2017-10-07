@@ -1,8 +1,9 @@
-<md-toolbar class="md-toolbar-tools"
-    layout="row" layout-padding layout-align="center none"
-    ng-show="starMode">
-
+<md-toolbar style="width:fit-content" class="panel md-whiteframe-2dp md-toolbar-tools transparent-panel" flex="none" ng-show="starMode" layout="row">
     <md-radio-group  ng-model="stars" layout="row" >
         <md-radio-button ng-repeat="i in [1,2,3,4,5]" ng-value="{{i}}" aria-label="{{i}}"></md-radio-button>
     </md-radio-group>
+    <div flex></div>
+    <md-button class="md-icon-button" aria-label="close" ng-click="toggleStarMode()">
+        <md-icon>close</md-icon>
+    </md-button>
 </md-toolbar>
