@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/ws.js & browser-sync start --proxy http://localhost:8090/ --files ./client/ --no-open"
+    "start": "node src/ws.js & browser-sync start --proxy http://localhost:8089/ --port 8090 --files ./client/ --no-open"
   },
   "author": "",
   "license": "ISC",

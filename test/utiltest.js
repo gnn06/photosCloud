@@ -61,7 +61,7 @@ var config = {
 	dataPath      : ROOT_FOLDER_TEST + "photos/data/",
 	conv_prog     : "convert",
 	video_prog    : 'ffmpeg',
-	port          : 8090
+	port          : 8089
 };
 
 module.exports = {
