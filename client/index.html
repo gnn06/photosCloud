@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="styles/main.css">
   </head>
-  <body ng-app="photosAngularApp" layout="column" ng-view ng-cloak>
+  <body ng-app="photosAngularApp" layout="column" ng-cloak>
+    <!-- div needed because ng-view breaks ngAnimate -->
+    <div class="maxscreen" ng-view></div>
+
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
        !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
@@ -40,5 +42,6 @@
     <script src="scripts/services/photoservice.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/photo.js"></script>
+    <script src="scripts/animations/animation.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-<div id="photo" layout="column" flex="grow">
+<div id="photo" class="maxscreen" layout="column" flex="grow">
 	<div class="header">
 		<md-toolbar class="md-toolbar-tools transparent-toolbar md-whiteframe-2dp">
 			<!-- <a href="#!/"><img src="/images/back.png"/></a> -->
@@ -10,7 +10,7 @@
 			<md-button class="md-icon-button" aria-label="Custom Icon Button" ng-click="deletePhoto($event)">
 				<md-icon md-font-set="material-icons"><i class="material-icons">delete</i></md-icon>
 			</md-button>
-			<md-button class="md-icon-button" aria-label="stars" ng-click="toggleStarMode()">
+			<md-button class="md-icon-button animation-target" aria-label="stars" ng-click="toggleStarMode()">
 				<md-icon>star</md-icon>
 			</md-button>
 			<md-button id="fullscreen" class="md-icon-button" aria-label="Custom Icon Button"
@@ -21,8 +21,6 @@
 		</md-toolbar>
 		<pc-stars></pc-stars>
 	</div>
-	
-	
 	
 	<md-button id="prev" class="md-icon-button md-raised" aria-label="Custom Icon Button"
 		href="#!{{ photos[currentPhoto - 1].url | thumbnail }}">

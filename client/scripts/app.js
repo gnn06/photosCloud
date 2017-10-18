@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 angular
-  .module('photosAngularApp', ['ngResource', 'ngRoute', 'ngMaterial'])
+  .module('photosAngularApp', ['ngResource', 'ngRoute', 'ngMaterial', 'ngAnimate'])
 
   .filter('thumbnail', function() {
 		return function (input) {

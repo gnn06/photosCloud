@@ -1,3 +1,8 @@
+.maxscreen {
+  height: 100%;
+  width: 100%;
+}
+
 .header {
   position: fixed;
   top: 0px;
@@ -60,10 +65,6 @@ video {
   opacity: 0.65;
 }
 
-.panel {
-  margin: 5px;
-}
-
 .panel md-radio-button * {
   border-color: rgba(255,255,255,0.87);
 }
@@ -72,12 +73,28 @@ video {
   opacity: 0.75;
 }
 
-.animate-show-hide.ng-hide-add,
-.animate-show-hide.ng-hide-remove {
-  transition: all linear 0.5s;
+md-toolbar.panel {
+  background-color:rgb(63,81,181);
+  -webkit-transition: all 0.5s ease-in ;
+  -moz-transition: all 0.5s ease-in ;
+  transition: all 0.5s ease-in ;
+  z-index: 3;
 }
 
-.animate-show-hide.ng-hide {
-  opacity: 0 !important;
+.panel.ng-hide-add {
+  /* background-color: red; */
+  opacity: 0.75;
 }
 
+.panel.ng-hide-add-active {
+  opacity: 0;
+}
+
+.panel.ng-hide-remove {
+  /* background-color: green; */
+  opacity: 0;
+} 
+
+.panel.ng-hide-remove-active {
+  opacity: 0.75;
+}

@@ -1,4 +1,7 @@
-<md-toolbar style="width:fit-content" class="panel md-whiteframe-2dp md-toolbar-tools transparent-panel" flex="none" ng-show="starMode" layout="row">
+<md-toolbar style="" class="panel ng-hide md-whiteframe-2dp md-toolbar-tools transparent-panel" 
+    layout="row" flex="none"
+    ng-show="starMode">
+
     <md-radio-group  ng-model="stars" layout="row" >
         <md-radio-button ng-repeat="i in [1,2,3,4,5]" ng-value="{{i}}" aria-label="{{i}}"></md-radio-button>
     </md-radio-group>
