@@ -29,6 +29,51 @@
 }
 
 /* ===== photo ===== */
+#photo {
+  background-color: black;
+}
+
+#photo md-toolbar {
+  background-color: rgba(0,0,0,0);
+  z-index: 3;
+}
+
+#photo md-toolbar.panel {
+  background-color: rgba(255,255,255,0.85);
+  /* pour que le panel n'occupe pas toute la largeur */
+  display: inline-flex;
+  width: unset;
+  border-radius: 2px;
+}
+
+#photo md-toolbar.panel * {
+  color: black;
+  border-color: rgba(0,0,0,0.87);
+}
+
+#photo md-toolbar.panel {
+  -webkit-transition: all 0.3s ease-in ;
+  -moz-transition: all 0.3s ease-in ;
+  transition: all 0.3s ease-in ;
+}
+
+.panel.ng-hide-add {
+  /* background-color: red; */
+  opacity: 0.75;
+}
+
+.panel.ng-hide-add-active {
+  opacity: 0;
+}
+
+.panel.ng-hide-remove {
+  /* background-color: green; */
+  opacity: 0;
+} 
+
+.panel.ng-hide-remove-active {
+  opacity: 0.75;
+}
 
 #prev {
   position: fixed;
@@ -60,45 +105,4 @@
 
 video {
   width: 100%;
-}
-
-#photo md-toolbar.transparent-toolbar {
-  opacity: 0.65;
-}
-
-.panel md-radio-button * {
-  border-color: rgba(255,255,255,0.87);
-}
-
-.transparent-panel {
-  opacity: 0.75;
-}
-
-md-toolbar.panel {
-  background-color:rgb(63,81,181);
-  -webkit-transition: all 0.3s ease-in ;
-  -moz-transition: all 0.3s ease-in ;
-  transition: all 0.3s ease-in ;
-  z-index: 3;
-  /* pour que le panel n'occupe pas toute la largeur */
-  display: inline-flex;
-  width: unset;
-}
-
-.panel.ng-hide-add {
-  /* background-color: red; */
-  opacity: 0.75;
-}
-
-.panel.ng-hide-add-active {
-  opacity: 0;
-}
-
-.panel.ng-hide-remove {
-  /* background-color: green; */
-  opacity: 0;
-} 
-
-.panel.ng-hide-remove-active {
-  opacity: 0.75;
 }
