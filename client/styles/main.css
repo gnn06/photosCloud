@@ -8,6 +8,7 @@
   top: 0px;
   left: 0px;
   width:100%;
+  z-index:3; /* needed for video */
 }
 
 #photos md-checkbox {
