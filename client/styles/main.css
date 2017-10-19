@@ -57,6 +57,21 @@
   transition: all 0.3s ease-in ;
 }
 
+#photo md-toolbar:not(.panel),
+#photo a {
+  transition: all 1s ease-in;
+}
+
+#photo md-toolbar:not(.panel).ng-hide-add,
+#photo a.ng-hide-add {
+  opacity: 1;
+}
+
+#photo md-toolbar:not(.panel).ng-hide-add-active,
+#photo a.ng-hide-add-active {
+  opacity: 0;
+}
+
 .panel.ng-hide-add {
   /* background-color: red; */
   opacity: 0.75;

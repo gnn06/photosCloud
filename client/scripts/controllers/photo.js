@@ -7,9 +7,10 @@
  * # MainCtrl
  * Controller of the photosAngularApp
  */
+
 angular.module('photosAngularApp')
 	.controller('PhotoCtrl', function ($scope, $rootScope, $location, $route, $routeParams, $http, 
-		$filter, photoservice) {
+		$filter, $timeout, $document, photoservice) {
 		console.log('dans PhotoCtrl');
 	
 		if (!$rootScope.photos) {
@@ -55,5 +56,28 @@ angular.module('photosAngularApp')
 				}, function () {
 					console.log('rejected');
 				});
-		};		
+		};
+
+		$scope.timeoutHide = false;
+
+		const HIDE_DELAY = 4000;
+
+		function hide () {
+			$scope.timeoutHide = true;
+			$document.on('mousemove', function () {
+				console.log('mouse move');
+				$document.off('mousemove');
+				$scope.$apply('timeoutHide = false');
+				$timeout(function () {
+					console.log('hide');
+					hide();
+				}, HIDE_DELAY);
+			});
+		}
+
+		$timeout(function () {
+			console.log('hide');
+			hide();
+		}, HIDE_DELAY);
+
 	});

@@ -1,6 +1,6 @@
 <div id="photo" class="maxscreen" layout="column" flex="grow">
 	<div class="header">
-		<md-toolbar class="md-toolbar-tools">
+		<md-toolbar class="md-toolbar-tools" ng-hide="timeoutHide">
 			<!-- <a href="#!/"><img src="/images/back.png"/></a> -->
 			<md-button class="md-icon-button" aria-label="Custom Icon Button"
 			href="#!/">
@@ -22,13 +22,13 @@
 		<pc-stars></pc-stars>
 	</div>
 	
-	<md-button id="prev" class="md-icon-button md-raised" aria-label="Custom Icon Button"
+	<md-button id="prev" class="md-icon-button md-raised" ng-hide="timeoutHide" aria-label="Custom Icon Button"
 		href="#!{{ photos[currentPhoto - 1].url | thumbnail }}">
 		<md-icon md-font-set="material-icons"><i class="material-icons">keyboard_arrow_left</i></md-icon>
 	</md-button>
 	<!-- <a id="prev" href="#!/{{ photos[currentPhoto - 1].url | thumbnail }}"><img src="/images/left_arrow.png"/></a> -->
 	
-	<md-button id="next" class="md-icon-button md-raised" aria-label="Custom Icon Button"
+	<md-button id="next" class="md-icon-button md-raised" ng-hide="timeoutHide" aria-label="Custom Icon Button"
 		href="#!{{ photos[currentPhoto + 1].url | thumbnail }}">
 		<md-icon md-font-set="material-icons"><i class="material-icons">keyboard_arrow_right</i></md-icon>
 	</md-button>
