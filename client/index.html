@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="styles/main.css">
   </head>
-  <body ng-app="photosAngularApp" layout="column" ng-cloak>
+  <body ng-app="photosAngularApp"  >
     <!-- div needed because ng-view breaks ngAnimate -->
-    <div class="maxscreen" ng-view></div>
+    <div  layout="column" class="maxscreen" ng-view ng-cloak</div>
 
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
