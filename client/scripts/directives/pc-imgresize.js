@@ -31,7 +31,11 @@ angular.module('photosAngularApp')
 				angular.element($window).on('resize', function () {
 					// console.log('on resize img');
 					temp(element);
-				});            
+				});
+				scope.$on('$destroy', function () {
+					console.log('pc-imgresize.destroy');
+					angular.element($window).off('resize');
+				});
 			}
 		};
 	});
