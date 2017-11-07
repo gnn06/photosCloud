@@ -65,7 +65,7 @@ angular.module('photosAngularApp')
 		function hide () {
 			$scope.timeoutHide = true;
 			$document.on('mousemove', function () {
-				console.log('mouse move');
+				console.log('mouse move => show hidden controls');
 				$document.off('mousemove');
 				$scope.$apply('timeoutHide = false');
 				$timeout(function () {
@@ -76,7 +76,7 @@ angular.module('photosAngularApp')
 		}
 
 		$timeout(function () {
-			console.log('hide');
+			console.log('inactivity => hide controls');
 			hide();
 		}, HIDE_DELAY);
 
