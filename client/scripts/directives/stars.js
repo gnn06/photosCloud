@@ -9,7 +9,7 @@ module.directive('pcStars', function () {
 		replace: true,
 					
 		controller: function ($scope, $rootScope, $http, $routeParams) {
-			console.log($routeParams);
+			console.log('into pc-stars.controller', $routeParams);
 
 			$scope.toggleStarMode = function () {
 				
