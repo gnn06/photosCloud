@@ -35,10 +35,10 @@
 	<!-- <a id="next" href="#!/{{ photos[currentPhoto + 1].url | thumbnail }}"><img src="/images/right_arrow.png"/></a> -->
 
 	<div id="media" ng-cloak flex="grow">
-		<div id="picture" 
-			style="background-image:url('{{ '/large/' + $route.current.params.folder}}')"
-			ng-show="$route.current.params.folder.toLowerCase().indexOf('.jpg') > 0">
-		</div>
+		<img
+			src="{{ '/large/' + $route.current.params.folder}}"
+			ng-show="$route.current.params.folder.toLowerCase().indexOf('.jpg') > 0"
+			pc-imgresize pc-zoom/>
 		<!-- mise en cache images adjacentes -->
 		<img style="display:none" src="{{ (photos[currentPhoto - 1].url) | large }}"/>
 		<img style="display:none" src="{{ (photos[currentPhoto + 1].url) | large  }}"/>
