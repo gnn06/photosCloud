@@ -3,7 +3,7 @@
 
 angular.module('photosAngularApp')
 	.directive('pcImgresize', function ($window) {
-		function temp (element) {
+		function chooseWidthOrHeight (element) {
 			var w = element[0].width;
 			var h = element[0].height;
 			var ww = $window.innerWidth;
@@ -25,12 +25,12 @@ angular.module('photosAngularApp')
 				attrs.$observe('src', function(newVal, oldVal){
 					if (newVal != oldVal) {
 						console.log('into observe');
-						temp(element);
+						chooseWidthOrHeight(element);
 					}
 				});
 				angular.element($window).on('resize', function () {
 					// console.log('on resize img');
-					temp(element);
+					chooseWidthOrHeight(element);
 				});
 				scope.$on('$destroy', function () {
 					console.log('pc-imgresize.destroy');
