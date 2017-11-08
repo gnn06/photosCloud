@@ -22,6 +22,8 @@ angular.module('photosAngularApp')
 		}
 		return {
 			link : function (scope, element, attrs) {
+				// $observe needed as img.src need to be interpolated
+				// to replace {{}}. 
 				attrs.$observe('src', function(newVal, oldVal){
 					if (newVal != oldVal) {
 						console.log('into observe');

@@ -11,8 +11,8 @@ angular.module('photosAngularApp')
 				element.removeAttr('pc-zoom');
 				$compile(element)(scope);
             },
-            // important to have terminal and priority
-            // if not execute controller and register event twice.
+            // important to have terminal and priority with $compile
+            // if not, execute controller and register event twice.
             terminal: true, 
             priority: 1000,
 			controller : function ($scope) {
