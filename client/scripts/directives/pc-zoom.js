@@ -75,10 +75,10 @@ angular.module('photosAngularApp')
 					var wh = window.innerHeight;
 					var ww = window.innerWidth;
 					/* important to use min at the end to priorise finalDeltaX to 0 */
-					finalDeltaX = Math.max(finalDeltaX,          -((w * finalScale / 2) - ww + (w / 2)));
-					finalDeltaX = Math.min(finalDeltaX,  (w * finalScale / 2) - w / 2);
-					finalDeltaY = Math.max(finalDeltaY,          -((h * finalScale / 2) - wh + (h / 2)));
-					finalDeltaY = Math.min(finalDeltaY,   (h * finalScale / 2) - (h / 2));
+					finalDeltaX = Math.max(finalDeltaX,          -((w * finalScale / 2) - ww / 2));
+					finalDeltaX = Math.min(finalDeltaX,  (w * finalScale / 2) - ww / 2);
+					finalDeltaY = Math.max(finalDeltaY,          -((h * finalScale / 2) - wh / 2));
+					finalDeltaY = Math.min(finalDeltaY,   (h * finalScale / 2) - wh / 2);
 					console.log('end of snap', finalDeltaX);
 				}
             

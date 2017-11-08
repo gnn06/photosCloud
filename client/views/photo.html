@@ -34,7 +34,7 @@
 	</md-button>
 	<!-- <a id="next" href="#!/{{ photos[currentPhoto + 1].url | thumbnail }}"><img src="/images/right_arrow.png"/></a> -->
 
-	<div id="media" ng-cloak flex="grow">
+	<div id="media" ng-cloak flex="grow" layout="column" layout-align="center center">
 		<img
 			src="{{ '/large/' + $route.current.params.folder}}"
 			ng-show="$route.current.params.folder.toLowerCase().indexOf('.jpg') > 0"
