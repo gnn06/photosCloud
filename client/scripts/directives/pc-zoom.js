@@ -10,11 +10,11 @@ angular.module('photosAngularApp')
 				/* removeAttr needed to avoid error */
 				element.removeAttr('pc-zoom');
 				$compile(element)(scope);
-            },
-            // important to have terminal and priority with $compile
-            // if not, execute controller and register event twice.
-            terminal: true, 
-            priority: 1000,
+			},
+			// important to have terminal and priority with $compile
+			// if not, execute controller and register event twice.
+			terminal: true, 
+			priority: 1000,
 			controller : function ($scope) {
 				var finalScale = 1.0;
 				var finalDeltaX = 0;
