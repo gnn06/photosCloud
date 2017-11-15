@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  </head>
+    <style>
+        html {
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            padding: 0px;
+            margin: 0px;
+            width:100%;
+            height:100%;
+        }
+        img {
+            display: block;
+        }
+    </style>
+	<body ng-app="photosAngularApp"> 
+        <img id="picture"
+            pc-imgresize
+            src="portrait.jpg"/>        
+        <script src="/node_modules/angular/angular.js"></script>
+        <script src="pc-imgresize.js"></script>
+    </body>
+</html>

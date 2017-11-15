@@ -31,8 +31,10 @@
     "gulp": "^3.9.1",
     "gulp-zip": "^4.0.0",
     "image-size": "^0.6.0",
+    "live-server": "^1.2.0",
     "mocha": "^3.4.2",
     "proxyquire": "^1.8.0",
+    "selenium-webdriver": "^3.6.0",
     "sinon": "^2.3.5",
     "supertest": "^3.0.0"
   }
