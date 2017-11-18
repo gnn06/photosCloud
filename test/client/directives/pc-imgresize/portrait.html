@@ -22,7 +22,10 @@
         <img id="picture"
             pc-imgresize
             src="portrait.jpg"/>        
-        <script src="/node_modules/angular/angular.js"></script>
-        <script src="pc-imgresize.js"></script>
+        <script src="/client/bower_components/angular/angular.js"></script>
+        <script>
+            angular.module('photosAngularApp', []);
+        </script>
+        <script src="/client/scripts/directives/pc-imgresize.js"></script>
     </body>
 </html>

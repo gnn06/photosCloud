@@ -6,7 +6,7 @@
  * de la div et respecte pas la taille de l'image
  */
 
-angular.module('photosAngularApp', [])
+angular.module('photosAngularApp')
 	.directive('pcImgresize', function ($window) {		
 		return {
 			link : function (scope, element, attrs) {
