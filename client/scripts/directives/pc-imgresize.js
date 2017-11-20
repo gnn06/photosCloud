@@ -22,7 +22,7 @@ angular.module('photosAngularApp')
 						console.log('resize image => choose width', w, h, ww, wh);
 						element.css('width', ww + 'px');
 						element.css('height', '');
-					} else {
+					} if (ratio_W / ratio_H < 1) {
 						console.log('resize image => choose height', w, h, ww, wh);
 						element.css('height', wh + 'px');
 						element.css('width', '');
