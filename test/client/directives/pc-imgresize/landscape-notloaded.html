@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  </head>
+    <style>
+        html {
+            width: 100%;
+            height:100%;
+        }
+        body {
+            padding: 0px;
+            margin: 0px;
+            width:100%;
+            height:100%;
+        }
+        img {
+            display: block;
+        }
+        button {
+            position:fixed;
+        }
+    </style>
+    
+	<body ng-app="photosAngularApp" ng-controller="ctrl">
+        <button id="bouton" ng-click="test()">click to test</button>
+        <img id="picture"
+            pc-imgresize
+            src="{{image}}"/>
+        <script src="/client/bower_components/angular/angular.js"></script>
+        <script>
+            angular.module('photosAngularApp', [])
+            .controller('ctrl', function ($scope) {
+                $scope.image = '';
+                $scope.test = function () {
+                    $scope.image = '/media/landscape.jpg';
+                }
+            });
+
+        </script>
+        <script src="/client/scripts/directives/pc-imgresize.js"></script>
+    </body>
+</html>

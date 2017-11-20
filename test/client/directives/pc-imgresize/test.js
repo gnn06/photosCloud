@@ -4,7 +4,7 @@ var By = webdriver.By;
 var test = require('selenium-webdriver/testing');
 var liveServer = require('live-server');
 
-test.describe('imgresize', function () {
+test.describe('imgresize nominal', function () {
     
 	this.timeout(60000);
 	/**
@@ -34,8 +34,8 @@ test.describe('imgresize', function () {
 	});
 
 	test.after(function() {
-		driver.quit();
-		liveServer.shutdown();
+		// driver.quit();
+		// liveServer.shutdown();
 	});
 
 	/**
@@ -69,7 +69,7 @@ test.describe('imgresize', function () {
 	});
 
 	test.describe('when window has only width bigger (960x533)', function() {
-		test.it('img size should be (800x533)', function () {
+		test.it('img size should be (800x533), height setted', function () {
 			driver.manage().window().setSize(960+16, 533+132)
 				.then(() => {
 					driver.get('http://localhost:8080/landscape.html')
@@ -78,7 +78,7 @@ test.describe('imgresize', function () {
 								element.getCssValue('width').then(width => {
 									element.getCssValue('height').then(height => {
 										assert.equal(width, '800px');
-										assert.equal(height, '533px');
+										assert.equal(height, '533px'); 
 									});
 								});
 							});
@@ -88,7 +88,7 @@ test.describe('imgresize', function () {
 	});
 
 	test.describe('when window has only height bigger (800x639)', function() {
-		test.it('img size should be (800x533)', function () {
+		test.it('img size should be (800x533), width setted', function () {
 			driver.manage().window().setSize(800+16, 639+132)
 				.then(() => {
 					driver.get('http://localhost:8080/landscape.html')

@@ -17,24 +17,44 @@ angular.module('photosAngularApp')
 					var wh = $window.innerHeight;
 					var ratio_W = (w / ww);
 					var ratio_H = (h / wh);
+					console.log('debug,src=', element[0].src);
 					if (ratio_W / ratio_H > 1 ) {
-						console.log('resize image => choose width');
+						console.log('resize image => choose width', w, h, ww, wh);
 						element.css('width', ww + 'px');
 						element.css('height', '');
 					} else {
-						console.log('resize image => choose height');
+						console.log('resize image => choose height', w, h, ww, wh);
 						element.css('height', wh + 'px');
 						element.css('width', '');
 					}
 				}
-				// $observe needed as img.src need to be interpolated
-				// to replace {{}}. 
-				attrs.$observe('src', function(newVal, oldVal){
-					if (newVal != oldVal) {
-						console.log('into observe');
-						chooseWidthOrHeight(element);
-					}
+				// better to use onload instead on $observe on src attribute
+				// because during $observe, imgage could don't be yet loaded
+
+				/**
+				 * when img loaded before onLoad event is registered, 
+				 * onLoad is not fired. We test it, using naturalWidth properties
+				 * (!= 0 <=> img already loaded, onLoad won't be fired)
+				 */
+				console.log('register img.onload');
+				console.log(element[0].naturalWidth);
+				if (element[0].naturalWidth != 0 && element[0].naturalHeight != 0) {
+					console.log('image already loaded');
+					chooseWidthOrHeight(element);
+				}
+				element.on('load', function () {
+					console.log('onload image');
+					chooseWidthOrHeight(element);
 				});
+				
+				// $observe needed because img.src need to be interpolated
+				// to replace {{}}. 
+				// attrs.$observe('src', function(newVal, oldVal){
+				// 	if (newVal != oldVal) {
+				// 		console.log('into observe');
+				// 		chooseWidthOrHeight(element);
+				// 	}
+				// });
 				angular.element($window).on('resize', function () {
 					// console.log('on resize img');
 					chooseWidthOrHeight(element);
