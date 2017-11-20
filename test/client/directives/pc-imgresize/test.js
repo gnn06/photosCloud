@@ -21,10 +21,9 @@ test.describe('imgresize nominal', function () {
 			ignore: 'scss,my/templates', // comma-separated string for paths to ignore
 			file: 'landscape.html', // When set, serve this file (server root relative) for every 404 (useful for single-page applications)
 			watch: [],
-			quiet: true,
 			wait: 1000, // Waits for all changes, before reloading. Defaults to 0 sec.
 			mount: [['/client', 'client/']], // Mount a directory to a route.
-			logLevel: 2, // 0 = errors only, 1 = some, 2 = lots
+			logLevel: 0, // 0 = errors only, 1 = some, 2 = lots
 			middleware: [function(req, res, next) { next(); }] // Takes an array of Connect-compatible middleware that are injected into the server middleware stack
 		};
 		liveServer.start(params);
@@ -69,23 +68,25 @@ test.describe('imgresize nominal', function () {
 		});
 	});
 
-	test.describe('when window has only width bigger (960x533)', function() {
+	test.describe.only('when window has only width bigger (960x533)', function() {
 		test.it('img size should be (800x533), height setted', function () {
-			driver.manage().window().setSize(960+16, 533+132)
-				.then(() => {
-					driver.get('http://localhost:8080/landscape.html')
-						.then(function () {
-							driver.findElement(By.id('picture')).then(element => {
-								element.getCssValue('width').then(width => {
-									element.getCssValue('height').then(height => {
-										assert.equal(width, '800px');
-										assert.equal(height, '533px'); 
-									});
-								});
-							});
-						});
+			driver.manage().window().setSize(960+16, 533+132);
+			driver.get('http://localhost:8080/landscape.html');
+			driver.findElement(By.id('picture'))
+				.then(element => {
+					element.getCssValue('width').then(width => {
+						assert.equal(width, '800px');
+					});
+					element.getCssValue('height').then(height => {
+						assert.equal(height, '533px'); 
+					});
+					element.getAttribute('style').then(value => {
+						assert.ok(value.indexOf('height') >= 0);
+						assert.ok(value.indexOf('width')  == -1);
+					});
 				});
 		});
+			
 	});
 
 	test.describe('when window has only height bigger (800x639)', function() {
