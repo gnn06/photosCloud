@@ -19,11 +19,12 @@ test.describe('imgresize loading', function () {
 			open: false, // When false, it won't load your browser by default.
 			ignore: 'scss,my/templates', // comma-separated string for paths to ignore
 			watch: [],
+			quiet: true,
 			wait: 1000, // Waits for all changes, before reloading. Defaults to 0 sec.
 			logLevel: 2, // 0 = errors only, 1 = some, 2 = lots
 			middleware: [function(req, res, next) { next(); }] // Takes an array of Connect-compatible middleware that are injected into the server middleware stack
 		};
-		// liveServer.start(params);
+		liveServer.start(params);
 
 		driver = new webdriver.Builder()
 			.forBrowser('chrome')
@@ -32,7 +33,7 @@ test.describe('imgresize loading', function () {
 
 	test.after(function() {
 		driver.quit();
-		// liveServer.shutdown();
+		liveServer.shutdown();
 	});
 
 	test.describe('when image is long to download', function() {

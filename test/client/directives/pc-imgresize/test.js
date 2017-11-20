@@ -21,6 +21,7 @@ test.describe('imgresize nominal', function () {
 			ignore: 'scss,my/templates', // comma-separated string for paths to ignore
 			file: 'landscape.html', // When set, serve this file (server root relative) for every 404 (useful for single-page applications)
 			watch: [],
+			quiet: true,
 			wait: 1000, // Waits for all changes, before reloading. Defaults to 0 sec.
 			mount: [['/client', 'client/']], // Mount a directory to a route.
 			logLevel: 2, // 0 = errors only, 1 = some, 2 = lots
@@ -34,8 +35,8 @@ test.describe('imgresize nominal', function () {
 	});
 
 	test.after(function() {
-		// driver.quit();
-		// liveServer.shutdown();
+		driver.quit();
+		liveServer.shutdown();
 	});
 
 	/**
