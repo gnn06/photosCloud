@@ -35,8 +35,12 @@ test.describe('imgresize loading', function () {
 		liveServer.shutdown();
 	});
 
-	test.describe('when image is long to download', function() {
-		test.it('should size the image when it is loaded', function () {
+	/**
+	 * describe('when image is static, is already test')
+	 */
+
+	test.describe('when image is dynamic (src with expression) and long to download', function() {
+		test.it('should size the image when it is loaded via onload', function () {
 			/**
 			 * use an portait image before testing to make sure, the width
 			 * attribute was setted by the click
