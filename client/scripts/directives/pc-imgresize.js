@@ -17,12 +17,12 @@ angular.module('photosAngularApp')
 					var wh = $window.innerHeight;
 					var ratio_W = (w / ww);
 					var ratio_H = (h / wh);
-					console.log('debug,src=', element[0].src);
+					console.log('debug,src=', element[0].src, h, wh);
 					if (ratio_W / ratio_H > 1 ) {
 						console.log('resize image => choose width', w, h, ww, wh);
 						element.css('width', ww + 'px');
 						element.css('height', '');
-					} if (ratio_W / ratio_H < 1) {
+					} else {
 						console.log('resize image => choose height', w, h, ww, wh);
 						element.css('height', wh + 'px');
 						element.css('width', '');
