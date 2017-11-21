@@ -1,6 +1,6 @@
 #!/bin/bash
 archive="release/photosCloud-$(date '+%y-%m-%d-%H-%M-%S').tar.gz"
-tar --exclude=./client/bower_components --exclude=./src/config.js -zcvf $archive ./src/ ./client/ ./package.json
+tar --exclude=./client/bower_components --exclude=./client/node_modules --exclude=./src/config.js -zcvf $archive ./src/ ./client/ ./package.json
 cd /var/photos/photosCloud
 tar -zxvf ~/dev/photosCloud/$archive
 npm install
