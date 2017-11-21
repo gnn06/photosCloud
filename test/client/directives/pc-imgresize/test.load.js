@@ -36,7 +36,12 @@ test.describe('imgresize loading', function () {
 	});
 
 	/**
-	 * describe('when image is static, is already test')
+	 * pourrait être refactoré  sur le principe d'un mock pour vérifier que la function de resize
+	 * est appelé
+	 */
+
+	/**
+	 * describe('when image is static, is already tested')
 	 */
 
 	test.describe('when image is dynamic (src with expression) and long to download', function() {
