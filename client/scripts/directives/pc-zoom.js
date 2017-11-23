@@ -26,7 +26,7 @@ angular.module('photosAngularApp')
 					var trans = 'translate(' + dX +'px,' + dY + 'px) scale(' + s + ')';
 					//console.log('pinch', trans);
 					event.element.css('transform', trans);
-					console.log('end of inch', finalDeltaX);
+					console.log('end of inch', trans);
 				};
 				$scope.onPinchEnd = function (event) {
 					finalScale = finalScale * event.scale;
@@ -40,13 +40,13 @@ angular.module('photosAngularApp')
 					if (event.scale < 1) {
 						finalDeltaX += event.deltaX;
 						finalDeltaY += event.deltaY;    
-						snapToBorder(event);
+						snapToBorder(event, $window);
 					}
 					//console.log(finalDeltaX);
 					var trans = 'translate(' + finalDeltaX +'px,' + finalDeltaY + 'px) scale(' + finalScale + ')';
 					//console.log('pinch end', trans);
 					event.element.css('transform', trans);
-					console.log('end of pinchend', finalDeltaX);
+					console.log('end of pinchend', trans);
 				};
 				$scope.onDoubleTap = function (event) {
 					if (finalScale == 1.0) {
@@ -58,37 +58,53 @@ angular.module('photosAngularApp')
 					}
 					var trans = 'translate(' + finalDeltaX +'px,' + finalDeltaY + 'px) scale(' + finalScale + ')';
 					event.element.css('transform', trans);
-					console.log('end of doubletap', finalDeltaX);
+					console.log('end of doubletap', trans);
 				};
 				$scope.onPan = function (event) {
-					if (finalScale > 1) {
-						var dX = finalDeltaX + event.deltaX;
-						var dY = finalDeltaY + event.deltaY;
-						var trans = 'translate(' + dX +'px,' + dY + 'px) scale(' + finalScale + ')';
-						event.element.css('transform', trans);
-						console.log('end of pan', finalDeltaX);
-					}
+					var dX = finalDeltaX + event.deltaX;
+					var dY = finalDeltaY + event.deltaY;
+					var trans = 'translate(' + dX +'px,' + dY + 'px) scale(' + finalScale + ')';
+					event.element.css('transform', trans);
+					console.log('end of pan', trans);
 				};
 				function snapToBorder (event, window) {
+					// taille de l'image sans le scale
 					var w = event.element[0].clientWidth;
 					var h = event.element[0].clientHeight;
+					// taille de l'écran
 					var wh = window.innerHeight;
 					var ww = window.innerWidth;
-					/* important to use min at the end to priorise finalDeltaX to 0 */
-					finalDeltaX = Math.max(finalDeltaX,          -((w * finalScale / 2) - ww / 2));
-					finalDeltaX = Math.min(finalDeltaX,  (w * finalScale / 2) - ww / 2);
-					finalDeltaY = Math.max(finalDeltaY,          -((h * finalScale / 2) - wh / 2));
-					finalDeltaY = Math.min(finalDeltaY,   (h * finalScale / 2) - wh / 2);
-					console.log('end of snap', finalDeltaX);
+					/**
+					 * si l'image est plus petite que l'écran dans un des deux dimensions
+					 * on recentre l'image
+					 */
+					if (finalScale * w > ww) {
+						/* important to use min at the end to priorise finalDeltaX to 0 */
+						finalDeltaX = Math.max(finalDeltaX,          -((w * finalScale / 2) - ww / 2));
+						finalDeltaX = Math.min(finalDeltaX,  (w * finalScale / 2) - ww / 2);
+					}
+					if (h * finalScale > wh) {
+						finalDeltaY = Math.max(finalDeltaY,          -((h * finalScale / 2) - wh / 2));
+						finalDeltaY = Math.min(finalDeltaY,   (h * finalScale / 2) - wh / 2);
+					} else {
+						finalDeltaY = 0;
+					}
+					// console.log('end of snap', finalDeltaX);
 				}
             
 				$scope.onPanEnd = function (event) {
-					finalDeltaX += event.deltaX;
-					finalDeltaY += event.deltaY;
-					snapToBorder(event, $window);
+					if (finalScale > 1) {
+						/**
+						 * si l'image est à sa taille originale
+						 * on ne la déplace pas, elle reste centrée
+						 */
+						finalDeltaX += event.deltaX;
+						finalDeltaY += event.deltaY;
+						snapToBorder(event, $window);
+					}
 					var trans = 'translate(' + finalDeltaX +'px,' + finalDeltaY + 'px) scale(' + finalScale + ')';
 					event.element.css('transform', trans);
-					console.log('end of panEnd', finalDeltaX);
+					console.log('end of panEnd', trans);
 				};
 			}
 		};
