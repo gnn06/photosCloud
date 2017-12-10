@@ -65,6 +65,8 @@ describe('pc-zoom', function () {
 			// };
 	
 			window = $window;
+			container.css('width', '300px');
+			container.css('height', '200px');
 			window.innerWidth  = 300;
 			window.innerHeight = 200;
 			// console.log('dans beforeEach', element[0].clientWidth);
