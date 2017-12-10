@@ -2,29 +2,33 @@
 module.exports = function(config) {
   config.set({
 
-    basePath: './client',
-
     files: [
-      'bower_components/angular/angular.js',
-      'bower_components/angular-route/angular-route.js',
-      'bower_components/angular-resource/angular-resource.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/angular-material/angular-material.js',
-      'bower_components/angular-animate/angular-animate.js',
-      'bower_components/angular-aria/angular-aria.js',
-      'bower_components/hammerjs/hammer.js',
-      'bower_components/AngularHammer/angular.hammer.js',
-      'scripts/app.js',
-      'scripts/directives/pc-zoom*.js'
+      'client/bower_components/angular/angular.js',
+      'client/bower_components/angular-route/angular-route.js',
+      'client/bower_components/angular-resource/angular-resource.js',
+      'client/bower_components/angular-mocks/angular-mocks.js',
+      'client/bower_components/angular-material/angular-material.js',
+      'client/bower_components/angular-animate/angular-animate.js',
+      'client/bower_components/angular-aria/angular-aria.js',
+      'client/bower_components/hammerjs/hammer.js',
+      'client/bower_components/AngularHammer/angular.hammer.js',
+      'client/scripts/app.js',
+      'client/scripts/directives/pc-zoom*.js',
+      'test/client/directives/pc-imgresize/style.css'
     ],
 
     autoWatch: true,
 
     frameworks: ['mocha', 'chai'],
 
-    browsers: ['Chrome', 'Firefox'],
+    //browsers: ['Chrome', 'Firefox'],
     // browsers: ['Chrome'],
-    // browsers: ['Firefox'],
+    browsers: ['Firefox'],
+    // browsers: ['FirefoxHeadless'], 
+    // customLaunchers: { FirefoxHeadless: 
+      // { base: 'Firefox', flags: [ '-headless' ] }
+    // } ,
+    
 
     plugins: [
       'karma-chrome-launcher',
