@@ -12,6 +12,9 @@ html, body {
 	height: 200px; 
 	border: solid 1px black; 
 	margin: auto;
+	display: flex;
+	vertical-align: middle;
+	align-items: center;
 }
 
 .content {
