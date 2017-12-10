@@ -4,7 +4,7 @@ angular.module('photosAngularApp')
 			var s = $scope.finalScale * event.scale;
 			var dX = $scope.finalDeltaX * event.scale;
 			var dY = $scope.finalDeltaY * event.scale;
-			var trans = 'translate(' + dX +'px,' + dY + 'px) scale(' + s + ')';
+			var trans = 'translate(' + dX +'px, ' + dY + 'px) scale(' + s + ')';
 			//console.log('pinch', trans);
 			event.element.css('transform', trans);
 			console.log('end of inch', trans);
@@ -23,7 +23,7 @@ angular.module('photosAngularApp')
 				$scope.finalDeltaY += event.deltaY;    
 				snapToBorder(event, $window);
 			}
-			var trans = 'translate(' + $scope.finalDeltaX +'px,' + $scope.finalDeltaY + 'px) scale(' + $scope.finalScale + ')';
+			var trans = 'translate(' + $scope.finalDeltaX +'px, ' + $scope.finalDeltaY + 'px) scale(' + $scope.finalScale + ')';
 			//console.log('pinch end', trans);
 			event.element.css('transform', trans);
 			console.log('end of pinchend', trans);
@@ -36,14 +36,14 @@ angular.module('photosAngularApp')
 				$scope.finalDeltaX = 0;
 				$scope.finalDeltaY = 0;
 			}
-			var trans = 'translate(' + $scope.finalDeltaX +'px,' + $scope.finalDeltaY + 'px) scale(' + $scope.finalScale + ')';
+			var trans = 'translate(' + $scope.finalDeltaX +'px, ' + $scope.finalDeltaY + 'px) scale(' + $scope.finalScale + ')';
 			event.element.css('transform', trans);
 			console.log('end of doubletap', trans);
 		};
 		$scope.onPan = function (event) {
 			var dX = $scope.finalDeltaX + event.deltaX;
 			var dY = $scope.finalDeltaY + event.deltaY;
-			var trans = 'translate(' + dX +'px,' + dY + 'px) scale(' + $scope.finalScale + ')';
+			var trans = 'translate(' + dX +'px, ' + dY + 'px) scale(' + $scope.finalScale + ')';
 			event.element.css('transform', trans);
 			console.log('end of pan', trans);
 		};
@@ -58,7 +58,7 @@ angular.module('photosAngularApp')
 				$scope.finalDeltaY += event.deltaY;
 				snapToBorder(event, $window);
 			}
-			var trans = 'translate(' + $scope.finalDeltaX +'px,' + $scope.finalDeltaY + 'px) scale(' + $scope.finalScale + ')';
+			var trans = 'translate(' + $scope.finalDeltaX +'px, ' + $scope.finalDeltaY + 'px) scale(' + $scope.finalScale + ')';
 			event.element.css('transform', trans);
 			console.log('end of panEnd', trans);
 		};

@@ -14,6 +14,10 @@ describe('pc-zoom', function () {
 	
 	beforeEach(module('photosAngularApp'));
 
+	afterEach(function() {
+		element.remove();
+	});
+
 	beforeEach(function(/*done*/) {
 		inject(function($rootScope, $controller, $compile, $document, $window) {
 			$scope = $rootScope.$new();
@@ -27,16 +31,16 @@ describe('pc-zoom', function () {
 			 * 
 			 * inconvénient : la taille de l'image et de la fenêtre est difficile à controler.
 			 */
-
-			// element = angular.element('<img src="/base/landscape.jpg">');
+			var content = angular.element('<div class="container"><div class="content" pc-zoom></div></div>');
+			element = content.find('DIV');
 			// wait event load is needed to have the image width
 			// element.bind('load', function() {
 			// 	// console.log('image loaded', element[0].clientWidth);
 			// 	done();
 			// });
 			// if element is not appended to the body, the width image is not available
-			// angular.element($document[0].body).append(element);
-			// $scope.$digest();
+			angular.element($document[0].body).append(content);
+			$scope.$digest();
 
 			/**
 			 * solution 2
@@ -47,23 +51,25 @@ describe('pc-zoom', function () {
 			 */
 
 
-			element = [];
-			element[0] = {};
-			element[0].clientWidth  = 300;
-			element[0].clientHeight = 200;
-			element._css_ = '';
-			element.css = function(key, value) { 
-				if (value == undefined) { 
-					return this._css_;
-				} else { 
-					this._css_ = value;
-				}
-			};
+			// element = [];
+			// element[0] = {};
+			// element[0].clientWidth  = 300;
+			// element[0].clientHeight = 200;
+			// element._css_ = '';
+			// element.css = function(key, value) { 
+			// 	if (value == undefined) { 
+			// 		return this._css_;
+			// 	} else { 
+			// 		this._css_ = value;
+			// 	}
+			// };
 	
 			window = $window;
 			window.innerWidth  = 300;
 			window.innerHeight = 200;
 			// console.log('dans beforeEach', element[0].clientWidth);
+
+			// window = content;
 
 			$scope.finalScale  = 1;
 			$scope.finalDeltaX = 0;
@@ -83,7 +89,7 @@ describe('pc-zoom', function () {
 			var event = { element: element, scale: 0.9, deltaX: 0, deltaY: 0 };
 			$scope.onPinchEnd(event);
 			var trans = event.element.css('transform');
-			expect(trans).to.equal('translate(0px,0px) scale(1)');
+			expect(trans).to.equal('translate(0px, 0px) scale(1)');
 		});
 	});
 	
@@ -98,7 +104,7 @@ describe('pc-zoom', function () {
 			var event = { element: element, scale: 1.1, deltaX: 0, deltaY: 0 };
 			$scope.onPinchEnd(event);
 			var trans = event.element.css('transform');
-			expect(trans).to.equal('translate(0px,0px) scale(1.1)');
+			expect(trans).to.equal('translate(0px, 0px) scale(1.1)');
 		});
 	});
 
@@ -113,7 +119,7 @@ describe('pc-zoom', function () {
 			var event = { element: element, scale: 1, deltaX: 10, deltaY: 10 };
 			$scope.onPanEnd(event);
 			var trans = event.element.css('transform');
-			expect(trans).to.equal('translate(0px,0px) scale(1)');
+			expect(trans).to.equal('translate(0px, 0px) scale(1)');
 		});
 	});
 
@@ -123,7 +129,7 @@ describe('pc-zoom', function () {
 			$scope.finalScale = 0.9;
 			$scope.onPanEnd({ element: element, scale: 0.9, deltaX: 10, deltaY: 10 });
 			var trans = element.css('transform');
-			expect(trans).to.equal('translate(0px,0px) scale(0.9)');
+			expect(trans).to.equal('translate(0px, 0px) scale(0.9)');
 		});
 	});
 
@@ -136,7 +142,7 @@ describe('pc-zoom', function () {
 			$scope.onPanEnd({ element: element, deltaX: 10, deltaY: 10 });
 			// var trans = element.css('transform');
 			var trans = element.css('transform');
-			expect(trans).to.equal('translate(0px,0px) scale(1)');
+			expect(trans).to.equal('translate(0px, 0px) scale(1)');
 		});
 	});
 
@@ -149,7 +155,7 @@ describe('pc-zoom', function () {
 			$scope.onPanEnd({ element: element, deltaX: 150, deltaY: 100 });
 			// var trans = element.css('transform');
 			var trans = element.css('transform');
-			expect(trans).to.equal('translate(150px,100px) scale(2)');
+			expect(trans).to.equal('translate(150px, 100px) scale(2)');
 		});
 	});
 
@@ -162,7 +168,7 @@ describe('pc-zoom', function () {
 			$scope.onPanEnd({ element: element, deltaX: 160, deltaY: 110 });
 			// var trans = element.css('transform');
 			var trans = element.css('transform');
-			expect(trans).to.equal('translate(150px,100px) scale(2)');
+			expect(trans).to.equal('translate(150px, 100px) scale(2)');
 		});
 	});
 
@@ -178,7 +184,7 @@ describe('pc-zoom', function () {
 			$scope.onPinchEnd({ element: element, scale: 0.9, deltaX: 0, deltaY: 0 });
 			// var trans = element.css('transform');
 			var trans = element.css('transform');
-			expect(trans).to.equal('translate(0px,0px) scale(1.35)');
+			expect(trans).to.equal('translate(0px, 0px) scale(1.35)');
 		});
 	});
 
@@ -194,7 +200,7 @@ describe('pc-zoom', function () {
 			$scope.onPinchEnd({ element: element, scale: 0.9, deltaX: 0, deltaY: 10 });
 			// var trans = element.css('transform');
 			var trans = element.css('transform');
-			expect(trans).to.equal('translate(0px,0px) scale(1.35)');
+			expect(trans).to.equal('translate(0px, 0px) scale(1.35)');
 		});
 	});
 });
