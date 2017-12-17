@@ -10,13 +10,9 @@ var assert = chai.assert;
 var expect = chai.expect;
 
 const utiltest = require('./utiltest');
+const ROOT_FOLDER_TEST = 'e:/temp/dev/mochtest/';
 
 var config = require('../src/config');
-config.photoPath     = utiltest.FOLDER_TEST + "test6/original/";
-config.largePath     = utiltest.FOLDER_TEST + "test6/large/";
-config.thumbnailPath = utiltest.FOLDER_TEST + "test6/thumbnail/";
-config.dataPath      = utiltest.FOLDER_TEST + "test6/data/";
-config.port          = 8120;
 
 var   ws   = require('../src/ws');
 
@@ -26,6 +22,11 @@ var sendFileStub;
 describe('ws for large', function() {
     before(function() {
         sendFileStub      = sinon.stub(express.response, 'sendFile');
+        config.photoPath     = ROOT_FOLDER_TEST + "test6/original/";
+        config.largePath     = ROOT_FOLDER_TEST + "test6/large/";
+        config.thumbnailPath = ROOT_FOLDER_TEST + "test6/thumbnail/";
+        config.dataPath      = ROOT_FOLDER_TEST + "test6/data/";
+        config.port          = 8120;
     });
 
     this.timeout(12000);

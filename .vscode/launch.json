@@ -16,7 +16,7 @@
                 "--timeout",
                 "999999",
                 "--colors",
-                "${workspaceRoot}/test/client/directives/pc-imgresize/"
+                "${workspaceRoot}/test/client/webdriver/directives/pc-imgresize/"
             ],
             "internalConsoleOptions": "openOnSessionStart"
         },

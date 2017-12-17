@@ -1,12 +1,15 @@
 {
-  "name": "test-expressjs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "photosCloud",
+  "version": "0.0.1",
+  "description": "pictures gallery with picture stored on local network",
+  "main": "src/ws.js",
   "scripts": {
-    "start": "node src/ws.js & browser-sync start --proxy http://localhost:8089/ --port 8090 --files ./client/ --no-open"
+    "start": "node src/ws.js & browser-sync start --proxy http://localhost:8089/ --port 8090 --files ./client/ --no-open",
+    "testclient":    "node node_modules/karma/bin/karma start --single-run && node node_modules/mocha/bin/mocha --u tdd --colors test/client/webdriver/**/*.js",
+    "testkarma":     "node node_modules/karma/bin/karma start --single-run",
+    "testwebdriver": "node node_modules/mocha/bin/mocha --u tdd --colors test/client/webdriver/**/*.js"
   },
-  "author": "",
+  "author": "Gilles Orsini gilles.orsini@gmail.com",
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.5.0",

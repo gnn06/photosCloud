@@ -13,7 +13,7 @@ test.describe('imgresize loading', function () {
 		var params = {
 			port: 8080, // Set the server port. Defaults to 8080.
 			host: '0.0.0.0', // Set the address to bind to. Defaults to 0.0.0.0 or process.env.IP.
-			root: 'test/client/directives/pc-imgresize/', // Set root directory that's being served. Defaults to cwd.
+			root: 'test/client/webdriver/directives/pc-imgresize/', // Set root directory that's being served. Defaults to cwd.
 			file: 'landscape.html', // When set, serve this file (server root relative) for every 404 (useful for single-page applications)
 			mount: [['/client', 'client/'], ['/media', 'test/media']], // Mount a directory to a route.
 			open: false, // When false, it won't load your browser by default.
