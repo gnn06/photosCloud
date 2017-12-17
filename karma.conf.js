@@ -14,7 +14,8 @@ module.exports = function(config) {
       'client/bower_components/AngularHammer/angular.hammer.js',
       'client/scripts/app.js',
       'client/scripts/directives/pc-zoom*.js',
-      'test/client/webdriver/directives/pc-imgresize/style.css'
+      'test/client/webdriver/directives/pc-imgresize/style.css',
+      'test/client/karma/*spec*.js'
     ],
 
     autoWatch: true,
