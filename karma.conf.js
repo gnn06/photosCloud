@@ -15,7 +15,10 @@ module.exports = function(config) {
       'client/scripts/app.js',
       'client/scripts/directives/pc-zoom*.js',
       'test/client/webdriver/directives/pc-imgresize/style.css',
-      'test/client/karma/*spec*.js'
+      'client/scripts/controllers/*.js',
+      'client/scripts/services/*.js',
+      'test/client/karma/*spec*.js',
+      'node_modules/sinon/pkg/sinon-2.4.1.js'
     ],
 
     autoWatch: true,

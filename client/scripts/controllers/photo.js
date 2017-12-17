@@ -12,6 +12,15 @@ angular.module('photosAngularApp')
 	.controller('PhotoCtrl', function ($scope, $rootScope, $location, $route, $routeParams, $http, 
 		$filter, $timeout, $document, photoservice) {
 		console.log('dans PhotoCtrl');
+
+		function indexOfPhoto () {
+			var result;
+			var decodedPhotoURL = $rootScope.photos
+				.map(function(item){return decodeURI(item.url);});
+			var currentURL = decodeURI('/thumbnail/' + $routeParams.folder);
+			result = decodedPhotoURL.indexOf(currentURL);
+			return result;
+		}
 	
 		if (!$rootScope.photos) {
 			$http({method: 'GET',
@@ -28,21 +37,29 @@ angular.module('photosAngularApp')
 							return 0;
 						}
 					});
-					$scope.currentPhoto = $rootScope.photos
-						.map(function(item){return decodeURI(item.url)})
-						.indexOf('/thumbnail/' + $routeParams.folder);
+					$scope.currentPhoto = indexOfPhoto();
 				}, function(response) {
 					console.error('error');
 				});		
 		} else {
-			$scope.currentPhoto = $rootScope.photos
-				.map(function(item){return decodeURI(item.url);})
-				.indexOf('/thumbnail/' + $routeParams.folder);
+			$scope.currentPhoto = indexOfPhoto();
 		}
 
 		$scope.$location = $location;
 		$scope.$route = $route;
 		$scope.$routeParams = $routeParams;
+
+		$scope.goToPrev = function () {
+			var hrefNext = $scope.photos[$scope.currentPhoto - 1].url;
+			hrefNext = $filter('thumbnail')(hrefNext);
+			$location.path(hrefNext);
+		};
+		
+		$scope.goToNext = function () {
+			var hrefNext = $scope.photos[$scope.currentPhoto + 1].url;
+			hrefNext = $filter('thumbnail')(hrefNext);
+			$location.path(hrefNext);
+		};
 
 		$scope.deletePhoto = function(ev) {
 			console.log('delete');
