@@ -4,9 +4,9 @@
   "description": "pictures gallery with picture stored on local network",
   "main": "src/ws.js",
   "scripts": {
-    "start": "node src/ws.js & browser-sync start --proxy http://localhost:8089/ --port 8090 --files ./client/ --no-open",
-    "testclient":    "node node_modules/karma/bin/karma start --single-run && node node_modules/mocha/bin/mocha --u tdd --colors test/client/webdriver/**/*.js",
-    "testkarma":     "node node_modules/karma/bin/karma start --single-run",
+    "start": "browser-sync start --proxy http://localhost:8089/ --port 8090 --files ./client/ --no-open",
+    "testclient": "node node_modules/karma/bin/karma start --single-run && node node_modules/mocha/bin/mocha --u tdd --colors test/client/webdriver/**/*.js",
+    "testkarma": "node node_modules/karma/bin/karma start --single-run",
     "testwebdriver": "node node_modules/mocha/bin/mocha --u tdd --colors test/client/webdriver/**/*.js"
   },
   "author": "Gilles Orsini gilles.orsini@gmail.com",
@@ -32,6 +32,7 @@
     "eslint-plugin-mocha": "^4.11.0",
     "fs-extra": "^3.0.1",
     "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
     "gulp-zip": "^4.0.0",
     "image-size": "^0.6.0",
     "karma": "^0.13.22",

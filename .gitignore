@@ -68,3 +68,6 @@ real_sample/
 short_sample/
 
 release/
+
+# inutile depuis bascule sous sass
+client/styles
