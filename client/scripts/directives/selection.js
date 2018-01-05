@@ -33,12 +33,13 @@ angular.module('photosAngularApp')
                     '</md-checkbox><ng-transclude></ng-transclude>',
 
         link: function (scope, element, attrs) {
+            // need link vs compile as into compile
+            // transcluded code is not available
             // console.log('link', element.html());
             var a = element.find('a');
             a.attr('ng-click', 'togglePhoto($event)');
             $compile(a)(scope);
         }
-
     }
 
 })
