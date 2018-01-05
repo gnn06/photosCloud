@@ -19,24 +19,29 @@ angular.module('photosAngularApp')
 			$http({method: 'GET',
 				url: '/thumbnails'
 				/*, cache: $templateCache*/}).
-					then(function(response) {
-						$rootScope.allPhotos = response.data;
-						$rootScope.allPhotos.sort((a, b) => {
-							if (a.date < b.date) {
-								return 1;
-							} else if (a.date > b.date) {
-								return -1;
-							} else {
-								return 0;
-							}
-						});
-						$rootScope.count = 7 * (8 + 3);
-						$rootScope.photos = $scope.photos = $rootScope.allPhotos.slice(0, $rootScope.count);
-					}, function(response) {
-						console.error('error');
-			});
+				then(function(response) {
+					$rootScope.allPhotos = response.data;
+					$rootScope.allPhotos.sort((a, b) => {
+						if (a.date < b.date) {
+							return 1;
+						} else if (a.date > b.date) {
+							return -1;
+						} else {
+							return 0;
+						}
+					});
+					$rootScope.imgToLoad = $rootScope.count = 7 * (8 + 3);
+					// $rootScope.imgToLoad = $rootScope.count = (7 * 5);
+					$rootScope.photos = $scope.photos = $rootScope.allPhotos.slice(0, $rootScope.count);
+				}, function(response) {
+					console.error('error');
+				})
+				.finally(function () {
+					console.log('initial load: ', $rootScope.count);
+				});
 		} else {
-			$rootScope.count = $rootScope.photos.length;
+			$rootScope.imgToLoad = $rootScope.count = $rootScope.photos.length;
+			console.log('initial load: ', $rootScope.count);
 		}
 
 		$scope.deletePhotos = function (ev) {
