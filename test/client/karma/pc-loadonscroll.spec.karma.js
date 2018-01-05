@@ -6,7 +6,7 @@
  */
 'use strict';
 
-describe.only('pc-loadonscroll', function () {
+describe('pc-loadonscroll', function () {
 	
 	var $compile, rootScope, $scope;
 	
