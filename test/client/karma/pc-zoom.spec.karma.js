@@ -12,7 +12,7 @@ describe('pc-zoom', function () {
 	var container, content;
 	var window;
 	
-	beforeEach(module('photosAngularApp'));
+	beforeEach(angular.mock.module('photosAngularApp'));
 
 	afterEach(function() {
 		container.remove();

@@ -6,18 +6,18 @@ module.exports = function(config) {
       'client/bower_components/angular/angular.js',
       'client/bower_components/angular-route/angular-route.js',
       'client/bower_components/angular-resource/angular-resource.js',
-      'client/bower_components/angular-mocks/angular-mocks.js',
       'client/bower_components/angular-material/angular-material.js',
       'client/bower_components/angular-animate/angular-animate.js',
       'client/bower_components/angular-aria/angular-aria.js',
       'client/bower_components/hammerjs/hammer.js',
       'client/bower_components/AngularHammer/angular.hammer.js',
+      'client/bower_components/angular-mocks/angular-mocks.js', // angular-mocks.js here and angular.mock.module to avoid module is undefined
       'client/scripts/app.js',
-      'client/scripts/directives/pc-zoom*.js',
       'test/client/webdriver/directives/pc-imgresize/style.css',
       'client/scripts/controllers/*.js',
+      'client/scripts/directives/*.js',
       'client/scripts/services/*.js',
-      'test/client/karma/*spec*.js',
+      'test/client/karma/*.spec.karma.js',
       'node_modules/sinon/pkg/sinon-2.4.1.js'
     ],
 

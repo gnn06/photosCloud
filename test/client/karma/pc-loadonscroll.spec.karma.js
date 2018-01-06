@@ -10,7 +10,7 @@ describe('pc-loadonscroll', function () {
 	
 	var $compile, rootScope, $scope;
 	
-	beforeEach(module('photosAngularApp'));
+	beforeEach(angular.mock.module('photosAngularApp'));
 
 	beforeEach(function(/*done*/) {
 		inject(function($compile, $rootScope, $controller) {

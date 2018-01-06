@@ -4,7 +4,7 @@ describe('photo-controller', function () {
 
     var $controller, $rootScope, $location;
     
-    beforeEach(module('photosAngularApp'));
+    beforeEach(angular.mock.module('photosAngularApp'));
 
 	beforeEach(function() {
 		inject(function (_$controller_, _$rootScope_, _$location_) {
