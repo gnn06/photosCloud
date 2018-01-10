@@ -43,7 +43,7 @@
 		<img ng-if="$route.current.params.folder.toLowerCase().indexOf('.jpg') > 0" style="display:none" src="{{ (photos[currentPhoto - 1].url) | large }}"/>
 		<img ng-if="$route.current.params.folder.toLowerCase().indexOf('.jpg') > 0" style="display:none" src="{{ (photos[currentPhoto + 1].url) | large  }}"/>
 		<!-- autoplay -->
-		<div ng-if="$route.current.params.folder.indexOf('.mp4') > 0" id="video">
+		<div ng-if="$route.current.params.folder.indexOf('.mp4') > 0">
 			<video 
 				src="{{ '/photo/' + $route.current.params.folder}}" controls>
 				Votre navigateur ne permet pas de lire les vidéos.
