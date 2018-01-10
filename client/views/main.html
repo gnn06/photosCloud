@@ -13,12 +13,14 @@
   <md-content md-scroll-y flex load-on-scroll style="position: relative;">
       
       <md-grid-list id="photos" md-cols="7" md-cols-xs="4" md-gutter="1px" md-row-height="1:1">
-        <md-grid-tile ng-repeat="p in photos">            
+        <md-grid-tile ng-repeat="p in photos">
           <pc-selection-item>
             <a href="#!{{p.url | thumbnail }}" >
               <img ng-src="{{p.url}}" imageonload/>
+              
             </a>
-          </pc-selection-item>      
+            <span ng-if="p.url.indexOf('.mp4') > 0" class="video_icon">video</span>
+          </pc-selection-item>               
         </md-grid-tile>
       </md-grid-list>
     </md-content>
