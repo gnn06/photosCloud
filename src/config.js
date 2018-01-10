@@ -1,10 +1,15 @@
 var config = {}
 
+// absolute path need to express.js module
+
 // DEVELOPPEMENT
 
-const ROOT_FOLDER = '/home/pi/dev/photosCloud/real_sample/';
+// const ROOT_FOLDER = '/home/pi/dev/photosCloud/real_sample/';
 // const ROOT_FOLDER = '//raspberrypi/pi/dev/photosCloud/short_sample/';
 // const ROOT_FOLDER = '//raspberrypi/pi/dev/photosCloud/real_sample/';
+
+ const ROOT_FOLDER = 'C:/Users/gorsini/Documents/workspace/photosCloud/real_sample/';
+
 
 // à terminer par un slash
 config.photoPath     = ROOT_FOLDER + "original/";
