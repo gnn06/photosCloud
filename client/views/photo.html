@@ -37,14 +37,14 @@
 	<div id="media" ng-cloak flex="grow" layout="column" layout-align="center center">
 		<img
 			src="{{ '/large/' + $route.current.params.folder}}"
-			ng-show="$route.current.params.folder.toLowerCase().indexOf('.jpg') > 0"
+			ng-if="$route.current.params.folder.toLowerCase().indexOf('.jpg') > 0"
 			pc-imgresize pc-zoom/>
 		<!-- mise en cache images adjacentes -->
-		<img style="display:none" src="{{ (photos[currentPhoto - 1].url) | large }}"/>
-		<img style="display:none" src="{{ (photos[currentPhoto + 1].url) | large  }}"/>
+		<img ng-if="$route.current.params.folder.toLowerCase().indexOf('.jpg') > 0" style="display:none" src="{{ (photos[currentPhoto - 1].url) | large }}"/>
+		<img ng-if="$route.current.params.folder.toLowerCase().indexOf('.jpg') > 0" style="display:none" src="{{ (photos[currentPhoto + 1].url) | large  }}"/>
 		<!-- autoplay -->
-		<div id="video">
-			<video ng-show="$route.current.params.folder.indexOf('.mp4') > 0"
+		<div ng-if="$route.current.params.folder.indexOf('.mp4') > 0" id="video">
+			<video 
 				src="{{ '/photo/' + $route.current.params.folder}}" controls>
 				Votre navigateur ne permet pas de lire les vidéos.
 				Mais vous pouvez toujours
